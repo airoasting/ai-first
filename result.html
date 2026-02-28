@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>진단 결과 | AI-Native 문제해결력</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.4.5/dist/dom-to-image-more.min.js"></script>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/result.css">
+</head>
+<body>
+<div id="app-header"></div>
+
+<main>
+  <div class="container">
+    <!-- A: No diagnosis → show framework first -->
+    <div id="view-no-diag" class="section-hidden">
+      <div class="section-header no-border">
+        <span class="section-num">프레임워크</span>
+        <span class="section-title">AI와 일하는 5가지 원칙</span>
+      </div>
+      <p class="section-subtitle">진단 전, 이 원칙을 먼저 이해하면 결과가 더 잘 보입니다.</p>
+      <div class="no-diagnosis-view">
+        <div class="no-diagnosis-banner">
+          <h3>아직 진단을 완료하지 않았어요</h3>
+          <p>15문항 진단을 완료하면 나의 AI 활용 유형과 집중해야 할 영역을 확인할 수 있어요.</p>
+          <a href="diagnosis.html" class="btn-primary">지금 진단하기 →</a>
+        </div>
+        <div class="prep-container" id="principles-content-nodx"></div>
+      </div>
+    </div>
+
+    <!-- B: Has diagnosis → show results -->
+    <div id="view-results" class="section-hidden">
+
+      <!-- ① 내 진단 결과 (가장 먼저!) -->
+      <div class="result-diagnosis-section">
+        <!-- 히어로 + 레이더 + 총점 3열 -->
+        <div class="result-three-col">
+          <!-- 프로필 히어로 -->
+          <div class="result-hero" id="result-card-for-image">
+            <div class="result-hero-inner">
+              <span class="result-hero-emoji" id="hero-emoji"></span>
+              <div class="result-hero-type">나의 AI 활용 유형</div>
+              <div class="result-hero-name" id="hero-name"></div>
+              <div class="result-hero-grade" id="hero-grade"></div>
+              <div class="result-hero-tags" id="hero-tags"></div>
+              <p class="result-hero-message" id="hero-message"></p>
+            </div>
+          </div>
+
+          <!-- 레이더 차트 -->
+          <div class="result-radar-wrap">
+            <canvas id="result-radar" width="340" height="340"></canvas>
+          </div>
+
+          <!-- 총점 -->
+          <div class="result-score-summary">
+            <div class="result-total-score">
+              <span class="total-num" id="total-score">0</span>
+              <span class="total-max">/ 50</span>
+            </div>
+            <div class="total-label">종합 점수</div>
+            <div class="score-grade-label" id="score-grade-label"></div>
+            <div class="score-bar-track"><div class="score-bar-fill" id="score-bar"></div></div>
+            <div class="score-breakdown" id="score-breakdown"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② 병목 + 훈련 (결과 바로 다음) -->
+      <div id="result-bottleneck-area"></div>
+
+      <!-- ③ 5개 영역 흐름 (간소화) -->
+      <div class="area-explain-section" id="area-explain-section">
+        <div class="area-explain-header">
+          <span class="area-explain-title">AI와 일하는 5단계 흐름</span>
+          <p class="area-explain-sub">각 단계를 순서대로 거치면 문제 해결이 완성됩니다.</p>
+        </div>
+        <div class="area-explain-flow" id="area-explain-flow"></div>
+      </div>
+
+      <!-- ④ 액션 + 공유 -->
+      <div class="result-actions" id="result-actions"></div>
+      <div class="result-share">
+        <button class="btn-share" onclick="shareResultLink()">🔗 링크 공유</button>
+        <button class="btn-share" onclick="saveResultImage()">📸 결과 카드 저장</button>
+        <a class="btn-share" href="diagnosis.html">🔄 다시 진단하기</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="app-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/result.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCommon();
+  initResult();
+});
+</script>
+</body>
+</html>

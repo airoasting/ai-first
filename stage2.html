@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2단계: 정보 탐색 | AI-Native 문제해결력</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/stage.css">
+<style>
+  .stage-header {
+    text-align: center;
+    padding: 48px 32px 40px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+    border-bottom: 3px solid #C0524A;
+  }
+  .stage-header .back-link {
+    display: inline-block;
+    color: #D47870;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: opacity 0.2s;
+  }
+  .stage-header .back-link:hover { opacity: 0.7; }
+  .stage-header h1 {
+    font-size: 40px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .stage-header p { font-size: 17px; color: rgba(255,255,255,0.6); }
+  .stage-header .header-badge {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #D47870;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(192,82,74,0.3);
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  /* ── 5단계 진행 인디케이터 ── */
+  .stage-step-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-dot.done {
+    background: rgba(192,82,74,0.25);
+    border-color: #C0524A;
+    color: #D47870;
+  }
+  .step-dot.current {
+    background: #C0524A;
+    border-color: #C0524A;
+    color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(192,82,74,0.22);
+  }
+  .step-line {
+    width: 36px;
+    height: 2px;
+    background: rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+  .step-line.done { background: #C0524A; }
+  a.step-dot {
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  a.step-dot:hover {
+    opacity: 0.75;
+    transform: scale(1.12);
+  }
+
+  @media(max-width:768px) {
+    .stage-header { padding: 36px 24px 32px; }
+    .stage-header h1 { font-size: 28px; }
+    .step-line { width: 20px; }
+    .step-dot { width: 28px; height: 28px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<header class="stage-header">
+  <!-- 5단계 진행 인디케이터 -->
+  <div class="stage-step-progress">
+    <a class="step-dot done" href="stage1.html">1</a>
+    <div class="step-line done"></div>
+    <div class="step-dot current">2</div>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage3.html">3</a>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage4.html">4</a>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage5.html">5</a>
+  </div>
+
+  <a class="back-link" href="index.html">&larr; 목록으로</a>
+  <h1>2단계: 정보 탐색</h1>
+  <p id="stage-subtitle"></p>
+  <div class="header-badge">⏱ 3시간 30분 → 25분 · 더 높은 퀄리티</div>
+</header>
+
+<div id="pd-stage-banner" data-competency="limitless"></div>
+
+<main>
+  <div class="container">
+
+    <div class="stage-container">
+      <div id="stage-content"></div>
+      <div class="stage-nav" id="stage-nav"></div>
+    </div>
+  </div>
+</main>
+
+<div id="app-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/stage.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCommon();
+  injectStagePDBanner();
+  initStage('stage2');
+});
+</script>
+</body>
+</html>

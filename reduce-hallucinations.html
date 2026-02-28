@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환각을 줄이는 법 | AI Roasting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.75;
+            font-size: 16px;
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        /* ── Header ── */
+        header {
+            text-align: center;
+            padding: 56px 32px 48px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+            border-bottom: 4px solid #CC0000;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #e8706a;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: opacity 0.2s;
+        }
+        .back-link:hover { opacity: 0.7; }
+
+        h1 {
+            font-size: 43px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+
+        header .desc {
+            font-size: 18px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+        }
+
+        .header-badge {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e8706a;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(232,112,106,0.3);
+            padding: 6px 20px;
+            border-radius: 24px;
+            margin-top: 16px;
+        }
+
+        /* ── Container ── */
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 56px 32px 40px;
+        }
+
+        /* ── Intro Box ── */
+        .intro-box {
+            background: linear-gradient(135deg, #fef2f2, #fef2f2);
+            border: 1px solid #fecaca;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+            font-size: 16px;
+            color: #7f1d1d;
+            line-height: 1.8;
+        }
+        .intro-box .intro-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        .intro-box strong { color: #991b1b; }
+
+        /* ── TOC Nav ── */
+        .toc-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 0 calc(-50vw + 50%) 48px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .toc-nav-inner {
+            display: flex;
+            justify-content: center;
+            padding: 0 16px;
+            min-width: max-content;
+        }
+        .toc-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 16px 20px;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .toc-nav a:hover { background: #fafafa; }
+        .toc-nav a.active {
+            border-bottom-color: #CC0000;
+            background: #fff5f5;
+        }
+        .toc-num {
+            font-size: 12px;
+            font-weight: 800;
+            color: #CC0000;
+            background: #fff5f5;
+            border: 1px solid #f0c0c0;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toc-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .toc-sub {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* ── Section ── */
+        .section {
+            margin-bottom: 64px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #CC0000;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .section .section-desc {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        /* ── Concept Box ── */
+        .concept-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #CC0000;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+        }
+        .concept-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .concept-box p {
+            font-size: 15px;
+            color: #475569;
+            line-height: 1.75;
+        }
+        .concept-box strong { color: #1a1a1a; }
+
+        /* ── Prompt Example ── */
+        .prompt-example {
+            background: #1a1a2e;
+            border-radius: 14px;
+            padding: 0;
+            margin-bottom: 28px;
+            overflow: hidden;
+        }
+        .prompt-example-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .prompt-example-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e8706a;
+        }
+        .prompt-copy-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .prompt-copy-btn:hover {
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+        }
+        .prompt-body {
+            padding: 20px 24px;
+        }
+        .prompt-role {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .prompt-text {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+        }
+        .prompt-text .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        /* ── Why Box ── */
+        .why-box {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 28px;
+        }
+        .why-box .why-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .why-box .why-content {
+            font-size: 14px;
+            color: #92400e;
+            line-height: 1.7;
+        }
+        .why-box strong { color: #78350f; }
+
+        /* ── Advanced Grid ── */
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .advanced-card {
+            background: #f8f8f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 14px;
+            padding: 24px 24px 20px;
+        }
+        .advanced-card .emoji {
+            font-size: 27px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .advanced-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        .advanced-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.65;
+        }
+
+        /* ── Closing Box ── */
+        .closing-box {
+            background: linear-gradient(135deg, #fefce8, #fef9c3);
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+            font-size: 16px;
+            color: #713f12;
+            line-height: 1.8;
+        }
+        .closing-box .closing-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #a16207;
+            margin-bottom: 8px;
+        }
+        .closing-box strong { color: #854d0e; }
+
+        /* ── Footer ── */
+        .page-footer {
+            background: #fafafa;
+            border-top: 1px solid #e5e5e5;
+            padding: 40px 32px;
+        }
+        .footer-inner {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .footer-nav {
+            text-align: center;
+            padding-top: 16px;
+        }
+        .footer-nav a {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #CC0000;
+            text-decoration: none;
+            padding: 12px 28px;
+            border: 2px solid #CC0000;
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+        .footer-nav a:hover {
+            background: #CC0000;
+            color: #fff;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            header .desc { font-size: 15px; }
+            .container { padding: 36px 20px 32px; }
+            .toc-nav { margin: 0 -20px 36px; }
+            .toc-nav a { padding: 12px 14px; }
+            .toc-label { font-size: 12px; }
+            .section h2 { font-size: 22px; }
+            .advanced-grid { grid-template-columns: 1fr; }
+            .prompt-text { font-size: 13px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 26px; }
+            .container { padding: 28px 16px 24px; }
+            .section { margin-bottom: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="back-link">&larr; 목록으로</a>
+    <h1>환각을 줄이는 법</h1>
+    <p class="desc">AI가 그럴듯하게 지어낸 거짓 정보를 걸러내는 실전 기법</p>
+    <div class="header-badge">기본 3가지 + 고급 4가지 기법 &middot; 2단계 정보 탐색</div>
+</header>
+
+<div class="container">
+
+    <!-- ── Intro ── -->
+    <div class="intro-box">
+        <div class="intro-title">AI가 "정확해 보이는 거짓말"을 하고 있다면?</div>
+        AI는 가끔 사실이 아닌 내용을 마치 확실한 것처럼 생성합니다. 이것을 <strong>"환각(hallucination)"</strong>이라 부릅니다.<br>
+        정보 탐색 단계에서 이 환각을 걸러내지 못하면, <strong>잘못된 근거 위에 모든 분석이 세워집니다.</strong><br>
+        아래 기법들을 프롬프트에 적용하면 AI의 답변 신뢰도를 크게 높일 수 있습니다.
+    </div>
+
+    <!-- ── TOC Nav ── -->
+    <nav class="toc-nav" id="tocNav">
+        <div class="toc-nav-inner">
+            <a href="#sec1" data-section="sec1"><span class="toc-num">1</span><span class="toc-label">"모르겠습니다"</span><span class="toc-sub">불확실성 허용</span></a>
+            <a href="#sec2" data-section="sec2"><span class="toc-num">2</span><span class="toc-label">직접 인용</span><span class="toc-sub">사실 근거 확보</span></a>
+            <a href="#sec3" data-section="sec3"><span class="toc-num">3</span><span class="toc-label">출처 검증</span><span class="toc-sub">주장별 근거 요구</span></a>
+            <a href="#sec4" data-section="sec4"><span class="toc-num">4</span><span class="toc-label">고급 기법</span><span class="toc-sub">추가 검증 방법</span></a>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 섹션 1: "모르겠습니다"라고 말할 수 있게 하기 -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="section" id="sec1">
+        <div class="section-num">1</div>
+        <h2>"모르겠습니다"라고 말할 수 있게 하기</h2>
+        <p class="section-desc">
+            AI에게 불확실할 때 솔직히 인정하도록 <strong>명시적으로 허용</strong>하세요.
+            이 한 줄만 추가해도 거짓 정보가 크게 줄어듭니다.
+        </p>
+
+        <div class="concept-box">
+            <h3>왜 이게 효과적인가?</h3>
+            <p>
+                AI는 기본적으로 "답을 반드시 제공해야 한다"는 경향이 있습니다.
+                확신이 없어도 답변을 만들어내려 하기 때문에 환각이 발생합니다.<br><br>
+                <strong>"모르면 모른다고 해도 괜찮다"</strong>고 명시하면,
+                AI가 억지로 만들어내는 대신 솔직하게 한계를 인정합니다.
+            </p>
+        </div>
+
+        <div class="prompt-example">
+            <div class="prompt-example-header">
+                <span class="prompt-example-title">프롬프트 예시: M&A 보고서 분석</span>
+                <button class="prompt-copy-btn" onclick="copyPrompt(this)">복사</button>
+            </div>
+            <div class="prompt-body">
+                <div class="prompt-role">User</div>
+                <div class="prompt-text">우리 회사의 M&A 자문 역할로, ExampleCorp의 AcmeCo 인수에 대한 이 보고서를 분석해주세요.
+
+<span class="highlight" style="color:#94a3b8; font-weight:400;">--- 여기에 분석할 보고서 내용을 복사해서 붙여넣으세요 ---</span>
+
+재무 전망, 통합 리스크, 규제 허들에 집중해주세요.
+
+<span class="highlight">확신이 없는 부분이나 보고서에 필요한 정보가 부족한 경우,
+"이 부분은 확신 있게 판단하기 어렵습니다"라고 말해주세요.</span></div>
+            </div>
+        </div>
+
+        <div class="why-box">
+            <span class="why-icon">💡</span>
+            <div class="why-content">
+                <strong>핵심 포인트:</strong> 마지막 문장이 핵심입니다. "모른다고 말해도 된다"는 허가를 주면, AI는 근거 없이 추측하는 대신 정보 부족을 솔직히 알려줍니다.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 섹션 2: 직접 인용으로 사실 근거 확보 -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="section" id="sec2">
+        <div class="section-num">2</div>
+        <h2>직접 인용으로 사실 근거 확보하기</h2>
+        <p class="section-desc">
+            긴 문서를 분석할 때, AI에게 <strong>원문에서 정확한 문장을 먼저 추출</strong>하게 한 뒤
+            그 인용문을 바탕으로 분석하도록 지시하세요.
+        </p>
+
+        <div class="concept-box">
+            <h3>왜 이게 효과적인가?</h3>
+            <p>
+                20,000 토큰이 넘는 긴 문서를 분석할 때, AI는 문서 내용을 "기억"하며 요약하는 과정에서
+                원문에 없는 내용을 슬쩍 끼워 넣을 수 있습니다.<br><br>
+                <strong>원문 인용을 먼저 뽑게 하면</strong>, AI의 분석이 실제 텍스트에 "고정"됩니다.
+                근거 없는 주장이 끼어들 여지가 줄어듭니다.
+            </p>
+        </div>
+
+        <div class="prompt-example">
+            <div class="prompt-example-header">
+                <span class="prompt-example-title">프롬프트 예시: 데이터 프라이버시 정책 감사</span>
+                <button class="prompt-copy-btn" onclick="copyPrompt(this)">복사</button>
+            </div>
+            <div class="prompt-body">
+                <div class="prompt-role">User</div>
+                <div class="prompt-text">데이터 보호 책임자(DPO) 역할로, 이 개인정보 처리방침을 GDPR 및 개인정보보호법 준수 여부를 검토해주세요.
+
+<span class="highlight" style="color:#94a3b8; font-weight:400;">--- 여기에 검토할 개인정보 처리방침 전문을 복사해서 붙여넣으세요 ---</span>
+
+<span class="highlight">1. 먼저 정책에서 법률 준수와 가장 관련 있는 정확한 문장을 그대로 추출하세요.
+   관련 인용문을 찾을 수 없다면 "관련 인용문 없음"이라고 적으세요.
+
+2. 추출한 인용문을 근거로 각 섹션의 준수 여부를 분석하세요.
+   인용문 번호를 참조하고, 추출한 인용문에만 근거를 두세요.</span></div>
+            </div>
+        </div>
+
+        <div class="why-box">
+            <span class="why-icon">💡</span>
+            <div class="why-content">
+                <strong>핵심 포인트:</strong> "추출한 인용문에만 근거를 두세요"라는 제약이 중요합니다. AI가 문서에 없는 정보를 끌어오는 것을 방지합니다.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 섹션 3: 인용과 출처로 검증하기 -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="section" id="sec3">
+        <div class="section-num">3</div>
+        <h2>인용과 출처로 검증하기</h2>
+        <p class="section-desc">
+            AI가 작성한 내용을 <strong>감사 가능(auditable)</strong>하게 만드세요.
+            모든 주장에 출처 인용을 요구하고, 근거를 찾지 못하면 해당 주장을 <strong>스스로 철회</strong>하도록 지시합니다.
+        </p>
+
+        <div class="concept-box">
+            <h3>왜 이게 효과적인가?</h3>
+            <p>
+                AI에게 "작성 후 스스로 검증"하라고 시키면, <strong>자기 교정(self-correction)</strong> 메커니즘이 작동합니다.
+                근거를 찾지 못하는 주장은 AI 스스로 삭제하므로, 최종 결과물에서 환각이 걸러집니다.
+            </p>
+        </div>
+
+        <div class="prompt-example">
+            <div class="prompt-example-header">
+                <span class="prompt-example-title">프롬프트 예시: 신제품 보도자료 작성</span>
+                <button class="prompt-copy-btn" onclick="copyPrompt(this)">복사</button>
+            </div>
+            <div class="prompt-body">
+                <div class="prompt-role">User</div>
+                <div class="prompt-text">우리 새 보안 제품 AcmeSecurity Pro의 보도자료를 작성해주세요.
+아래 제품 브리프와 시장 보고서의 정보만 사용하세요.
+
+<span class="highlight" style="color:#94a3b8; font-weight:400;">--- 여기에 제품 브리프, 시장 보고서 등 참고 자료를 복사해서 붙여넣으세요 ---</span>
+
+<span class="highlight">작성 후, 보도자료의 각 주장을 검토하세요.
+각 주장에 대해 문서에서 뒷받침하는 직접 인용문을 찾으세요.
+뒷받침 인용문을 찾지 못한 주장은 보도자료에서 삭제하고,
+삭제된 위치를 빈 [] 괄호로 표시하세요.</span></div>
+            </div>
+        </div>
+
+        <div class="why-box">
+            <span class="why-icon">💡</span>
+            <div class="why-content">
+                <strong>핵심 포인트:</strong> "삭제하고 [] 표시하세요"라는 지시가 강력합니다. AI가 근거 없는 주장을 남기는 대신, 명시적으로 빈 자리를 드러내게 합니다.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 섹션 4: 고급 기법 -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="section" id="sec4">
+        <div class="section-num">4</div>
+        <h2>고급 기법</h2>
+        <p class="section-desc">
+            기본 기법 위에 추가로 적용할 수 있는 검증 방법들입니다.
+            여러 기법을 조합하면 환각을 더욱 효과적으로 줄일 수 있습니다.
+        </p>
+
+        <div class="advanced-grid">
+            <div class="advanced-card">
+                <span class="emoji">🔗</span>
+                <h4>단계별 추론 검증</h4>
+                <p>최종 답변 전에 단계별로 추론 과정을 설명하게 하세요. 논리적 비약이나 잘못된 가정이 드러납니다.</p>
+            </div>
+            <div class="advanced-card">
+                <span class="emoji">🔄</span>
+                <h4>N회 반복 비교</h4>
+                <p>같은 프롬프트를 여러 번 실행한 뒤 답변을 비교하세요. 답변 간 불일치가 있다면 환각 가능성이 높습니다.</p>
+            </div>
+            <div class="advanced-card">
+                <span class="emoji">🔍</span>
+                <h4>반복 정제</h4>
+                <p>AI의 출력을 다시 입력으로 넣어 이전 답변을 검증하고 확장하게 하세요. 불일치를 잡아낼 수 있습니다.</p>
+            </div>
+            <div class="advanced-card">
+                <span class="emoji">📄</span>
+                <h4>외부 지식 제한</h4>
+                <p>제공한 문서의 정보만 사용하라고 명시하세요. AI의 일반 지식에서 오는 부정확한 정보를 차단합니다.</p>
+            </div>
+        </div>
+
+        <div class="why-box">
+            <span class="why-icon">⚠️</span>
+            <div class="why-content">
+                <strong>주의:</strong> 이 기법들은 환각을 크게 줄여주지만, 완전히 없앨 수는 없습니다. 중요한 결정에 사용할 정보는 반드시 원본 데이터와 대조해서 검증하세요.
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Closing ── -->
+    <div class="closing-box">
+        <div class="closing-title">실전에서 바로 써보세요</div>
+        오늘 AI에게 분석을 시킬 때, 위 기법 중 <strong>하나만</strong> 추가해보세요.<br>
+        가장 쉬운 시작은 <strong>"확신이 없으면 모른다고 말해주세요"</strong> 한 줄을 넣는 것입니다.<br>
+        그것만으로도 AI가 "그럴듯한 거짓말" 대신 <strong>솔직한 답변</strong>을 내놓는 것을 체감할 수 있습니다.
+    </div>
+
+</div><!-- .container -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- Footer: 출처 + 네비게이션 -->
+<!-- ══════════════════════════════════════ -->
+<footer class="page-footer">
+    <div class="footer-inner">
+        <div style="background:#fff; border:1px solid #e5e5e5; border-radius:14px; padding:28px 32px; margin-bottom:24px;">
+            <div style="font-size:12px; font-weight:800; color:#999; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px;">출처</div>
+            <div style="font-size:18px; font-weight:800; color:#1a1a1a; margin-bottom:4px;">Reduce Hallucinations</div>
+            <div style="font-size:14px; color:#999; margin-bottom:14px;">Anthropic · Claude Documentation</div>
+            <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" style="font-size:13px; color:#CC0000; text-decoration:none; word-break:break-all; display:inline-block; margin-bottom:14px;">https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations</a>
+            <div style="font-size:13px; color:#888; line-height:1.6;">이 페이지는 Anthropic 공식 문서의 주요 내용을 한국어로 재구성한 것입니다.</div>
+        </div>
+
+        <div class="footer-nav">
+            <a href="index.html">&larr; 목록으로 돌아가기</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+(function() {
+    /* ── TOC Nav: scroll tracking ── */
+    var nav = document.getElementById('tocNav');
+    var links = nav.querySelectorAll('a[data-section]');
+    var sections = Array.from(links).map(function(link) {
+        return {
+            id: link.getAttribute('data-section'),
+            el: document.getElementById(link.getAttribute('data-section')),
+            link: link
+        };
+    });
+
+    function updateActive() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var current = null;
+        for (var i = 0; i < sections.length; i++) {
+            if (sections[i].el && sections[i].el.getBoundingClientRect().top <= 120) {
+                current = sections[i];
+            }
+        }
+        links.forEach(function(l) { l.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive);
+    updateActive();
+
+    /* ── Smooth scroll ── */
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.getElementById(this.getAttribute('data-section'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+})();
+
+/* ── Copy prompt ── */
+function copyPrompt(btn) {
+    var body = btn.closest('.prompt-example').querySelector('.prompt-text');
+    var text = body.innerText || body.textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '복사됨!';
+        setTimeout(function() { btn.textContent = '복사'; }, 1500);
+    });
+}
+</script>
+</body>
+</html>

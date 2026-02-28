@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 토론 설계법 (멀티 페르소나) | AI Roasting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, -apple-system, system-ui, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            padding: 48px 32px 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+            border-bottom: 3px solid #CC0000;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #e8706a;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover { opacity: 0.7; }
+
+        header h1 {
+            font-size: 40px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        header p { font-size: 16px; color: rgba(255,255,255,0.6); }
+
+        .header-badge {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #e8706a;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(232,112,106,0.3);
+            padding: 4px 16px;
+            border-radius: 20px;
+            margin-top: 12px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 32px 64px;
+        }
+
+        /* ── Section Title ── */
+        .section-block {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            padding-left: 16px;
+            border-left: 4px solid #CC0000;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: #666;
+            padding-left: 20px;
+            margin-bottom: 24px;
+        }
+
+        /* ── 비교: Before vs After ── */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .compare-card {
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .compare-card.before {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+        }
+
+        .compare-card.after {
+            background: #fff5f5;
+            border: 1px solid #f0c0c0;
+        }
+
+        .compare-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 3px 12px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+        }
+
+        .before .compare-label {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .after .compare-label {
+            background: #CC0000;
+            color: #fff;
+        }
+
+        .compare-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .compare-prompt {
+            font-size: 14px;
+            color: #333;
+            background: #2d2d2d;
+            color: #fff;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .compare-result {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .compare-result strong {
+            color: #1a1a1a;
+        }
+
+        .compare-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #CC0000;
+            font-weight: 800;
+        }
+
+        /* ── 핵심 원리 ── */
+        .principle-box {
+            background: #f9f9f9;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 32px;
+        }
+
+        .principle-box h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .principle-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .principle-item {
+            text-align: center;
+            padding: 20px 16px;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+        }
+
+        .principle-item .p-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .principle-item .p-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .principle-item .p-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* ── 팀 구성 ── */
+        .team-setup {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .team-header {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .team-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .team-roles {
+            padding: 24px;
+        }
+
+        .role-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .role-row:last-child { border-bottom: none; }
+
+        .role-badge {
+            min-width: 80px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .role-badge.leader {
+            background: #CC0000;
+            color: #fff;
+        }
+
+        .role-badge.member {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .role-info { flex: 1; }
+
+        .role-info .role-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .role-info .role-desc {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .role-tip {
+            font-size: 12px;
+            color: #CC0000;
+            font-weight: 600;
+            background: #fff5f5;
+            padding: 3px 10px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ── 프롬프트 템플릿 ── */
+        .template-box {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .template-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: #2d2d2d;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .template-bar span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #999;
+        }
+
+        .copy-btn {
+            font-size: 12px;
+            font-weight: 600;
+            color: #CC0000;
+            background: rgba(204,0,0,0.1);
+            border: 1px solid rgba(204,0,0,0.3);
+            padding: 4px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #CC0000;
+            color: #fff;
+        }
+
+        .template-body {
+            padding: 20px 24px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            color: #e0e0e0;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .template-body .t-comment {
+            color: #666;
+        }
+
+        .template-body .t-role {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .template-body .t-keyword {
+            color: #CC0000;
+            font-weight: 600;
+        }
+
+        .template-note {
+            font-size: 13px;
+            color: #888;
+            padding: 12px 16px;
+            background: #f8f8f8;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .template-note strong {
+            color: #CC0000;
+        }
+
+        /* ── 활용 예시 ── */
+        .usecase-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .usecase-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: border-color 0.2s;
+        }
+
+        .usecase-card:hover {
+            border-color: #CC0000;
+        }
+
+        .usecase-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .usecase-card .usecase-team {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .usecase-card .usecase-prompt {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: #f8f8f8;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        /* ── 핵심 팁 ── */
+        .tips-section {
+            background: #f9f9f9;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .tips-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 14px;
+        }
+
+        .tips-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tips-list li {
+            font-size: 14px;
+            color: #4a4a4a;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .tips-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #CC0000;
+            font-weight: 700;
+        }
+
+        /* ── 프로세스 흐름도 ── */
+        .flow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 16px 20px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            min-width: 140px;
+        }
+
+        .flow-step.active {
+            border-color: #CC0000;
+            background: #fff5f5;
+        }
+
+        .flow-step .fs-num {
+            font-size: 11px;
+            font-weight: 800;
+            color: #CC0000;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .flow-step .fs-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .flow-step .fs-desc {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .flow-arrow {
+            font-size: 20px;
+            color: #CC0000;
+            font-weight: 800;
+            padding: 0 8px;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 32px;
+            border-top: 1px solid #e0e0e0;
+            background: #f4f4f4;
+        }
+
+        footer .footer-brand {
+            font-size: 14px;
+            font-weight: 700;
+            color: #CC0000;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        footer .footer-text { font-size: 13px; color: #999; }
+
+        @media (max-width: 768px) {
+            header { padding: 40px 20px 24px; }
+            header h1 { font-size: 28px; }
+            .container { padding: 32px 16px 48px; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .principle-items { grid-template-columns: 1fr; }
+            .usecase-cards { grid-template-columns: 1fr; }
+            .flow-steps { flex-direction: column; }
+            .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+            .role-row { flex-wrap: wrap; }
+            .role-tip { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a class="back-link" href="index.html">&larr; 목록으로</a>
+        <h1>AI 토론 설계법 (멀티 페르소나)</h1>
+        <p>AI 한 명에게 묻지 말고, AI 팀을 구성해서 토론시키세요</p>
+        <span class="header-badge">대화만으로 퀄리티 2배 &middot; 5분 소요</span>
+    </header>
+
+    <main class="container">
+
+        <!-- 핵심 비교: Before vs After -->
+        <div class="section-block">
+            <h2 class="section-title">같은 질문, 다른 퀄리티</h2>
+            <p class="section-subtitle">팀장 + 팀원 구성만 추가하면 답변의 깊이가 달라집니다</p>
+
+            <div class="compare-grid">
+                <div class="compare-card before">
+                    <span class="compare-label">Before &mdash; 혼자 물어보기</span>
+                    <div class="compare-prompt">"20대 직장인 대상 AI 생산성 앱을 런칭하려고 해. 마케팅 전략을 짜줘."</div>
+                    <div class="compare-result">
+                        <strong>결과:</strong> 한 관점의 일반적 전략 나열<br>
+                        &bull; SNS 마케팅, 인플루언서 협업, 콘텐츠 마케팅...<br>
+                        &bull; 나름 괜찮지만, 누가 써도 나올 수 있는 답변<br>
+                        &bull; <strong style="color:#CC0000">비용·고객·데이터 검증 없음</strong>
+                    </div>
+                </div>
+                <div class="compare-card after">
+                    <span class="compare-label">After &mdash; 팀 토론</span>
+                    <div class="compare-prompt">"총 4명의 팀을 구성해줘. 마케팅 디렉터가 팀장이고, 데이터 분석가, 고객 전문가, 재무 담당이 3명의 팀원이야. 마케팅 디렉터가 각 팀원과 3차례 비판적으로 토론한 후, 최종 결론을 도출해줘."</div>
+                    <div class="compare-result">
+                        <strong>결과:</strong> 3라운드 비판적 토론을 거친 전략<br>
+                        &bull; 1라운드: 각 팀원의 초기 주장<br>
+                        &bull; 2라운드: 팀장이 약점 지적 &rarr; 팀원이 보완<br>
+                        &bull; 3라운드: 반박 &amp; 재반박으로 논리 완성<br>
+                        &bull; <strong style="color:#CC0000">검증된 최종 결론 도출</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 왜 효과적인가 -->
+        <div class="section-block">
+            <h2 class="section-title">왜 효과적인가?</h2>
+            <p class="section-subtitle">한 사람의 관점 vs 여러 전문가의 관점</p>
+
+            <div class="principle-box">
+                <div class="principle-items">
+                    <div class="principle-item">
+                        <div class="p-icon">🔍</div>
+                        <div class="p-title">다각도 검증</div>
+                        <div class="p-desc">각 전문가가 자기 관점에서<br>빈틈을 찾아냅니다</div>
+                    </div>
+                    <div class="principle-item">
+                        <div class="p-icon">💬</div>
+                        <div class="p-title">순차적 토론</div>
+                        <div class="p-desc">앞사람 의견을 듣고<br>반박&middot;보완하며 깊어집니다</div>
+                    </div>
+                    <div class="principle-item">
+                        <div class="p-icon">✅</div>
+                        <div class="p-title">팀장 종합</div>
+                        <div class="p-desc">토론 결과를 종합해<br>실행 가능한 결론을 냅니다</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PSM 연구 기반 설명 -->
+        <div class="section-block">
+            <h2 class="section-title">Anthropic 연구가 증명한 원리</h2>
+            <p class="section-subtitle">왜 "역할을 나눠라"고 하면 AI가 진짜 다르게 답할까?</p>
+
+            <div style="background: linear-gradient(135deg, #f0f4ff, #fff); border: 1px solid #d0daf0; border-radius: 12px; padding: 28px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px;">
+                    <span style="font-size: 28px; flex-shrink: 0;">🎭</span>
+                    <div>
+                        <p style="font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;">AI는 "배우"처럼 작동합니다</p>
+                        <p style="font-size: 14px; color: #555; line-height: 1.8;">
+                            Anthropic의 <strong style="color: #1e40af;">Persona Selection Model(PSM)</strong> 연구에 따르면, Claude 같은 AI는 학습 과정에서 수많은 글을 읽으며 <strong>다양한 캐릭터를 연기하는 법</strong>을 배웁니다. 마치 배우가 여러 역할을 소화할 수 있는 것처럼요.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 8px;">📚</div>
+                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">학습 = 캐릭터 습득</div>
+                        <div style="font-size: 12px; color: #666; line-height: 1.5;">수많은 텍스트를 읽으며<br>다양한 전문가의 사고방식을 학습</div>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 8px;">🎯</div>
+                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">역할 부여 = 캐릭터 전환</div>
+                        <div style="font-size: 12px; color: #666; line-height: 1.5;">"데이터 분석가처럼 봐줘"라고 하면<br>그 캐릭터의 사고방식으로 전환</div>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 8px;">🧠</div>
+                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">실제로 다른 관점</div>
+                        <div style="font-size: 12px; color: #666; line-height: 1.5;">단순 흉내가 아니라<br>AI 내부에서 실제로 다른 패턴이 활성화</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 14px 18px; background: #f8f5f0; border: 1px solid #e8e0d4; border-radius: 8px;">
+                    <p style="font-size: 13px; color: #555; line-height: 1.7; margin: 0;">
+                        <strong style="color: #1a1a1a;">그래서 멀티 페르소나가 효과적입니다.</strong> AI에게 서로 다른 역할을 부여하면, 각 역할마다 <strong>실제로 다른 전문가의 관점</strong>이 활성화됩니다.
+                        한 명에게 물어보면 한 가지 관점만 나오지만, 팀을 구성하면 <strong>여러 관점이 충돌하며 더 깊은 답변</strong>이 나오는 이유입니다.
+                    </p>
+                </div>
+            </div>
+
+            <div style="font-size: 12px; color: #999; line-height: 1.6; padding-left: 2px;">
+                📎 출처: <a href="https://alignment.anthropic.com/2026/psm/" target="_blank" rel="noopener" style="color: #3b82f6; text-decoration: none;">Anthropic, "The Persona Selection Model" (2026)</a>
+            </div>
+        </div>
+
+        <!-- 토론 프로세스 -->
+        <div class="section-block">
+            <h2 class="section-title">토론 프로세스</h2>
+            <p class="section-subtitle">4단계로 자연스럽게 퀄리티가 올라갑니다</p>
+
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="fs-num">STEP 1</div>
+                    <div class="fs-title">팀 구성</div>
+                    <div class="fs-desc">팀장 1명 + 팀원 정의</div>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">
+                    <div class="fs-num">STEP 2</div>
+                    <div class="fs-title">1차 토론</div>
+                    <div class="fs-desc">각 팀원이 주장 제시</div>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">
+                    <div class="fs-num">STEP 3</div>
+                    <div class="fs-title">비판적 토론 3R</div>
+                    <div class="fs-desc">팀장이 각 팀원과 3라운드</div>
+                </div>
+                <span class="flow-arrow">&rarr;</span>
+                <div class="flow-step">
+                    <div class="fs-num">STEP 4</div>
+                    <div class="fs-title">최종 결론</div>
+                    <div class="fs-desc">팀장이 종합 &rarr; 결론 도출</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 팀 구성법 -->
+        <div class="section-block">
+            <h2 class="section-title">팀 구성하는 법</h2>
+            <p class="section-subtitle">팀장 1명 + 팀원 2~4명이 가장 효과적입니다</p>
+
+            <div class="team-setup">
+                <div class="team-header">
+                    <span>👥</span>
+                    <h3>예시: 마케팅 전략 수립팀</h3>
+                </div>
+                <div class="team-roles">
+                    <div class="role-row">
+                        <span class="role-badge leader">팀장</span>
+                        <div class="role-info">
+                            <div class="role-name">마케팅 디렉터</div>
+                            <div class="role-desc">최종 의사결정, 토론 종합 및 결론 도출</div>
+                        </div>
+                        <span class="role-tip">반드시 1명</span>
+                    </div>
+                    <div class="role-row">
+                        <span class="role-badge member">팀원 1</span>
+                        <div class="role-info">
+                            <div class="role-name">데이터 분석가</div>
+                            <div class="role-desc">수치 근거 제시, 시장 데이터 기반 의견</div>
+                        </div>
+                    </div>
+                    <div class="role-row">
+                        <span class="role-badge member">팀원 2</span>
+                        <div class="role-info">
+                            <div class="role-name">고객 경험 전문가</div>
+                            <div class="role-desc">사용자 관점, 실제 고객 반응 예측</div>
+                        </div>
+                    </div>
+                    <div class="role-row">
+                        <span class="role-badge member">팀원 3</span>
+                        <div class="role-info">
+                            <div class="role-name">재무 담당</div>
+                            <div class="role-desc">비용 타당성, ROI 분석, 예산 현실성 검토</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-note">
+                <strong>팀 구성 팁:</strong> 팀원은 서로 <strong>다른 관점</strong>을 가진 역할로 구성하세요. 같은 방향만 바라보는 팀은 토론이 아니라 동의가 됩니다. "비판자" 역할을 하나 넣으면 퀄리티가 확 올라갑니다.
+            </div>
+        </div>
+
+        <!-- 프롬프트 템플릿 -->
+        <div class="section-block">
+            <h2 class="section-title">복사해서 바로 쓰는 프롬프트</h2>
+            <p class="section-subtitle">아래 템플릿을 복사하고, 빨간 부분만 내 상황에 맞게 바꾸세요</p>
+
+            <div class="template-box">
+                <div class="template-bar">
+                    <span>프롬프트 템플릿</span>
+                    <button class="copy-btn" onclick="copyTemplate()">복사하기</button>
+                </div>
+                <div class="template-body" id="prompt-template">지금부터 팀 회의를 시작합니다.
+
+<span class="t-comment">## 논의 주제</span>
+<span class="t-keyword">[여기에 논의할 주제를 적으세요]</span>
+
+<span class="t-comment">## 팀 구성 (총 4명)</span>
+<span class="t-role">팀장:</span> <span class="t-keyword">[역할명]</span> &mdash; 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+<span class="t-role">팀원 1:</span> <span class="t-keyword">[역할명]</span> &mdash; <span class="t-keyword">[이 역할의 관점/전문 분야]</span>
+<span class="t-role">팀원 2:</span> <span class="t-keyword">[역할명]</span> &mdash; <span class="t-keyword">[이 역할의 관점/전문 분야]</span>
+<span class="t-role">팀원 3:</span> <span class="t-keyword">[역할명]</span> &mdash; <span class="t-keyword">[이 역할의 관점/전문 분야]</span>
+
+<span class="t-comment">## 진행 규칙</span>
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 <span class="t-keyword">각 팀원과 1:1로 3차례씩 비판적 토론</span>을 진행합니다
+   &mdash; 1차: 팀장이 약점&middot;빈틈을 지적 &rarr; 팀원이 반박&middot;보완
+   &mdash; 2차: 팀장이 재반박 &rarr; 팀원이 근거를 추가해 방어
+   &mdash; 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 <span class="t-keyword">최종 결론을 도출</span>합니다
+
+<span class="t-comment">## 출력 형식</span>
+&mdash; 각 팀원과의 토론을 구분해서 보여주세요
+&mdash; 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.</div>
+            </div>
+
+            <div class="template-note">
+                <strong>핵심:</strong> "순서대로 발언"과 "팀장이 결론" 이 두 가지 규칙이 퀄리티를 만듭니다. 규칙 없이 "토론해줘"라고만 하면 산만해집니다.
+            </div>
+
+            <!-- 완성 예시 -->
+            <h3 style="font-size: 17px; font-weight: 700; color: #1a1a1a; margin: 32px 0 12px; padding-left: 2px;">📝 실제로 이렇게 채우면 됩니다</h3>
+            <div class="template-box">
+                <div class="template-bar">
+                    <span>완성 예시 : 마케팅 전략 수립</span>
+                    <button class="copy-btn" onclick="copyExample()">복사하기</button>
+                </div>
+                <div class="template-body" id="prompt-example">지금부터 팀 회의를 시작합니다.
+
+<span class="t-comment">## 논의 주제</span>
+20대 직장인 대상 AI 생산성 앱의 런칭 마케팅 전략
+
+<span class="t-comment">## 팀 구성 (총 4명)</span>
+<span class="t-role">팀장:</span> 마케팅 디렉터 &mdash; 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+<span class="t-role">팀원 1:</span> 데이터 분석가 &mdash; 시장 규모, 경쟁사 수치, 타겟 사용자 데이터 기반 의견
+<span class="t-role">팀원 2:</span> 고객 경험 전문가 &mdash; 20대 직장인의 실제 불편함과 니즈 관점
+<span class="t-role">팀원 3:</span> 재무 담당 &mdash; 마케팅 예산 대비 ROI, 비용 효율성 검토
+
+<span class="t-comment">## 진행 규칙</span>
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 각 팀원과 1:1로 3차례씩 비판적 토론을 진행합니다
+   &mdash; 1차: 팀장이 약점&middot;빈틈을 지적 &rarr; 팀원이 반박&middot;보완
+   &mdash; 2차: 팀장이 재반박 &rarr; 팀원이 근거를 추가해 방어
+   &mdash; 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 최종 결론을 도출합니다
+
+<span class="t-comment">## 출력 형식</span>
+&mdash; 각 팀원과의 토론을 구분해서 보여주세요
+&mdash; 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.</div>
+            </div>
+            <div class="template-note">
+                <strong>위 예시를 보세요:</strong> 빈칸 템플릿과 구조는 똑같고, <strong>주제와 역할만 구체적으로 채웠을 뿐</strong>입니다. 여러분도 본인 업무에 맞게 바꿔 넣으면 됩니다.
+            </div>
+
+            <p style="font-size: 12px; color: #999; line-height: 1.6; margin-top: 8px; padding-left: 2px;">※ 토론 라운드 수(3회)는 "주장 → 반박 → 합의"의 최소 논증 구조를 기준으로 한 권장값입니다. 주제의 복잡도에 따라 2~5회로 자유롭게 조정할 수 있습니다.</p>
+        </div>
+
+        <!-- 프로젝트 지침 활용법 -->
+        <div class="section-block">
+            <h2 class="section-title">프로젝트 지침에 넣어서 자동 적용하기</h2>
+            <p class="section-subtitle">매번 복붙할 필요 없이, 프로젝트 안에서 자동으로 멀티 페르소나가 적용됩니다</p>
+
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 8px 16px; margin-bottom: 20px;">
+                <span style="font-size: 16px;">💎</span>
+                <span style="font-size: 13px; font-weight: 600; color: #92400E;">Pro · Team · Enterprise 플랜에서 사용 가능</span>
+            </div>
+
+            <div style="background: #f9f9f9; border: 1px solid #e8e8e8; border-radius: 12px; padding: 28px; margin-bottom: 20px;">
+                <p style="font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 20px;">
+                    Claude의 <strong style="color: #1a1a1a;">프로젝트(Projects)</strong> 기능을 사용하면, 위 프롬프트를 <strong style="color: #CC0000;">프로젝트 지침(Project Instructions)</strong>에 저장해둘 수 있습니다.<br>
+                    이렇게 하면 해당 프로젝트에서 새 대화를 시작할 때마다 <strong style="color: #1a1a1a;">자동으로 멀티 페르소나 토론 방식이 적용</strong>됩니다.
+                </p>
+
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <!-- Step 1 -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">1</div>
+                        <div style="flex: 1; padding-top: 6px;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">프로젝트 만들기</div>
+                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                                <a href="https://claude.ai" target="_blank" style="color: #CC0000; font-weight: 600; text-decoration: none;">claude.ai</a> 접속 → 왼쪽 사이드바에서 <strong style="background: #f0f0f0; padding: 1px 8px; border-radius: 4px; font-size: 12px;">+ 프로젝트 만들기</strong> 클릭 → 프로젝트 이름 입력 (예: "마케팅 전략 토론")
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">2</div>
+                        <div style="flex: 1; padding-top: 6px;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">프로젝트 지침에 프롬프트 붙여넣기</div>
+                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                                프로젝트 상단의 <strong style="background: #f0f0f0; padding: 1px 8px; border-radius: 4px; font-size: 12px;">프로젝트 지침 설정</strong> 클릭 → 위에서 복사한 멀티 페르소나 프롬프트를 그대로 붙여넣기 → 저장
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">3</div>
+                        <div style="flex: 1; padding-top: 6px;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">새 대화에서 주제만 입력하면 끝!</div>
+                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                                이제 해당 프로젝트에서 새 대화를 시작하면 프롬프트가 자동 적용됩니다. 매번 긴 프롬프트를 복붙할 필요 없이, <strong style="color: #CC0000;">"이번 주제는 ○○야. 시작해줘."</strong>라고만 쓰면 됩니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="template-note">
+                <strong>TIP:</strong> 주제별로 프로젝트를 나눠두면 편합니다. 예를 들어 "마케팅 토론", "사업 아이디어 검증", "보고서 검토" 등 용도별로 프로젝트를 만들고, 각각에 맞는 팀 구성을 프로젝트 지침에 저장해두세요.
+            </div>
+        </div>
+
+        <!-- 활용 예시 -->
+        <div class="section-block">
+            <h2 class="section-title">이런 상황에서 써보세요</h2>
+            <p class="section-subtitle">어떤 주제든 팀만 잘 구성하면 됩니다</p>
+
+            <div class="usecase-cards">
+                <div class="usecase-card">
+                    <h4>📄 보고서 검토</h4>
+                    <div class="usecase-team">팀장: 부서장 / 팀원: 전략가, 현장 실무자, 경영진 관점</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 부서장이 팀장, 전략가&middot;현장 실무자&middot;경영진 관점 담당이 팀원이야. 이 보고서를 검토하는데, 부서장이 각 팀원과 3차례 비판적으로 토론한 후 최종 결론을 내줘."</div>
+                </div>
+                <div class="usecase-card">
+                    <h4>💡 사업 아이디어 검증</h4>
+                    <div class="usecase-team">팀장: CEO / 팀원: 시장분석가, 기술전문가, 투자심사역</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. CEO가 팀장, 시장분석가&middot;기술전문가&middot;투자심사역이 팀원이야. 이 사업 아이디어를 각자 평가하고, CEO가 각 팀원과 3차례 비판적 토론 후 투자 여부를 결론 내줘."</div>
+                </div>
+                <div class="usecase-card">
+                    <h4>📧 중요 이메일 작성</h4>
+                    <div class="usecase-team">팀장: 커뮤니케이션 전문가 / 팀원: 수신자 입장, 법무 검토, 브랜드 담당</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 커뮤니케이션 전문가가 팀장, 수신자 입장&middot;법무 담당&middot;브랜드 담당이 팀원이야. 이 이메일 초안을 각자 평가하고, 팀장이 각 팀원과 3차례 토론한 후 최종 이메일을 완성해줘."</div>
+                </div>
+                <div class="usecase-card">
+                    <h4>🎯 채용 면접 준비</h4>
+                    <div class="usecase-team">팀장: HR 디렉터 / 팀원: 직무 전문가, 조직문화 담당, 면접자 입장</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. HR 디렉터가 팀장, 직무 전문가&middot;조직문화 담당&middot;면접자 입장이 팀원이야. 면접 질문을 각자 제안하고, HR 디렉터가 각 팀원과 3차례 비판적 토론 후 최종 질문 리스트를 확정해줘."</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 실전 팁 -->
+        <div class="tips-section">
+            <div class="tips-title">실전 팁</div>
+            <ul class="tips-list">
+                <li>팀원은 2~4명이 적당합니다. 5명 이상이면 토론이 산만해집니다</li>
+                <li>반드시 "비판자" 역할을 하나 넣으세요. 모두 찬성하면 토론의 의미가 없습니다</li>
+                <li>팀장은 직접 의견을 내지 않고 종합만 하게 하면 더 객관적인 결론이 나옵니다</li>
+                <li>토론 후 "팀장이 실행 계획까지 정리해줘"를 추가하면 바로 써먹을 수 있습니다</li>
+                <li>한 번 좋은 팀 구성을 찾으면, 비슷한 주제에 계속 재활용하세요</li>
+            </ul>
+        </div>
+    </main>
+
+    <nav class="page-nav" style="max-width: 960px; margin: 0 auto; padding: 0 32px 48px; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+        <a href="ai-fluency.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">← 이전: 프롬프트 11가지 습관</a>
+        <a href="extensions.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff; margin-left: auto;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">다음: 쓰던 앱 안에서 Claude →</a>
+    </nav>
+
+    <footer>
+        <p class="footer-brand">AI Roasting</p>
+        <p class="footer-text">Claude 실전 가이드</p>
+    </footer>
+
+    <script>
+        function copyExample() {
+            const example = `지금부터 팀 회의를 시작합니다.
+
+## 논의 주제
+20대 직장인 대상 AI 생산성 앱의 런칭 마케팅 전략
+
+## 팀 구성 (총 4명)
+팀장: 마케팅 디렉터 / 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+팀원 1: 데이터 분석가 / 시장 규모, 경쟁사 수치, 타겟 사용자 데이터 기반 의견
+팀원 2: 고객 경험 전문가 / 20대 직장인의 실제 불편함과 니즈 관점
+팀원 3: 재무 담당 / 마케팅 예산 대비 ROI, 비용 효율성 검토
+
+## 진행 규칙
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 각 팀원과 1:1로 3차례씩 비판적 토론을 진행합니다
+   - 1차: 팀장이 약점·빈틈을 지적 → 팀원이 반박·보완
+   - 2차: 팀장이 재반박 → 팀원이 근거를 추가해 방어
+   - 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 최종 결론을 도출합니다
+
+## 출력 형식
+- 각 팀원과의 토론을 구분해서 보여주세요
+- 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.`;
+            navigator.clipboard.writeText(example).then(() => {
+                const btns = document.querySelectorAll('.copy-btn');
+                btns[1].textContent = '복사 완료!';
+                setTimeout(() => { btns[1].textContent = '복사하기'; }, 2000);
+            });
+        }
+
+        function copyTemplate() {
+            const template = `지금부터 팀 회의를 시작합니다.
+
+## 논의 주제
+[여기에 논의할 주제를 적으세요]
+
+## 팀 구성 (총 4명)
+팀장: [역할명] / 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+팀원 1: [역할명] / [이 역할의 관점/전문 분야]
+팀원 2: [역할명] / [이 역할의 관점/전문 분야]
+팀원 3: [역할명] / [이 역할의 관점/전문 분야]
+
+## 진행 규칙
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 각 팀원과 1:1로 3차례씩 비판적 토론을 진행합니다
+   - 1차: 팀장이 약점·빈틈을 지적 → 팀원이 반박·보완
+   - 2차: 팀장이 재반박 → 팀원이 근거를 추가해 방어
+   - 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 최종 결론을 도출합니다
+
+## 출력 형식
+- 각 팀원과의 토론을 구분해서 보여주세요
+- 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.`;
+            navigator.clipboard.writeText(template).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = '복사 완료!';
+                setTimeout(() => { btn.textContent = '복사하기'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문제 정의력 결과 | AI Roasting</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.4.5/dist/dom-to-image-more.min.js"></script>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/pd-result.css">
+</head>
+<body>
+<header>
+  <a class="back-link" href="index.html">&larr; 목록으로</a>
+  <h1>문제 정의력 진단 결과</h1>
+  <p>5대 역량별 다이아몬드 차트로 확인하는 나의 문제 정의력</p>
+  <div class="header-badge">📊 결과 분석 &middot; 공유 가능</div>
+</header>
+
+<main>
+  <div class="container">
+    <!-- No diagnosis -->
+    <div id="pd-view-no-diag" class="section-hidden">
+      <div class="pd-no-diag">
+        <h3>아직 진단을 완료하지 않았어요</h3>
+        <p>20문항 진단을 완료하면 5대 역량별 다이아몬드 차트로<br>나의 문제 정의력을 확인할 수 있어요.</p>
+        <a href="pd-diagnosis.html" class="btn-primary">지금 진단하기 →</a>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="pd-view-results" class="section-hidden">
+
+      <!-- Overall summary -->
+      <div class="pd-overall" id="pd-overall-card">
+        <span class="pd-overall-emoji" id="pd-hero-emoji"></span>
+        <div class="pd-overall-type">나의 문제 정의력 유형</div>
+        <div class="pd-overall-name" id="pd-hero-name"></div>
+        <div class="pd-overall-meta">
+          <div class="pd-overall-grade" id="pd-hero-grade"></div>
+          <div class="pd-overall-tags" id="pd-hero-tags"></div>
+        </div>
+        <p class="pd-overall-message" id="pd-hero-message"></p>
+        <div class="pd-total-row">
+          <span class="pd-total-num" id="pd-total-score">0</span>
+          <span class="pd-total-max">/ 50</span>
+        </div>
+        <div class="pd-total-bar">
+          <div class="pd-total-bar-fill" id="pd-total-bar-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Quick share (below summary) -->
+      <div class="pd-result-share pd-result-share-top">
+        <button class="pd-btn-share" onclick="pdSaveImage()">📸 결과 카드 저장</button>
+        <button class="pd-btn-share" onclick="pdShareLink()">🔗 링크 공유</button>
+      </div>
+
+      <!-- Score bars -->
+      <div class="pd-score-bars" id="pd-score-bars"></div>
+
+      <!-- 5 charts -->
+      <div class="pd-charts-section-title">5대 역량 다이아몬드 차트</div>
+      <p class="pd-charts-section-sub">각 역량의 4가지 하위 차원을 다이아몬드 차트로 확인하세요.</p>
+      <div class="pd-charts-grid" id="pd-charts-grid"></div>
+
+      <!-- Learning path -->
+      <div id="pd-learning-path"></div>
+
+      <!-- Retry -->
+      <div class="pd-result-share">
+        <a class="pd-btn-share" href="pd-diagnosis.html">🔄 다시 진단하기</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="app-footer"></div>
+
+<!-- ── Share card (off-screen, image export only) ── -->
+<div id="pd-share-card">
+  <div class="sc-top">
+    <span class="sc-brand">AI ROASTING</span>
+    <span class="sc-diag-label">문제 정의력 진단</span>
+  </div>
+  <div class="sc-hero">
+    <span class="sc-emoji" id="sc-emoji"></span>
+    <div class="sc-type-label">나의 문제 정의력 유형</div>
+    <div class="sc-name" id="sc-name"></div>
+    <div id="sc-grade"></div>
+  </div>
+  <div class="sc-bars" id="sc-bars"></div>
+  <div class="sc-footer">
+    <div class="sc-score-wrap">
+      <span class="sc-score-num" id="sc-score-num"></span>
+      <span class="sc-score-max">/ 50점</span>
+    </div>
+    <span class="sc-url">AI 네이티브로 일한다는 것</span>
+  </div>
+</div>
+
+<script src="js/pd-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/pd-result.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCommon();
+  initPDResult();
+});
+</script>
+</body>
+</html>

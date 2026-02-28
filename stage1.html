@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1단계: 프롬프트 실전 훈련 | AI-Native 문제해결력</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/stage.css">
+<style>
+  .stage-header {
+    text-align: center;
+    padding: 48px 32px 40px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
+    border-bottom: 3px solid #f97316;
+  }
+  .stage-header .back-link {
+    display: inline-block;
+    color: #e8706a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    transition: opacity 0.2s;
+  }
+  .stage-header .back-link:hover { opacity: 0.7; }
+  .stage-header h1 {
+    font-size: 40px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .stage-header > p { font-size: 17px; color: rgba(255,255,255,0.6); }
+  .stage-header .header-badge {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #f97316;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(249,115,22,0.3);
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  /* ── Step Nav ── */
+  .step-nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 0 40px;
+  }
+  .step-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    opacity: 0.45;
+    padding: 4px 24px 14px;
+    border-bottom: 3px solid transparent;
+    position: relative;
+  }
+  .step-nav-item:hover { opacity: 0.75; }
+  .step-nav-item.active { opacity: 1; border-bottom-color: #C0524A; }
+  .step-nav-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #C0524A;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-nav-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .step-nav-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Before prompt */
+  .before-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .before-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--border);
+    color: var(--text-muted);
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .before-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .before-result {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+
+  /* Level badge */
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .level-badge.lv1 { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+  .level-badge.lv2 { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+  .level-badge.lv3 { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  [data-theme="dark"] .level-badge.lv1 { background: rgba(67,56,202,0.15); border-color: rgba(99,102,241,0.3); }
+  [data-theme="dark"] .level-badge.lv2 { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.3); }
+  [data-theme="dark"] .level-badge.lv3 { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); }
+
+  /* Level section */
+  .level-title {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .level-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  /* Method list */
+  .method-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .method-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .method-num {
+    min-width: 26px;
+    height: 26px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .method-content strong {
+    display: block;
+    font-size: 15px;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+  .method-content span {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Arrow label */
+  .arrow-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  /* Summary grid */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .summary-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .summary-col-title {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .summary-col-title.t1 { color: #4338ca; border-bottom-color: #6366f1; }
+  .summary-col-title.t2 { color: #92400e; border-bottom-color: #f59e0b; }
+  .summary-col-title.t3 { color: #991b1b; border-bottom-color: #ef4444; }
+  [data-theme="dark"] .summary-col-title.t1 { color: #818cf8; border-bottom-color: #6366f1; }
+  [data-theme="dark"] .summary-col-title.t2 { color: #fbbf24; border-bottom-color: #f59e0b; }
+  [data-theme="dark"] .summary-col-title.t3 { color: #f87171; border-bottom-color: #ef4444; }
+  .summary-item {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 3px 0;
+    line-height: 1.5;
+  }
+
+  /* Part divider */
+  .part-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 48px 0;
+  }
+
+  /* Team grid */
+  .team-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .team-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .team-badge {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .team-badge.leader { background: var(--accent); color: #fff; }
+  .team-badge.member { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
+  .team-info { flex: 1; }
+  .team-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+  .team-desc { font-size: 13px; color: var(--text-muted); }
+
+  /* Use case cards */
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .usecase-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .usecase-card:hover { border-color: var(--accent); }
+  .usecase-card h4 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .usecase-card .uc-team { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .usecase-card .uc-prompt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: 'Courier New', monospace;
+    background: var(--bg-secondary);
+    padding: 10px 12px;
+    border-radius: 6px;
+    line-height: 1.6;
+  }
+
+  /* Tip box */
+  .tip-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+  }
+  .tip-box strong {
+    font-size: 14px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .tip-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── Intro Box (green) ── */
+  .intro-box-wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 40px 40px;
+  }
+  .intro-box {
+    background: linear-gradient(135deg, rgba(249,115,22,0.06), rgba(249,115,22,0.02));
+    border: 1.5px solid rgba(249,115,22,0.25);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+  [data-theme="dark"] .intro-box {
+    background: rgba(249,115,22,0.06);
+    border-color: rgba(249,115,22,0.2);
+  }
+  .intro-box-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #c2410c;
+    margin-bottom: 14px;
+  }
+  [data-theme="dark"] .intro-box-title { color: #fb923c; }
+  .intro-box p {
+    font-size: 16px;
+    color: #374151;
+    line-height: 1.8;
+    margin: 0;
+  }
+  [data-theme="dark"] .intro-box p { color: #d1d5db; }
+  .intro-box strong {
+    font-weight: 700;
+    color: #111827;
+  }
+  [data-theme="dark"] .intro-box strong { color: #f9fafb; }
+
+  /* ── Step Nav (sticky bar) ── */
+  .step-nav-bar {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── 5단계 진행 인디케이터 ── */
+  .stage-step-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-dot.done {
+    background: rgba(192,82,74,0.25);
+    border-color: #C0524A;
+    color: #D47870;
+  }
+  .step-dot.current {
+    background: #C0524A;
+    border-color: #C0524A;
+    color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(192,82,74,0.22);
+  }
+  .step-line {
+    width: 36px;
+    height: 2px;
+    background: rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+  .step-line.done { background: #C0524A; }
+  a.step-dot {
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  a.step-dot:hover {
+    opacity: 0.75;
+    transform: scale(1.12);
+  }
+
+  /* Responsive */
+  @media(max-width:768px) {
+    .stage-header { padding: 36px 24px 32px; }
+    .stage-header h1 { font-size: 29px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .usecase-grid { grid-template-columns: 1fr; }
+    .step-nav-inner { gap: 32px; }
+    .step-nav-label { font-size: 13px; }
+    .intro-box-wrap { padding: 32px 20px 0; }
+    .intro-box { padding: 20px 22px; }
+    .intro-box p { font-size: 15px; }
+    .step-line { width: 20px; }
+    .step-dot { width: 28px; height: 28px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="stage-header">
+  <!-- 5단계 진행 인디케이터 -->
+  <div class="stage-step-progress">
+    <div class="step-dot current">1</div>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage2.html">2</a>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage3.html">3</a>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage4.html">4</a>
+    <div class="step-line"></div>
+    <a class="step-dot" href="stage5.html">5</a>
+  </div>
+
+  <a class="back-link" href="index.html">&larr; 목록으로</a>
+  <h1>프롬프트 실전 훈련</h1>
+  <p>11가지 방법으로 프롬프트를 개선하고, 멀티 페르소나 토론까지 설계합니다</p>
+  <div class="header-badge">&starf; 1단계 &middot; 20분 &middot; 따라하기 실습</div>
+</header>
+
+<div id="pd-stage-banner" data-competency="selfdirect"></div>
+
+<!-- Intro Box -->
+<div class="intro-box-wrap">
+  <div class="intro-box">
+    <div class="intro-box-title">AI에게 잘 시키는 법, 어디서부터 시작해야 할지 모르겠다면?</div>
+    <p>
+      프롬프트를 구조적으로 작성하고, AI 팀을 구성해 토론시키는 것.<br>
+      이 <strong>2가지가 AI 활용의 핵심</strong>입니다.<br>
+      지금부터 소개하는 <strong>2가지 Step</strong>만 익히면, <strong>어떤 업무든 AI와 효과적으로 협업</strong>할 수 있습니다.
+    </p>
+  </div>
+</div>
+
+<!-- Step Navigation -->
+<nav class="step-nav-bar" id="step-nav-bar">
+  <div class="step-nav-inner">
+    <a class="step-nav-item active" href="#part-11-ways" data-step="1">
+      <span class="step-nav-num">1</span>
+      <span class="step-nav-label">11가지 방법</span>
+      <span class="step-nav-sub">프롬프트</span>
+    </a>
+    <a class="step-nav-item" href="#part-multi-persona" data-step="2">
+      <span class="step-nav-num">2</span>
+      <span class="step-nav-label">멀티 페르소나</span>
+      <span class="step-nav-sub">토론</span>
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+    <div class="stage-container">
+
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- STEP 1: 프롬프트를 잘 쓰는 11가지 방법       -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div class="stage-section" id="part-11-ways">
+        <div class="stage-section-title">Step 1 &middot; 프롬프트를 잘 쓰는 11가지 방법</div>
+
+        <!-- 학습 개요: 11가지 한눈에 보기 (서두 배치) -->
+        <div class="key-insight" style="margin-bottom:16px;">
+          Anthropic이 <strong>9,830개</strong>의 실제 Claude 대화를 분석해 발견한 사실:
+          AI를 잘 활용하는 사람은 더 많이 쓰는 게 아니라, <strong>다르게 씁니다.</strong>
+        </div>
+
+        <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:14px;">이 Step에서 배우는 11가지</div>
+        <div class="summary-grid">
+          <div class="summary-col">
+            <div class="summary-col-title t1">LEVEL 1 &mdash; 지시</div>
+            <div class="summary-item">1. 역할을 부여하라</div>
+            <div class="summary-item">2. 목표를 명확히 하라</div>
+            <div class="summary-item">3. 맥락을 충분히 줘라</div>
+            <div class="summary-item">4. 출력 형식을 지정하라</div>
+            <div class="summary-item">5. 예시를 제공하라</div>
+            <div class="summary-item">6. 대상 독자를 지정하라</div>
+          </div>
+          <div class="summary-col">
+            <div class="summary-col-title t2">LEVEL 2 &mdash; 대화</div>
+            <div class="summary-item">7. 상호작용 방식을 설정하라</div>
+            <div class="summary-item">8. 반복 개선을 활용하라</div>
+          </div>
+          <div class="summary-col">
+            <div class="summary-col-title t3">LEVEL 3 &mdash; 검증</div>
+            <div class="summary-item">9. 추론 과정을 질문하라</div>
+            <div class="summary-item">10. 사실 확인을 요청하라</div>
+            <div class="summary-item">11. 누락된 관점을 파악하라</div>
+          </div>
+        </div>
+
+        <div class="scenario-box" style="margin-bottom:36px;">
+          아래에서 하나의 "나쁜 프롬프트"를 Level 1 &rarr; 2 &rarr; 3 순서로 개선하는 과정을 따라가 보세요.<br>
+          각 Level의 방법을 적용할 때마다 AI 답변의 퀄리티가 어떻게 달라지는지 체감할 수 있습니다.
+        </div>
+
+
+        <!-- Before: 나쁜 프롬프트 -->
+        <div class="before-box">
+          <span class="before-label">Before &mdash; 흔한 프롬프트</span>
+          <div class="before-text">"보고서 좀 써줘"</div>
+          <div class="before-result">
+            &rarr; 결과: 어떤 보고서인지, 누구를 위한 건지, 어떤 형식인지 모르니까 AI가 알아서 추측합니다.<br>
+            &rarr; 나름 그럴듯하지만, <strong>내가 원하는 보고서</strong>와는 거리가 멀 확률이 높습니다.
+          </div>
+        </div>
+
+
+        <!-- ── LEVEL 1: 기초 ── -->
+        <span class="level-badge lv1">LEVEL 1</span>
+        <div class="level-title">지시를 정확하게 &mdash; 6가지</div>
+        <div class="level-desc">AI에게 "무엇을, 어떻게, 누구를 위해" 만들어야 하는지 명확하게 알려주세요.</div>
+
+        <div class="method-list">
+          <div class="method-item">
+            <span class="method-num">1</span>
+            <div class="method-content">
+              <strong>역할을 부여하라</strong>
+              <span>AI에게 전문가 역할을 주면 해당 관점에서 답변합니다. &rarr; "너는 10년차 경영 전략 컨설턴트야."</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">2</span>
+            <div class="method-content">
+              <strong>목표를 명확히 하라</strong>
+              <span>"보고서 써줘"가 아니라 구체적인 목표를 제시합니다. &rarr; "2분기 실적을 분석하고 3분기 전략을 제안하는 보고서를 작성해줘."</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">3</span>
+            <div class="method-content">
+              <strong>맥락을 충분히 줘라</strong>
+              <span>현재 상황, 배경 정보, 제약 조건 등을 제공합니다. &rarr; "매출 12억(목표 대비 92%), 신규 고객 유입 30% 감소, 기존 고객 유지율 85%"</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">4</span>
+            <div class="method-content">
+              <strong>출력 형식을 지정하라</strong>
+              <span>원하는 결과물의 구조를 미리 알려줍니다. &rarr; "1) 핵심 요약 3줄 2) 실적 분석 표 3) 원인 분석 3가지 4) 전략 제안"</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">5</span>
+            <div class="method-content">
+              <strong>예시를 제공하라</strong>
+              <span>원하는 결과물의 샘플을 보여줍니다. &rarr; "핵심 요약 예시: 2분기 매출은 목표 대비 8% 미달이며, 주된 원인은 ○○입니다."</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">6</span>
+            <div class="method-content">
+              <strong>대상 독자를 지정하라</strong>
+              <span>누가 읽을 건지 알려주면 톤과 깊이가 달라집니다. &rarr; "C-level 임원진 보고용. 전문 용어 최소화, 액션 아이템 중심으로."</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-label">&darr; 6가지를 모두 적용한 프롬프트</div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>After &mdash; Level 1 적용</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level1')">📋 복사</button>
+          <div class="prompt-text" id="p-level1">너는 10년차 경영 전략 컨설턴트야.
+
+우리 팀의 2분기 실적을 분석하고, 3분기 개선 전략을 제안하는 보고서를 작성해줘.
+
+[현재 상황]
+- 2분기 매출: 12억 (목표 대비 92%)
+- 주요 이슈: 신규 고객 유입 30% 감소, 기존 고객 유지율 85%
+- 경쟁사: A사가 가격 인하 전략 시작
+
+[출력 형식]
+1. 핵심 요약 (3줄 이내)
+2. 실적 분석 (항목별 표)
+3. 원인 분석 (가장 중요한 3가지)
+4. 3분기 전략 제안 (우선순위 포함)
+5. 실행 계획 (주 단위)
+
+[참고 예시]
+핵심 요약 형식: "2분기 매출은 목표 대비 8% 미달이며, 주된 원인은 ○○입니다. 3분기에는 ○○ 전략으로 회복이 가능합니다."
+
+[대상 독자]
+C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 아이템 중심으로.</div>
+        </div>
+        <p class="prompt-hint">&rarr; 같은 "보고서 써줘"인데, 이 정도만 추가해도 결과가 완전히 달라집니다.</p>
+
+
+        <!-- ── LEVEL 2: 심화 ── -->
+        <span class="level-badge lv2">LEVEL 2</span>
+        <div class="level-title">대화를 관리하세요 &mdash; 2가지</div>
+        <div class="level-desc">프롬프트는 한 번에 끝나는 게 아닙니다. AI와 대화하며 결과를 발전시키세요.</div>
+
+        <div class="method-list">
+          <div class="method-item">
+            <span class="method-num">7</span>
+            <div class="method-content">
+              <strong>상호작용 방식을 설정하라</strong>
+              <span>AI가 바로 작업하지 말고 먼저 질문하게 합니다. &rarr; "작성하기 전에, 빠진 정보가 있으면 먼저 나에게 질문해줘."</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">8</span>
+            <div class="method-content">
+              <strong>반복 개선을 활용하라</strong>
+              <span>첫 결과에 만족하지 말고 구체적으로 수정 요청하세요. Anthropic 연구에서 85.7%의 사용자가 이 방법을 활용합니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-label">&darr; 실전에서 이렇게 씁니다</div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>먼저 보내기 &mdash; AI에게 질문 기회를 줘라</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level2a')">📋 복사</button>
+          <div class="prompt-text" id="p-level2a">작성하기 전에, 내가 빠뜨린 정보가 있으면 먼저 질문해줘.
+특히 보고서 퀄리티에 영향을 줄 수 있는 정보가 있다면 알려줘.</div>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>첫 결과를 받은 후 &mdash; 구체적으로 수정 요청</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level2b')">📋 복사</button>
+          <div class="prompt-text" id="p-level2b">전략 제안 부분을 더 구체화해줘:
+- 각 전략별 예상 비용과 기대 효과를 추가해줘
+- 실행 계획에 담당 부서도 포함해줘
+- 전체 분량은 A4 3페이지 이내로 줄여줘</div>
+        </div>
+        <p class="prompt-hint">&rarr; "다시 써줘"보다 "어디를 어떻게 고쳐줘"가 훨씬 좋은 결과를 만듭니다.</p>
+
+
+        <!-- ── LEVEL 3: 검증 ── -->
+        <span class="level-badge lv3">LEVEL 3</span>
+        <div class="level-title">AI를 그대로 믿지 마세요 &mdash; 3가지</div>
+        <div class="level-desc">AI 답변을 검증하는 습관이 결과물의 신뢰도를 결정합니다. Anthropic 연구에 따르면 이 단계를 실천하는 사용자는 전체의 25% 미만입니다.</div>
+
+        <div class="method-list">
+          <div class="method-item">
+            <span class="method-num">9</span>
+            <div class="method-content">
+              <strong>추론 과정을 질문하라</strong>
+              <span>"왜 그렇게 생각해?"라고 물어보세요. AI의 논리를 확인할 수 있습니다.</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">10</span>
+            <div class="method-content">
+              <strong>사실 확인을 요청하라</strong>
+              <span>수치나 데이터가 포함되면 근거나 출처를 요청하세요. AI가 지어낸 숫자를 걸러낼 수 있습니다.</span>
+            </div>
+          </div>
+          <div class="method-item">
+            <span class="method-num">11</span>
+            <div class="method-content">
+              <strong>누락된 관점을 파악하라</strong>
+              <span>"내가 빠뜨린 게 있어?"라고 물어보면 AI가 추가로 고려할 사항을 제안합니다.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-label">&darr; 검증 프롬프트 예시</div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>결과물을 받은 후 &mdash; 3단계 검증</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level3')">📋 복사</button>
+          <div class="prompt-text" id="p-level3">이 보고서를 검증해줘:
+
+1. 왜 전략 A를 1순위로 추천했어? 다른 대안은 고려했어?
+2. 사용된 수치 중 추정값이 있으면 명시해줘
+3. 이 보고서에서 빠진 중요한 관점이 있어?
+   (예: 리스크, 법적 이슈, 시장 변화, 내부 역량 등)</div>
+        </div>
+        <p class="prompt-hint">&rarr; 검증 없이 AI 결과를 그대로 쓰면, 그럴듯하지만 틀린 내용이 포함될 수 있습니다.</p>
+
+        <div class="tip-box" style="margin-top:32px;">
+          <strong>핵심 포인트</strong>
+          <p>11가지를 한 번에 다 적용할 필요는 없습니다. Level 1의 6가지만 적용해도 결과가 크게 달라집니다. 익숙해지면 Level 2, 3을 자연스럽게 추가하세요.</p>
+        </div>
+
+        <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
+          📎 데이터 출처: <a href="ai-fluency.html" style="color:var(--accent);text-decoration:none;font-weight:600;">프롬프트를 잘 쓰는 11가지 습관</a> (Anthropic 연구 기반 상세 분석)
+        </p>
+
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- DIVIDER                                     -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div class="part-divider"></div>
+
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- STEP 2: 멀티 페르소나 토론                    -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div class="stage-section" id="part-multi-persona">
+        <div class="stage-section-title">Step 2 &middot; 멀티 페르소나 토론</div>
+
+        <div class="key-insight" style="margin-bottom:28px;">
+          11가지 방법 중 가장 강력한 조합: <strong>역할 부여 + 반복 개선</strong>.<br>
+          AI 한 명에게 묻지 말고, <strong>AI 팀을 구성해서 토론시키세요.</strong><br>
+          같은 질문이라도 팀장 + 팀원 구성을 추가하면 답변의 깊이가 완전히 달라집니다.
+        </div>
+
+        <!-- Before vs After -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+          <div class="before-box" style="margin-bottom:0;">
+            <span class="before-label">혼자 물어보기</span>
+            <div class="before-text" style="font-size:14px;">"마케팅 전략 짜줘"</div>
+            <div class="before-result">한 관점의 일반적 전략 나열. 누가 물어도 나올 수 있는 답변.</div>
+          </div>
+          <div style="background:var(--accent-light);border:1px solid rgba(249,115,22,0.25);border-radius:10px;padding:20px 24px;">
+            <span style="display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:var(--accent);color:#fff;padding:2px 10px;border-radius:4px;margin-bottom:10px;">팀 토론</span>
+            <div style="font-family:'Courier New',monospace;font-size:14px;color:var(--text-primary);line-height:1.6;">"4명의 팀을 구성해줘. 팀장이 각 팀원과 3차례 토론한 후 결론을 내줘."</div>
+            <div style="font-size:14px;color:var(--text-secondary);margin-top:10px;padding-top:10px;border-top:1px solid rgba(249,115,22,0.15);line-height:1.6;">
+              3라운드 비판적 토론을 거친 <strong style="color:var(--accent);">검증된 전략</strong> 도출.
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 팀 구성법 -->
+        <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">팀 구성하는 법</div>
+        <div class="level-desc">팀장 1명 + 팀원 2~4명. 서로 <strong style="color:var(--text-primary);">다른 관점</strong>을 가진 역할로 구성하세요.</div>
+
+        <div class="team-grid">
+          <div class="team-row">
+            <span class="team-badge leader">팀장</span>
+            <div class="team-info">
+              <div class="team-name">[의사결정자 역할]</div>
+              <div class="team-desc">각 팀원과 비판적으로 토론하고, 최종 결론을 도출</div>
+            </div>
+          </div>
+          <div class="team-row">
+            <span class="team-badge member">팀원 1</span>
+            <div class="team-info">
+              <div class="team-name">[데이터/분석 관점]</div>
+              <div class="team-desc">수치와 근거 기반 의견</div>
+            </div>
+          </div>
+          <div class="team-row">
+            <span class="team-badge member">팀원 2</span>
+            <div class="team-info">
+              <div class="team-name">[현장/고객 관점]</div>
+              <div class="team-desc">실제 사용자 입장에서의 반응</div>
+            </div>
+          </div>
+          <div class="team-row">
+            <span class="team-badge member">팀원 3</span>
+            <div class="team-info">
+              <div class="team-name">[비용/리스크 관점]</div>
+              <div class="team-desc">현실성 검토, 예산, ROI</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <strong>팀 구성 핵심</strong>
+          <p>팀원은 서로 다른 관점을 가진 역할로 구성하세요. 같은 방향만 바라보는 팀은 토론이 아니라 동의가 됩니다. "비판자" 역할을 하나 넣으면 퀄리티가 올라갑니다.</p>
+        </div>
+
+
+        <!-- 프롬프트 템플릿 -->
+        <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:12px;">복사해서 바로 쓰는 프롬프트 템플릿</div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>멀티 페르소나 토론 &mdash; 빈칸 템플릿</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-template')">📋 복사</button>
+          <div class="prompt-text" id="p-template">지금부터 팀 회의를 시작합니다.
+
+## 논의 주제
+[여기에 논의할 주제를 적으세요]
+
+## 팀 구성 (총 4명)
+팀장: [역할명] — 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+팀원 1: [역할명] — [이 역할의 관점/전문 분야]
+팀원 2: [역할명] — [이 역할의 관점/전문 분야]
+팀원 3: [역할명] — [이 역할의 관점/전문 분야]
+
+## 진행 규칙
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 각 팀원과 1:1로 3차례씩 비판적 토론을 진행합니다
+   — 1차: 팀장이 약점·빈틈을 지적 → 팀원이 반박·보완
+   — 2차: 팀장이 재반박 → 팀원이 근거를 추가해 방어
+   — 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 최종 결론을 도출합니다
+
+## 출력 형식
+— 각 팀원과의 토론을 구분해서 보여주세요
+— 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.</div>
+        </div>
+
+
+        <!-- 완성 예시 -->
+        <div style="font-size:16px;font-weight:700;color:var(--text-primary);margin:28px 0 12px;">실제로 이렇게 채우면 됩니다</div>
+
+        <div class="prompt-block">
+          <div class="prompt-step-label">
+            <span>완성 예시 &mdash; 보고서 검토</span>
+          </div>
+          <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-example')">📋 복사</button>
+          <div class="prompt-text" id="p-example">지금부터 팀 회의를 시작합니다.
+
+## 논의 주제
+2분기 매출 목표 미달에 대한 3분기 회복 전략
+
+## 팀 구성 (총 4명)
+팀장: 사업부장 — 각 팀원과 비판적으로 토론하고, 최종 결론을 도출하는 역할
+팀원 1: 데이터 분석가 — 매출 데이터, 고객 이탈 패턴, 시장 트렌드 분석
+팀원 2: 영업 현장 팀장 — 고객 접점에서의 실제 반응, 경쟁사 대응 현황
+팀원 3: 재무 담당 — 비용 구조, 투자 대비 효과, 예산 현실성 검토
+
+## 진행 규칙
+1. 각 팀원이 자기 관점에서 의견을 먼저 제시합니다
+2. 팀장이 각 팀원과 1:1로 3차례씩 비판적 토론을 진행합니다
+   — 1차: 팀장이 약점·빈틈을 지적 → 팀원이 반박·보완
+   — 2차: 팀장이 재반박 → 팀원이 근거를 추가해 방어
+   — 3차: 양측이 합의점 도출 또는 쟁점 정리
+3. 모든 팀원과의 토론이 끝나면, 팀장이 논의 내용을 종합하여 최종 결론을 도출합니다
+
+## 출력 형식
+— 각 팀원과의 토론을 구분해서 보여주세요
+— 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
+
+시작하세요.</div>
+        </div>
+
+        <div class="tip-box">
+          <strong>핵심</strong>
+          <p>"순서대로 발언"과 "팀장이 결론"&mdash;이 두 가지 규칙이 퀄리티를 만듭니다. 규칙 없이 "토론해줘"라고만 하면 산만해집니다.</p>
+        </div>
+
+
+        <!-- 이런 상황에서 써보세요 -->
+        <div style="font-size:18px;font-weight:700;color:var(--text-primary);margin:32px 0 6px;">이런 상황에서 써보세요</div>
+        <div class="level-desc">아래 예시를 참고해서 본인 업무에 맞는 팀을 구성해보세요.</div>
+
+        <div class="usecase-grid">
+          <div class="usecase-card">
+            <h4>📄 보고서 검토</h4>
+            <div class="uc-team">팀장: 부서장 / 팀원: 전략가, 현장 실무자, 경영진 관점</div>
+            <div class="uc-prompt">"부서장이 각 팀원과 3차례 비판적으로 토론한 후 보고서의 최종 피드백을 정리해줘."</div>
+          </div>
+          <div class="usecase-card">
+            <h4>💡 사업 아이디어 검증</h4>
+            <div class="uc-team">팀장: CEO / 팀원: 시장분석가, 기술전문가, 투자심사역</div>
+            <div class="uc-prompt">"CEO가 각 팀원과 3차례 토론 후 이 아이디어의 투자 여부를 결론 내줘."</div>
+          </div>
+          <div class="usecase-card">
+            <h4>📧 중요 이메일 작성</h4>
+            <div class="uc-team">팀장: 커뮤니케이션 전문가 / 팀원: 수신자 입장, 법무, 브랜드</div>
+            <div class="uc-prompt">"팀장이 각 팀원과 3차례 토론한 후 최종 이메일을 완성해줘."</div>
+          </div>
+          <div class="usecase-card">
+            <h4>🎯 채용 면접 준비</h4>
+            <div class="uc-team">팀장: HR 디렉터 / 팀원: 직무 전문가, 조직문화, 면접자 입장</div>
+            <div class="uc-prompt">"HR 디렉터가 각 팀원과 3차례 토론 후 최종 면접 질문 리스트를 확정해줘."</div>
+          </div>
+        </div>
+
+        <p style="font-size:13px;color:var(--text-muted);">
+          📎 상세 가이드: <a href="multi-persona.html" style="color:var(--accent);text-decoration:none;font-weight:600;">AI 토론 설계법 (멀티 페르소나)</a> &mdash; 프로세스, 연구 배경, 프로젝트 지침 활용법 등
+        </p>
+
+      </div>
+
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- COMPLETION                                  -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div class="stage-complete-section" id="stage-complete-section">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- NAVIGATION                                  -->
+      <!-- ═══════════════════════════════════════════ -->
+      <div class="stage-nav" id="stage-nav">
+        <a href="index.html" class="btn-secondary">&larr; 목록으로</a>
+        <a href="stage2.html" class="btn-primary">다음 단계: 정보 탐색 &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div id="app-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script>
+function copyPrompt(btn, elementId) {
+  var el = document.getElementById(elementId);
+  if (!el) return;
+  var text = el.textContent.trim();
+  navigator.clipboard.writeText(text).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = '\u2713 \ubcf5\uc0ac\ub428';
+    btn.style.background = 'rgba(34,197,94,0.2)';
+    btn.style.color = '#16a34a';
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1500);
+  }).catch(function() {
+    showToast('\ubcf5\uc0ac\uc5d0 \uc2e4\ud328\ud588\uc2b5\ub2c8\ub2e4.');
+  });
+}
+
+// Step nav scroll spy
+function initStepNav() {
+  var navItems = document.querySelectorAll('.step-nav-item');
+  var sections = [
+    document.getElementById('part-11-ways'),
+    document.getElementById('part-multi-persona')
+  ];
+  function updateActive() {
+    var scrollY = window.scrollY + 120;
+    var activeIdx = 0;
+    sections.forEach(function(sec, i) {
+      if (sec && sec.offsetTop <= scrollY) activeIdx = i;
+    });
+    navItems.forEach(function(item, i) {
+      item.classList.toggle('active', i === activeIdx);
+    });
+  }
+  window.addEventListener('scroll', updateActive);
+  navItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(item.getAttribute('href'));
+      if (target) {
+        var offset = target.offsetTop - 80;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    });
+  });
+}
+
+// Topic routing via URL param
+function handleTopicParam() {
+  var params = new URLSearchParams(location.search);
+  var topic = params.get('topic');
+  if (topic === '11-ways') {
+    document.getElementById('part-11-ways').scrollIntoView({behavior:'smooth'});
+  } else if (topic === 'multi-persona') {
+    document.getElementById('part-multi-persona').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+var STAGE1_CHECKLIST = [
+  '11가지 방법 중 최소 1개 프롬프트를 복사해 실제 AI에 붙여넣고 결과를 확인했다',
+  '멀티 페르소나 토론 템플릿을 복사해 실제 AI로 팀 토론을 실행해봤다',
+  '내 업무 상황에 맞게 프롬프트를 수정해서 사용해봤다'
+];
+
+function initCompleteSection() {
+  var progress = load('ps_progress') || {};
+  var done = !!progress['stage1'];
+  var el = document.getElementById('stage-complete-section');
+  if (!el) return;
+  if (done) {
+    el.innerHTML =
+      '<div class="stage-complete-done">' +
+      '<span class="complete-check-icon">✅</span>' +
+      '<div class="complete-done-text">이 단계 완료!</div>' +
+      '<a href="stage2.html" class="btn-complete-next">다음 단계: 2단계 정보 탐색 →</a>' +
+      '</div>';
+  } else {
+    var total = STAGE1_CHECKLIST.length;
+    var checklistHtml =
+      '<div class="self-checklist">' +
+      '<div class="checklist-title">배운 내용을 실제로 해보셨나요? <span class="checklist-counter" id="checklist-counter-stage1">0 / ' + total + '</span></div>' +
+      STAGE1_CHECKLIST.map(function(item, i) {
+        return '<label class="checklist-item">' +
+          '<input type="checkbox" class="checklist-cb" id="chk-stage1-' + i + '" onchange="updateCompleteBtn1(' + total + ')">' +
+          '<span>' + item + '</span>' +
+          '</label>';
+      }).join('') +
+      '<p class="checklist-hint">모두 체크하면 완료 버튼이 활성화됩니다.</p>' +
+      '</div>';
+    el.innerHTML =
+      checklistHtml +
+      '<p class="stage-complete-hint">프롬프트 실습과 실전 도전까지 마쳤나요?<br>아래 버튼을 눌러 완료를 기록하세요.</p>' +
+      '<button class="btn-stage-complete" id="btn-complete-stage1" onclick="completeStage1()" disabled style="opacity:0.45;cursor:not-allowed;box-shadow:none;">✅ 학습 완료</button>' +
+      '<div class="next-stage-preview">' +
+      '<div class="next-stage-preview-icon">🔍</div>' +
+      '<div class="next-stage-preview-body">' +
+      '<div class="next-stage-preview-label">완료 후 다음 단계</div>' +
+      '<div class="next-stage-preview-title">2단계: 정보 탐색</div>' +
+      '<div class="next-stage-preview-desc">AI로 업계 동향과 필요한 정보를 빠르게 수집합니다</div>' +
+      '</div>' +
+      '<div class="next-stage-preview-arrow">→</div>' +
+      '</div>';
+  }
+}
+
+function updateCompleteBtn1(total) {
+  var checked = 0;
+  for (var i = 0; i < total; i++) {
+    var cb = document.getElementById('chk-stage1-' + i);
+    if (cb && cb.checked) checked++;
+  }
+  var counter = document.getElementById('checklist-counter-stage1');
+  if (counter) {
+    counter.textContent = checked + ' / ' + total;
+    counter.classList.toggle('complete', checked === total);
+  }
+  var btn = document.getElementById('btn-complete-stage1');
+  if (!btn) return;
+  var allDone = checked === total;
+  btn.disabled = !allDone;
+  btn.style.opacity = allDone ? '1' : '0.45';
+  btn.style.cursor = allDone ? 'pointer' : 'not-allowed';
+  btn.style.boxShadow = allDone ? '' : 'none';
+}
+
+function completeStage1() {
+  var progress = load('ps_progress') || {};
+  progress['stage1'] = true;
+  store('ps_progress', progress);
+  if (typeof awardBadge === 'function') awardBadge('selfdirect');
+  if (typeof showToast === 'function') showToast('🎉 학습 완료! 메인 페이지에서 진도를 확인하세요.');
+  var el = document.getElementById('stage-complete-section');
+  if (el) {
+    el.innerHTML =
+      '<div class="stage-complete-done">' +
+      '<span class="complete-check-icon">✅</span>' +
+      '<div class="complete-done-text">이 단계 완료!</div>' +
+      '<a href="stage2.html" class="btn-complete-next">다음 단계: 2단계 정보 탐색 →</a>' +
+      '</div>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  initCommon();
+  injectStagePDBanner();
+  initStepNav();
+  handleTopicParam();
+  initCompleteSection();
+});
+</script>
+</body>
+</html>

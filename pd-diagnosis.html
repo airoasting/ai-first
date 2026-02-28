@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>문제 정의력 진단 | AI Roasting</title>
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/diagnosis.css">
+<noscript><div style="padding:40px;text-align:center;font-family:sans-serif;"><h2>이 사이트는 JavaScript가 필요합니다.</h2></div></noscript>
+</head>
+<body>
+<header>
+  <a class="back-link" href="index.html">&larr; 목록으로</a>
+  <h1>문제 정의력 진단</h1>
+  <p>20개 실무 상황에서 AI 네이티브 역량을 진단합니다</p>
+  <div class="header-badge">📋 20문항 &middot; 약 8분</div>
+</header>
+
+<main>
+  <div class="container">
+    <div id="pd-diag-intro" class="section-header no-border">
+      <span class="section-num" id="pd-diag-section-num">진단</span>
+      <span class="section-title" id="pd-diag-section-title">나의 문제 정의력은 어느 수준일까?</span>
+    </div>
+    <p class="section-subtitle" id="pd-diag-subtitle">20개 실무 상황에서 당신의 AI 네이티브 역량을 진단합니다.</p>
+
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <div class="quiz-area-label" id="pd-quiz-area-label">자기주도성</div>
+        <div class="quiz-progress-wrap">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="pd-quiz-progress-fill" style="width:0%"></div>
+          </div>
+          <span class="quiz-progress-text" id="pd-quiz-progress-text">0 / 20 완료</span>
+        </div>
+      </div>
+      <div id="pd-quiz-question-area"></div>
+      <div class="quiz-nav">
+        <button class="btn-secondary" id="pd-quiz-prev-btn" onclick="pdQuizPrev()" style="display:none">← 이전</button>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="app-footer"></div>
+
+<script src="js/pd-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/pd-diagnosis.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  initCommon();
+  initPDDiagnosis();
+});
+</script>
+</body>
+</html>

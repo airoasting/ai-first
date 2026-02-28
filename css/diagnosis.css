@@ -1,0 +1,33 @@
+/* ── HEADER OVERRIDE ── */
+header{background:linear-gradient(135deg,#1a1a1a 0%,#2d1a1a 100%);border-bottom:3px solid #CC0000;padding:48px 32px 40px;}
+.back-link{display:inline-block;color:#e8706a;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:20px;transition:opacity 0.2s;}
+.back-link:hover{opacity:0.7;}
+header p{font-size:17px;color:rgba(255,255,255,0.6);}
+.header-badge{display:inline-block;font-size:13px;font-weight:600;color:#e8706a;background:rgba(255,255,255,0.1);border:1px solid rgba(232,112,106,0.3);padding:4px 16px;border-radius:20px;margin-top:12px;}
+
+/* ── QUIZ SECTION ── */
+#diag-intro,#pd-diag-intro{max-width:720px;margin-left:auto;margin-right:auto;}
+#diag-subtitle,#pd-diag-subtitle{max-width:720px;margin-left:auto;margin-right:auto;}
+.quiz-container{max-width:720px;margin:0 auto;}
+.quiz-header{margin-bottom:32px;}
+.quiz-area-label{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.quiz-progress-wrap{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.quiz-progress-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.quiz-progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s ease;}
+.quiz-progress-text{font-size:13px;font-weight:600;color:var(--text-muted);white-space:nowrap;}
+.quiz-q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:24px;animation:fadeIn 0.3s ease;}
+.quiz-q-num{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:12px;}
+.quiz-q-title{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;}
+.quiz-q-scenario{font-size:16px;color:var(--text-primary);line-height:1.7;margin-bottom:28px;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-opt{background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;font-size:15px;color:var(--text-primary);cursor:pointer;text-align:left;transition:all 0.2s ease;line-height:1.5;}
+.quiz-opt:hover{border-color:var(--accent);background:var(--accent-light);}
+.quiz-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff;}
+.quiz-nav{display:flex;gap:12px;justify-content:space-between;}
+.quiz-nudge{background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--text-secondary);margin-bottom:24px;}
+.quiz-nudge a{color:var(--accent);font-weight:700;text-decoration:none;}
+
+/* ── REDIAGNOSIS ── */
+.rediag-intro{background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:12px;padding:20px 24px;margin-bottom:28px;}
+.rediag-intro p{font-size:15px;color:var(--text-secondary);line-height:1.6;}
+.rediag-intro strong{color:var(--text-primary);}
