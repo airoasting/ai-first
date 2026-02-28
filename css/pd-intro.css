@@ -53,16 +53,16 @@ header p{font-size:18px;color:rgba(255,255,255,0.6);}
 .comp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px 20px;text-align:center;position:relative;overflow:hidden;transition:all 0.25s ease;display:flex;flex-direction:column;}
 .comp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--comp-color);}
 .comp-card:hover{box-shadow:0 6px 24px var(--shadow);transform:translateY(-2px);}
-.comp-num{font-size:15px;font-weight:700;color:var(--comp-color);margin-bottom:8px;}
-.comp-icon{font-size:36px;display:block;margin-bottom:8px;}
-.comp-name{font-size:20px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
-.comp-tagline{font-size:16px;color:var(--text-muted);margin-bottom:12px;}
-.comp-desc{font-size:17px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px;text-align:left;flex:1;}
-.comp-contrast{display:flex;flex-direction:column;gap:4px;font-size:16px;padding-top:12px;border-top:1px solid var(--border);margin-top:auto;}
+.comp-num{font-size:14px;font-weight:700;color:var(--comp-color);margin-bottom:8px;}
+.comp-icon{font-size:35px;display:block;margin-bottom:8px;}
+.comp-name{font-size:19px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
+.comp-tagline{font-size:15px;color:var(--text-muted);margin-bottom:12px;}
+.comp-desc{font-size:16px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px;text-align:left;flex:1;}
+.comp-contrast{display:flex;flex-direction:column;gap:4px;font-size:15px;padding-top:12px;border-top:1px solid var(--border);margin-top:auto;}
 .comp-contrast-row{display:flex;align-items:center;gap:6px;justify-content:center;}
 .comp-contrast-before{color:#CC0000;font-weight:600;text-decoration:line-through;opacity:0.7;}
 .comp-contrast-after{color:#2a7a2a;font-weight:700;}
-.comp-contrast-arrow{color:var(--text-muted);font-weight:700;font-size:18px;}
+.comp-contrast-arrow{color:var(--text-muted);font-weight:700;font-size:17px;}
 
 /* ── QUESTION BOX ── */
 .comp-question{background:var(--bg-secondary);border-radius:8px;padding:10px 12px;font-size:16px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;text-align:left;font-style:italic;border-left:3px solid var(--comp-color);}
