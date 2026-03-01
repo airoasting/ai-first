@@ -58,6 +58,11 @@ header>p.header-sub{font-size:16px;color:rgba(255,255,255,0.45);font-weight:400;
 .header-nav a:hover{color:rgba(255,255,255,0.8);background:rgba(255,255,255,0.1);}
 .header-nav a.active{color:#fff;background:rgba(249,115,22,0.3);}
 
+/* ── MOBILE NOTICE BANNER ── */
+.mobile-notice{display:none;align-items:center;justify-content:center;gap:8px;background:#2a2a2a;border-top:1px solid rgba(255,255,255,0.08);padding:11px 20px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);text-align:center;}
+.mobile-notice-icon{font-size:15px;flex-shrink:0;}
+@media(max-width:768px){.mobile-notice{display:flex;}}
+
 /* ── FOOTER ── */
 footer{text-align:center;padding:36px 32px 28px;background:#1a1a1a;}
 .footer-brand{font-size:13px;font-weight:700;color:#E8706A;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
@@ -129,6 +134,8 @@ footer{text-align:center;padding:36px 32px 28px;background:#1a1a1a;}
 .hero-sub em{color:var(--text-primary);font-style:normal;font-weight:600;}
 .hero-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
 .hero-cta-note{font-size:13px;color:var(--text-muted);margin-top:8px;}
+.btn-hero-cta{font-size:17px;padding:16px 36px;}
+.btn-hero-link{font-size:15px;}
 
 /* ── CARD DONE BADGE ── */
 .card-done{position:absolute;top:12px;right:12px;font-size:12px;font-weight:700;color:#2a7a2a;background:#edf7ed;border:1px solid #c3e6c3;border-radius:10px;padding:2px 10px;}

@@ -123,12 +123,6 @@ function showResultsView(scores, isRediag) {
   // ④ 액션
   renderActions(profileKey, bottleneckStep);
 
-  // AI 네이티브 뱃지: 진단 점수 45/50 이상
-  var areas = ['mindset','env','hypo','valid','output'];
-  var displayTotal = areas.reduce(function(s,a){ return s + toDisplay(scores[a]); }, 0);
-  if (displayTotal >= 45) {
-    setTimeout(function() { awardBadge('ai_native'); }, 500);
-  }
 
   // Rediag toast
   if (isRediag && prevScores) {
@@ -376,8 +370,7 @@ function renderActions(profileKey, bottleneckStep) {
       '<a class="btn-secondary" href="stage2.html">처음부터 학습하기</a>';
   } else {
     actArea.innerHTML =
-      '<a class="btn-primary" href="stage2.html">학습 시작하기 →</a>' +
-      (profileKey === 'ai_native' ? '<a class="btn-secondary" href="index.html">홈으로 돌아가기</a>' : '');
+      '<a class="btn-primary" href="stage2.html">학습 시작하기 →</a>';
   }
 }
 
@@ -405,7 +398,6 @@ function renderPrinciples(containerId, showCompleteBtn) {
 // ════════════════════════════════════════════════
 function determineProfile(scores) {
   var total = Object.values(scores).reduce(function(s,v){return s+v;}, 0);
-  if (total >= 36) return 'ai_native';
   if (total <= 15) return 'analog_fighter';
   var areas = ['mindset','env','hypo','valid','output'];
   var bottleneck = areas.reduce(function(min, a) { return scores[a] < scores[min] ? a : min; }, areas[0]);

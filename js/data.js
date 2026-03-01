@@ -178,12 +178,6 @@ const PROFILES = {
     message:'분석은 이미 잘하시네요. AI로 결과물 만드는 속도만 올리면, 좋은 분석이 묻히지 않고 제대로 전달돼요.',
     bottleneckStep: 5, bottleneckName:'결과물 완성'
   },
-  ai_native: {
-    emoji:'⚡', name:'AI 고수',
-    super:'AI를 자유자재로 활용해요', achilles:'팀 전체로 퍼뜨릴 차례예요',
-    message:'이미 AI를 잘 활용하고 계시네요! 다음은 이 능력을 팀 전체가 쓸 수 있게 만드는 거예요. 반복 가능한 업무 흐름을 설계해 보세요.',
-    bottleneckStep: null, bottleneckName:'없음'
-  }
 };
 
 // ════════════════════════════════════════════════
@@ -194,8 +188,7 @@ const BADGES_DEF = {
   limitless:      {id:'limitless',      emoji:'🌐', name:'Limitless Mindset', desc:'2단계를 완료했습니다'},
   unlearnrelearn: {id:'unlearnrelearn', emoji:'🔄', name:'Unlearn-Relearn',   desc:'3단계를 완료했습니다'},
   fastloop:       {id:'fastloop',       emoji:'🔍', name:'빠른 검증·반복',    desc:'4단계를 완료했습니다'},
-  deadline:       {id:'deadline',       emoji:'⏱️', name:'1/10 데드라인',     desc:'5단계를 완료했습니다'},
-  ai_native:      {id:'ai_native',      emoji:'⚡', name:'AI 네이티브',       desc:'진단 점수 45점 이상 달성'}
+  deadline:       {id:'deadline',       emoji:'⏱️', name:'1/10 데드라인',     desc:'5단계를 완료했습니다'}
 };
 
 // ════════════════════════════════════════════════
@@ -555,11 +548,22 @@ const MODULES = [
     id:'stage5', step:5, icon:'🚀', badgeId:'deadline',
     title:'결과물 완성 : 보고서·모델, 1시간 안에',
     shortTitle:'결과물 완성',
-    desc:'AI가 초안을 만들고, 내가 스토리를 다듬고, 다시 AI가 포맷을 정리하는 루프.',
+    desc:'AI가 초안을 만들고 (5분) → 내가 스토리를 다듬기 (10분) → AI가 비주얼로 정리 (5분)하는 3단 루프.',
     hideStepper: true,
-    learningObjective: 'AI가 슬라이드 초안과 엑셀 모델을 생성하면, 나는 <strong>스토리와 핵심 가정값</strong>을 결정합니다. 5시간 걸리던 결과물 완성을 <strong>1시간 안에</strong> 끝낼 수 있습니다.',
+    learningObjective: `AI가 슬라이드 초안과 엑셀 모델을 생성하면, 나는 <strong>①스토리 연결고리 재배열</strong>과 <strong>②핵심 가정값 결정</strong>을 합니다.
+    <br/><br/>
+    <strong>1~4단계를 완료한 상태에서만</strong> 결과물 완성을 <strong>1시간 안에</strong> 끝낼 수 있습니다.<br/>
+    (분석이 불완전하면 +30~50분 추가 예상)`,
     ratio:{ai:70, human:30},
-    scenario:'핵심 분석이 끝났습니다. 이제 경영진 보고용 슬라이드 5장과 3개년 수익 모델을 만들어야 합니다.',
+    scenario:'Stage 1~4에서 가설 검증을 마쳤습니다. 확신도 70점 이상이고, 분석 결과가 정리된 상태입니다. 이제 경영진 보고용 슬라이드 5장과 3개년 수익 모델을 만들어야 합니다.',
+    prerequisite: `<strong>🎯 필수 전제 조건</strong> (이 조건이 없으면 1시간 초과)<br/>
+    ✅ Stage 1~4 완료 + 분석 결과 정리됨<br/>
+    ✅ 핵심 가설 3개 선택 + 각각 확신도 70점 이상<br/>
+    ✅ 청중(CFO/CEO) 결정 + 주요 메시지 정의 + 핵심 숫자 3개 선정<br/>
+    <br/>
+    <strong>만약 조건이 불완전하면?</strong><br/>
+    🔴 분석 재검토 필요: +20분 | 🔴 메시지 재정의: +15분 | 🔴 가정값 협의: +20분<br/>
+    → <strong>예상 소요: 1시간 15분 ~ 1시간 55분</strong>`,
     before:{total:'5시간', items:[
       {time:'09:00', task:'슬라이드 구조 고민', dur:'30분'},
       {time:'09:30', task:'첫 장 작성', dur:'30분'},

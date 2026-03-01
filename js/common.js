@@ -14,12 +14,16 @@ function injectHeader() {
   el.outerHTML = `
 <header>
   <p class="brand">AI Roasting</p>
-  <h1>AI 네이티브로 일한다는 것</h1>
+  <h1>AI 퍼스트로 일한다는 것</h1>
   <p class="header-sub">5단계 실전 훈련</p>
   <div class="header-newsletter">
     <span class="header-newsletter-label">📊 AI Roasting 뉴스레터</span>
     <span class="header-newsletter-sub">주간 AI 소식</span>
     <a class="header-newsletter-btn" href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener">구독하기 →</a>
+  </div>
+  <div class="mobile-notice">
+    <span class="mobile-notice-icon">🖥️</span>
+    이 가이드는 데스크탑에 최적화되어 있습니다
   </div>
 </header>`;
 }
@@ -30,7 +34,7 @@ function injectFooter() {
   el.outerHTML = `
 <footer>
   <p class="footer-brand">AI Roasting</p>
-  <p class="footer-text">AI 네이티브로 일한다는 것 · 5단계 실전 훈련</p>
+  <p class="footer-text">AI 퍼스트로 일한다는 것 · 5단계 실전 훈련</p>
 </footer>`;
 }
 
