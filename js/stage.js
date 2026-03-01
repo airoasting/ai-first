@@ -151,7 +151,7 @@ function buildStageHTML(m, done) {
   <div class="stage-section" id="s-scenario">
     <div class="stage-section-title">이런 상황을 상상해보세요</div>
     <div class="scenario-box">${m.scenario}</div>
-    ${m.prerequisite ? `<div class="prerequisite-note">⚠️ ${m.prerequisite}</div>` : ''}
+    ${m.prerequisite ? `<div class="prerequisite-note">${m.prerequisite}</div>` : ''}
     <div class="scenario-industry-hint">💡 <strong>다른 업종이라면?</strong> 화장품 → 내 업종·내 상황으로 바꿔 읽어보세요. 구조는 동일하게 적용됩니다.</div>
   </div>
 
@@ -310,6 +310,41 @@ function buildStageHTML(m, done) {
   </div>
 
   <!-- 6. 빈칸 템플릿 -->
+  <!-- 학습 가이드 (Stage5 전용) -->
+  ${m.storyTuningGuide ? `
+  <div class="stage-section">
+    <div class="stage-section-title">📝 스토리 다듬기 가이드</div>
+    <p class="stage-section-subtitle">${m.storyTuningGuide.desc}</p>
+    <div class="guide-cards">
+      ${m.storyTuningGuide.items.map(item => `
+        <div class="guide-card">
+          <div class="guide-card-icon">${item.icon}</div>
+          <div class="guide-card-content">
+            <strong>${item.name}</strong>
+            <p>${item.action}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+  ` : ''}
+
+  ${m.assumptionGuide ? `
+  <div class="stage-section">
+    <div class="stage-section-title">💰 가정값 결정 기준</div>
+    <p class="stage-section-subtitle">${m.assumptionGuide.desc}</p>
+    <div class="assumption-table">
+      ${m.assumptionGuide.items.map(item => `
+        <div class="assumption-row">
+          <strong>${item.metric}</strong>
+          <p class="question">❓ ${item.question}</p>
+          <p class="examples">📊 예시: ${item.examples}</p>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+  ` : ''}
+
   <div class="stage-section" id="s-template">
     <div class="stage-section-title">실전 도전: 내 상황에 맞게 채우기</div>
     <p class="stage-section-subtitle">위 실습이 "연습"이었다면, 이번엔 내 실제 업무에 맞게 직접 채워 나만의 프롬프트를 완성해보세요.</p>
@@ -417,11 +452,18 @@ function buildCompleteSectionHTML(stageId, done) {
         배운 내용을 실제로 해보셨나요?
         <span class="checklist-counter" id="checklist-counter-${stageId}">0 / ${checklistTotal}</span>
       </div>
-      ${m.checklist.map((item, i) => `
+      ${m.checklist.map((item, i) => {
+        const itemText = typeof item === 'string' ? item : item.text;
+        const itemHint = typeof item === 'string' ? '' : item.hint;
+        return `
         <label class="checklist-item">
           <input type="checkbox" class="checklist-cb" id="chk-${stageId}-${i}" onchange="updateCompleteBtn('${stageId}', ${checklistTotal})">
-          <span>${item}</span>
-        </label>`).join('')}
+          <div class="checklist-text">
+            <strong>${itemText}</strong>
+            ${itemHint ? `<span class="checklist-hint">${itemHint}</span>` : ''}
+          </div>
+        </label>`;
+      }).join('')}
       <p class="checklist-hint">모두 체크하면 완료 버튼이 활성화됩니다.</p>
     </div>` : '';
   const nextPreviewHtml = nextM ? `

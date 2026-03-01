@@ -99,6 +99,7 @@
 .roadmap-step.completed { border-color: #2a7a2a; background: #f0fdf4; }
 [data-theme="dark"] .roadmap-step.completed { background: #0d1f0d; border-color: #2a7a2a; }
 .roadmap-step.recommended { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 4px 16px rgba(249,115,22,0.12); }
+.roadmap-step.current-section { border-color: var(--accent); border-bottom: 3px solid var(--accent); background: var(--accent-light); box-shadow: 0 4px 16px rgba(249,115,22,0.12); }
 .roadmap-icon { font-size: 24px; line-height: 1; }
 .roadmap-label { font-size: 13px; font-weight: 700; color: var(--text-primary); text-align: center; line-height: 1.4; }
 .roadmap-time { font-size: 11px; font-weight: 600; color: var(--text-muted); background: var(--bg-secondary); padding: 2px 8px; border-radius: 10px; }
@@ -108,14 +109,14 @@
 .roadmap-stage-label { font-size: 11px; font-weight: 700; color: #fff; background: var(--brand); padding: 3px 10px; border-radius: 10px; letter-spacing: 0.3px; white-space: nowrap; }
 
 /* ── Iteration note ── */
-.iteration-note { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; max-width: 600px; margin: 0 auto 28px; line-height: 1.5; text-align: center; }
+.iteration-note { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 10px; padding: 16px 18px; max-width: 600px; margin: 20px auto 28px; line-height: 1.5; text-align: center; }
 .iteration-note strong { color: var(--text-primary); }
 
 /* ── Start label ── */
 .start-label { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; padding: 4px 12px; margin-bottom: 10px; }
 
 /* ── Sticky Roadmap Flow ── */
-.roadmap-section .roadmap-flow { position: sticky; top: 0; z-index: 50; background: var(--bg-secondary); padding: 16px 0; margin: 0 -40px; padding: 16px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s ease; }
+.roadmap-section .roadmap-flow { position: relative; z-index: 50; background: var(--bg-secondary); padding: 16px 0; margin: 0 -40px; padding: 16px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s ease; }
 .roadmap-section .roadmap-flow.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
 [data-theme="dark"] .roadmap-section .roadmap-flow { background: var(--bg-secondary); }
 
@@ -302,7 +303,7 @@
       <div class="card-objective"><strong>읽고 나면:</strong> "AI 시대에 내게 어떤 역량이 필요한가"를 한 문장으로 말할 수 있습니다.</div>
       <span class="card-status">소개 읽기 →</span>
     </a>
-    <a class="card" href="pd-diagnosis.html">
+    <a class="card card-primary" href="pd-diagnosis.html">
       <div class="card-title-row">
         <span class="card-icon">📋</span>
         <h2>역량 진단하기</h2>
@@ -613,10 +614,58 @@ function updateRoadmap() {
 }
 
 function initScrollSpy() {
+  var roadmapSection = document.querySelector('.roadmap-section');
   var roadmapFlow = document.querySelector('.roadmap-section .roadmap-flow');
+  var sections = {
+    'diag': document.getElementById('diag'),
+    'step1': document.getElementById('step1'),
+    'step2': document.getElementById('step2'),
+    'step3': document.getElementById('step3'),
+    'step4': document.getElementById('step4'),
+    'step5': document.getElementById('step5')
+  };
+  var sectionIds = ['diag', 'step1', 'step2', 'step3', 'step4', 'step5'];
+
   window.addEventListener('scroll', function() {
-    if (roadmapFlow && roadmapFlow.getBoundingClientRect().top <= 0) roadmapFlow.classList.add('scrolled');
-    else if (roadmapFlow) roadmapFlow.classList.remove('scrolled');
+    if (!roadmapFlow || !roadmapSection) return;
+
+    var scrollY = window.scrollY;
+    var roadmapTop = roadmapSection.offsetTop;
+
+    // Always keep roadmap fixed after reaching roadmapSection
+    if (scrollY >= roadmapTop) {
+      roadmapFlow.style.position = 'fixed';
+      roadmapFlow.style.top = '0';
+      roadmapFlow.style.left = '0';
+      roadmapFlow.style.right = '0';
+      roadmapFlow.style.zIndex = '50';
+      roadmapFlow.style.width = '100%';
+      roadmapFlow.style.boxSizing = 'border-box';
+      roadmapFlow.classList.add('scrolled');
+    } else {
+      roadmapFlow.style.position = 'relative';
+      roadmapFlow.style.top = 'auto';
+      roadmapFlow.style.left = 'auto';
+      roadmapFlow.style.right = 'auto';
+      roadmapFlow.classList.remove('scrolled');
+    }
+
+    // Highlight current section in roadmap
+    var checkY = scrollY + 200;
+    var currentSection = null;
+    sectionIds.forEach(function(id) {
+      var el = sections[id];
+      if (el && el.offsetTop <= checkY) currentSection = id;
+    });
+
+    // Update roadmap-step active state
+    document.querySelectorAll('.roadmap-step').forEach(function(step) {
+      step.classList.remove('current-section');
+    });
+    if (currentSection) {
+      var currentEl = document.getElementById('rm-' + currentSection);
+      if (currentEl) currentEl.classList.add('current-section');
+    }
   });
 }
 

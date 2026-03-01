@@ -172,10 +172,15 @@
 /* ── SELF CHECKLIST ── */
 .self-checklist{margin-bottom:28px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
 .checklist-title{font-size:14px;font-weight:800;color:var(--text-primary);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:14px;color:var(--text-secondary);line-height:1.5;}
-.checklist-item:last-child{border-bottom:none;padding-bottom:0;}
-.checklist-item input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;accent-color:var(--accent);margin-top:2px;cursor:pointer;}
-.checklist-cb:checked+span{text-decoration:line-through;opacity:0.55;}
+.checklist-item{display:flex;align-items:flex-start;gap:12px;padding:14px 12px;border-bottom:1px solid var(--border);cursor:pointer;font-size:14px;color:var(--text-secondary);line-height:1.6;border-radius:6px;transition:background 0.2s ease;margin-bottom:4px;}
+.checklist-item:hover{background:rgba(249,115,22,0.06);}
+.checklist-item:last-child{border-bottom:none;padding-bottom:14px;margin-bottom:0;}
+.checklist-item input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;accent-color:var(--accent);margin-top:3px;cursor:pointer;}
+.checklist-item .checklist-text{flex:1;}
+.checklist-item .checklist-text strong{color:var(--text-primary);font-weight:700;display:block;margin-bottom:3px;}
+.checklist-item .checklist-hint{display:block;font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.5;font-weight:500;}
+.checklist-item input[type="checkbox"]:checked+.checklist-text{opacity:0.6;}
+.checklist-item input[type="checkbox"]:checked+.checklist-text strong{text-decoration:line-through;color:var(--accent);}
 
 /* ── CHECKLIST COUNTER ── */
 .checklist-counter {
@@ -300,9 +305,33 @@
 .float-jump-btn:hover{background:var(--accent-hover);transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(249,115,22,0.5);}
 
 /* ── PREREQUISITE NOTE ── */
-.prerequisite-note{margin-top:14px;padding:12px 16px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.18);border-radius:8px;font-size:13px;color:var(--text-secondary);line-height:1.6;}
+.prerequisite-note{margin-top:16px;padding:18px 20px;background:rgba(239,68,68,0.08);border:1.5px solid rgba(239,68,68,0.22);border-radius:10px;font-size:13px;color:var(--text-secondary);line-height:1.7;}
+.prerequisite-note strong{color:#dc2626;font-weight:700;display:block;margin-bottom:8px;}
+.prerequisite-note code{background:rgba(0,0,0,0.2);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px;}
+.prerequisite-note ul,.prerequisite-note ol{margin:8px 0 0 20px;padding:0;}
+.prerequisite-note li{margin:6px 0;}
+
+/* ── 학습 가이드 카드 (Stage5) ── */
+.guide-cards{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px;}
+.guide-card{display:flex;gap:16px;padding:18px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;transition:border-color 0.2s,box-shadow 0.2s;align-items:flex-start;}
+.guide-card:hover{border-color:var(--accent);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.guide-card-icon{font-size:28px;flex-shrink:0;line-height:1.2;}
+.guide-card-content{flex:1;}
+.guide-card-content strong{display:block;font-size:15px;color:var(--text-primary);margin-bottom:6px;}
+.guide-card-content p{font-size:14px;color:var(--text-secondary);line-height:1.6;margin:0;}
+
+/* ── 가정값 테이블 (Stage5) ── */
+.assumption-table{display:flex;flex-direction:column;gap:16px;margin-bottom:24px;}
+.assumption-row{padding:20px 22px;background:var(--bg-card);border:1.5px solid var(--border);border-radius:12px;transition:border-color 0.2s;}
+.assumption-row:hover{border-color:var(--accent);}
+.assumption-row strong{display:block;font-size:15px;color:var(--text-primary);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.assumption-row .question{font-size:14px;color:var(--text-secondary);margin:8px 0;line-height:1.6;}
+.assumption-row .examples{font-size:13px;color:var(--text-muted);margin:6px 0 0;padding:8px 12px;background:var(--bg-secondary);border-radius:8px;border-left:3px solid var(--accent);}
 
 @media(max-width:768px){
+  .guide-cards{grid-template-columns:1fr;}
+  .guide-card{flex-direction:column;align-items:flex-start;}
+  .assumption-row{padding:16px 18px;}
   .time-visual{grid-template-columns:1fr auto 1fr;gap:10px;padding:16px;}
   .time-visual-value{font-size:20px;}
   .next-stage-preview{padding:16px 18px;gap:12px;}
