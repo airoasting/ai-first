@@ -114,21 +114,10 @@
 /* ── Start label ── */
 .start-label { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; padding: 4px 12px; margin-bottom: 10px; }
 
-/* ── Sticky Roadmap ── */
-.sticky-roadmap { background: rgba(245,245,245,0.97); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; padding: 12px 40px; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); margin-top: 32px; margin-bottom: 4px; position: sticky; top: 0; z-index: 100; transition: box-shadow 0.3s ease; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-[data-theme="dark"] .sticky-roadmap { background: rgba(21,21,32,0.97); border-color: var(--border); }
-.sticky-roadmap.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-.sticky-roadmap-inner { display: flex; align-items: stretch; justify-content: center; gap: 4px; max-width: 1280px; margin: 0 auto; }
-.sticky-step { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 4px; padding: 10px 10px 8px; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 10px; min-width: 80px; text-decoration: none; cursor: pointer; transition: all 0.3s ease; flex-shrink: 0; color: inherit; }
-[data-theme="dark"] .sticky-step { background: var(--bg-card); border-color: var(--border); }
-.sticky-step:hover { border-color: var(--brand); background: rgba(204,0,0,0.05); box-shadow: 0 2px 8px rgba(204,0,0,0.12); }
-.sticky-step.active { border-color: var(--brand); background: rgba(204,0,0,0.08); }
-.sticky-step-badge { display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: #fff; background: var(--brand); padding: 2px 7px; border-radius: 8px; letter-spacing: 0.2px; white-space: nowrap; }
-.sticky-step-icon { font-size: 18px; line-height: 1; }
-.sticky-step-name { font-size: 10px; font-weight: 700; color: var(--text-primary); text-align: center; line-height: 1.2; }
-.sticky-step-time { font-size: 9px; font-weight: 600; color: var(--text-muted); background: var(--bg-secondary); padding: 2px 5px; border-radius: 6px; }
-.sticky-arrow { font-size: 13px; color: var(--text-muted); flex-shrink: 0; font-weight: 600; display: flex; align-items: center; }
-.sticky-arrow:last-child { display: none; }
+/* ── Sticky Roadmap Flow ── */
+.roadmap-section .roadmap-flow { position: sticky; top: 0; z-index: 50; background: var(--bg-secondary); padding: 16px 0; margin: 0 -40px; padding: 16px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s ease; }
+.roadmap-section .roadmap-flow.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+[data-theme="dark"] .roadmap-section .roadmap-flow { background: var(--bg-secondary); }
 
 /* ── Progress Section ── */
 .progress-section { margin-top: 48px; padding: 28px 32px; background: var(--bg-secondary); border-radius: 14px; border: 1px solid var(--border); }
@@ -167,11 +156,7 @@
 }
 @media (max-width: 768px) {
   .cards-2, .cards-3 { grid-template-columns: 1fr; }
-  .sticky-roadmap { justify-content: flex-start; padding: 10px 16px; gap: 3px; }
-  .sticky-roadmap-inner { gap: 3px; }
-  .sticky-step { min-width: 70px; padding: 8px 8px 6px; }
-  .sticky-step-name { font-size: 9px; }
-  .sticky-arrow { font-size: 12px; }
+  .roadmap-section .roadmap-flow { margin: 0 -20px; padding: 12px 20px; }
   .hero-stats { gap: 24px; }
   .hero-stat-num { font-size: 26px; }
   .roadmap-inner { padding: 0 20px; }
@@ -337,52 +322,6 @@
     </a>
   </div>
 
-  <!-- ── 단계 바로가기 (sticky roadmap) ── -->
-  <div class="sticky-roadmap" id="sticky-roadmap">
-    <div class="sticky-roadmap-inner">
-      <a class="sticky-step" href="#diag">
-        <span class="sticky-step-badge">진단</span>
-        <div class="sticky-step-icon">🎯</div>
-        <div class="sticky-step-name">문제 정의력<br>진단</div>
-        <div class="sticky-step-time">8분</div>
-      </a>
-      <div class="sticky-arrow">→</div>
-      <a class="sticky-step" href="#step1">
-        <span class="sticky-step-badge">1단계</span>
-        <div class="sticky-step-icon">🛠️</div>
-        <div class="sticky-step-name">프롬프트</div>
-        <div class="sticky-step-time">20분</div>
-      </a>
-      <div class="sticky-arrow">→</div>
-      <a class="sticky-step" href="#step2">
-        <span class="sticky-step-badge">2단계</span>
-        <div class="sticky-step-icon">🔭</div>
-        <div class="sticky-step-name">정보 탐색</div>
-        <div class="sticky-step-time">25분</div>
-      </a>
-      <div class="sticky-arrow">→</div>
-      <a class="sticky-step" href="#step3">
-        <span class="sticky-step-badge">3단계</span>
-        <div class="sticky-step-icon">💡</div>
-        <div class="sticky-step-name">방향 설정</div>
-        <div class="sticky-step-time">30분</div>
-      </a>
-      <div class="sticky-arrow">⇄</div>
-      <a class="sticky-step" href="#step4">
-        <span class="sticky-step-badge">4단계</span>
-        <div class="sticky-step-icon">⚖️</div>
-        <div class="sticky-step-name">근거 확인</div>
-        <div class="sticky-step-time">40분</div>
-      </a>
-      <div class="sticky-arrow">→</div>
-      <a class="sticky-step" href="#step5">
-        <span class="sticky-step-badge">5단계</span>
-        <div class="sticky-step-icon">🚀</div>
-        <div class="sticky-step-name">결과물 완성</div>
-        <div class="sticky-step-time">60분</div>
-      </a>
-    </div>
-  </div>
 
   <!-- ── 1단계: 프롬프트 ── -->
   <div class="section-label" id="step1">1단계 · 프롬프트 잘 쓰는 법</div>
@@ -674,21 +613,10 @@ function updateRoadmap() {
 }
 
 function initScrollSpy() {
-  var stepIds = ['diag','step1','step2','step3','step4','step5'];
-  var stickySteps = document.querySelectorAll('.sticky-step');
-  var stickyNav = document.getElementById('sticky-roadmap');
+  var roadmapFlow = document.querySelector('.roadmap-section .roadmap-flow');
   window.addEventListener('scroll', function() {
-    if (stickyNav && stickyNav.getBoundingClientRect().top <= 0) stickyNav.classList.add('scrolled');
-    else if (stickyNav) stickyNav.classList.remove('scrolled');
-    var current = '';
-    for (var i = 0; i < stepIds.length; i++) {
-      var section = document.getElementById(stepIds[i]);
-      if (section && section.getBoundingClientRect().top <= 140) current = stepIds[i];
-    }
-    for (var j = 0; j < stickySteps.length; j++) {
-      stickySteps[j].classList.remove('active');
-      if (stickySteps[j].getAttribute('href') === '#' + current) stickySteps[j].classList.add('active');
-    }
+    if (roadmapFlow && roadmapFlow.getBoundingClientRect().top <= 0) roadmapFlow.classList.add('scrolled');
+    else if (roadmapFlow) roadmapFlow.classList.remove('scrolled');
   });
 }
 
