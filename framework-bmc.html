@@ -4,64 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비즈니스 모델 캔버스 | AI Roasting</title>
+    <link rel="stylesheet" href="css/common.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.75;
-            font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             word-break: keep-all;
             overflow-wrap: break-word;
         }
 
-        /* ── Header ── */
-        header {
-            text-align: center;
-            padding: 56px 32px 48px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 4px solid #CC0000;
-        }
-        .back-link {
-            display: inline-block;
-            color: #e8706a;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: opacity 0.2s;
-        }
-        .back-link:hover { opacity: 0.7; }
-        h1 {
-            font-size: 43px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1.5px;
-            margin-bottom: 12px;
-            line-height: 1.25;
-        }
-        header .desc {
-            font-size: 18px;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.6;
-        }
-        .header-badge {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8706a;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 6px 20px;
-            border-radius: 24px;
-            margin-top: 16px;
-        }
+        /* ── Stage Header ── */
+        .stage-header { text-align: center; padding: 56px 32px 48px; background: #1e2235; box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); min-height: 320px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; transition: opacity 0.2s; }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 { font-size: 43px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.25; }
+        .stage-header .desc { font-size: 18px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: #1e2235; border: none; padding: 6px 20px; border-radius: 24px; margin-top: 16px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { .stage-header { padding: 40px 20px 32px; min-height: 260px; } .stage-header h1 { font-size: 28px; } }
 
         /* ── Container ── */
         .container {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 56px 32px 40px;
         }
@@ -69,45 +32,46 @@
 
         /* ── Wide Container ── */
         .container-wide {
-            max-width: 1140px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
         /* ── Intro Box ── */
         .intro-box {
-            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-            border: 1px solid #bbf7d0;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 48px;
             font-size: 16px;
-            color: #14532d;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
         .intro-box .intro-title {
             font-size: 15px;
             font-weight: 700;
-            color: #16a34a;
+            color: #CC0000;
             margin-bottom: 8px;
         }
-        .intro-box strong { color: #166534; }
+        .intro-box strong { color: var(--text-primary); }
 
         /* ── TOC Nav ── */
         .toc-nav {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #fff;
-            border-bottom: 1px solid #e5e5e5;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            background: var(--bg-primary);
+            border-bottom: none;
+            box-shadow: 0 6px 20px rgba(163,177,198,0.55), 0 2px 6px rgba(255,255,255,0.8);
             margin-bottom: 32px;
             width: 100vw;
             margin-left: calc(-50vw + 50%);
         }
         .toc-nav-inner {
             display: flex;
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .toc-nav a {
@@ -121,8 +85,8 @@
             border-bottom: 3px solid transparent;
             transition: all 0.2s;
         }
-        .toc-nav a:hover { background: #fafafa; border-bottom-color: #e5e5e5; }
-        .toc-nav a.active { border-bottom-color: #CC0000; background: #fff5f5; }
+        .toc-nav a:hover { background: var(--bg-secondary); border-bottom-color: var(--border); }
+        .toc-nav a.active { border-bottom-color: #CC0000; background: var(--bg-secondary); }
         .toc-nav .toc-num {
             display: flex; align-items: center; justify-content: center;
             width: 28px; height: 28px; border-radius: 50%;
@@ -130,9 +94,9 @@
         }
         .toc-nav a:hover .toc-num { transform: scale(1.1); }
         .toc-nav a.active .toc-num { background: #990000; }
-        .toc-nav .toc-label { font-size: 13px; font-weight: 700; color: #333; text-align: center; line-height: 1.3; }
+        .toc-nav .toc-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); text-align: center; line-height: 1.3; }
         .toc-nav a.active .toc-label { color: #CC0000; }
-        .toc-nav .toc-sub { font-size: 11px; color: #999; text-align: center; }
+        .toc-nav .toc-sub { font-size: 11px; color: var(--text-muted); text-align: center; }
         .toc-nav a.active .toc-sub { color: #CC0000; opacity: 0.7; }
 
         /* ── Section Divider ── */
@@ -140,82 +104,85 @@
             display: flex; align-items: center; gap: 16px; margin: 72px 0 36px;
         }
         .step-divider::before, .step-divider::after {
-            content: ''; flex: 1; height: 1px; background: #e0e0e0;
+            content: ''; flex: 1; height: 1px; background: var(--border);
         }
         .step-badge {
-            font-size: 13px; font-weight: 800; color: #CC0000; background: #fff;
+            font-size: 13px; font-weight: 800; color: #CC0000; background: var(--bg-card);
             border: 2px solid #CC0000; padding: 6px 20px; border-radius: 24px;
             letter-spacing: 0.5px; white-space: nowrap;
         }
 
         /* ── Section Title ── */
         .section-title {
-            font-size: 31px; font-weight: 800; color: #1a1a1a;
+            font-size: 31px; font-weight: 800; color: var(--text-primary);
             padding-left: 20px; border-left: 5px solid #CC0000;
             margin-bottom: 8px; line-height: 1.3; letter-spacing: -0.5px;
         }
         .section-subtitle {
-            font-size: 16px; color: #777; padding-left: 26px; margin-bottom: 32px;
+            font-size: 16px; color: var(--text-muted); padding-left: 26px; margin-top: 8px; margin-bottom: 32px;
         }
 
         /* ── Text ── */
         .text-block {
-            font-size: 16px; color: #333; line-height: 1.85; margin-bottom: 24px;
+            font-size: 16px; color: var(--text-secondary); line-height: 1.85; margin-bottom: 24px;
         }
-        .text-block strong { color: #1a1a1a; font-weight: 700; }
+        .text-block strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Info Box ── */
         .info-box {
-            background: #f8f8f8; border: 1px solid #e5e5e5; border-radius: 14px;
-            padding: 24px 28px; margin-bottom: 32px; font-size: 15px; color: #444; line-height: 1.85;
+            background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px;
+            padding: 24px 28px; margin-bottom: 32px; font-size: 15px; color: var(--text-secondary); line-height: 1.85;
         }
-        .info-box strong { color: #1a1a1a; }
+        .info-box strong { color: var(--text-primary); }
         .info-box.highlight {
-            background: #fff5f5; border-color: #fecaca; border-left: 4px solid #CC0000;
+            background: var(--bg-secondary); border-color: #fecaca; border-left: 4px solid #CC0000;
         }
         .info-box-title { font-size: 15px; font-weight: 800; color: #CC0000; margin-bottom: 8px; }
 
         /* ── Sub Title ── */
-        h3.sub-title { font-size: 23px; font-weight: 800; color: #1a1a1a; margin: 40px 0 16px; }
+        h3.sub-title { font-size: 23px; font-weight: 800; color: var(--text-primary); margin: 40px 0 16px; }
 
         /* ── List ── */
         .styled-list { list-style: none; margin-bottom: 28px; }
         .styled-list li {
-            font-size: 16px; color: #333; padding: 8px 0 8px 24px; position: relative; line-height: 1.75;
+            font-size: 16px; color: var(--text-secondary); padding: 8px 0 8px 24px; position: relative; line-height: 1.75;
         }
         .styled-list li::before {
             content: ''; position: absolute; left: 0; top: 18px;
             width: 8px; height: 8px; border-radius: 50%; background: #CC0000;
         }
-        .styled-list li strong { color: #1a1a1a; font-weight: 700; }
+        .styled-list li strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Analogy Box ── */
         .analogy-box {
-            background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #f59e0b;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
+            border-left: 4px solid #f59e0b;
             border-radius: 12px; padding: 24px 28px; margin-bottom: 32px;
-            font-size: 16px; color: #78350f; line-height: 1.85;
+            font-size: 16px; color: var(--text-secondary); line-height: 1.85;
         }
         .analogy-box .analogy-label {
             font-size: 13px; font-weight: 800; color: #d97706; margin-bottom: 6px;
             text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .analogy-box strong { color: #92400e; }
+        .analogy-box strong { color: var(--text-primary); }
 
         /* ── Step Card ── */
         .step-card {
-            background: #fff; border: 1px solid #e5e5e5; border-radius: 14px;
+            background: var(--bg-card); box-shadow: var(--nm-out); border: none; border-radius: 14px;
             padding: 24px 28px; margin-bottom: 16px;
             transition: box-shadow 0.2s, transform 0.2s;
         }
-        .step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+        .step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
         .step-card .step-num {
             display: inline-flex; align-items: center; justify-content: center;
             width: 32px; height: 32px; border-radius: 50%;
             background: #CC0000; color: #fff; font-size: 14px; font-weight: 800;
             margin-right: 12px; vertical-align: middle;
         }
-        .step-card .step-name { font-size: 17px; font-weight: 700; color: #1a1a1a; vertical-align: middle; }
-        .step-card .step-desc { font-size: 15px; color: #555; margin-top: 8px; padding-left: 44px; line-height: 1.75; }
+        .step-card .step-name { font-size: 17px; font-weight: 700; color: var(--text-primary); vertical-align: middle; }
+        .step-card .step-desc { font-size: 15px; color: var(--text-secondary); margin-top: 8px; padding-left: 44px; line-height: 1.75; }
 
         /* ── Example Block ── */
         .example-block {
@@ -237,11 +204,11 @@
         .example-block pre .info { color: #60a5fa; }
 
         .example-explain {
-            background: #f8fafc; border: 1px solid #e2e8f0; border-top: none;
+            background: var(--bg-secondary); border: 1px solid var(--border); border-top: none;
             border-radius: 0 0 14px 14px; padding: 18px 24px; margin-bottom: 28px;
-            font-size: 15px; color: #64748b; line-height: 1.75;
+            font-size: 15px; color: var(--text-muted); line-height: 1.75;
         }
-        .example-explain strong { color: #334155; }
+        .example-explain strong { color: var(--text-secondary); }
 
         /* ══════════════════════════════════ */
         /* ── BMC Grid                     ── */
@@ -251,19 +218,18 @@
             grid-template-rows: auto auto auto; gap: 10px; margin-bottom: 40px; font-size: 14px;
         }
         .bmc-cell {
-            background: #fff; border: 1px solid #e0e0e0; border-radius: 14px;
+            background: var(--bg-card); box-shadow: var(--nm-out); border: none; border-radius: 14px;
             padding: 20px 18px; line-height: 1.7;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             transition: box-shadow 0.2s, transform 0.2s;
         }
-        .bmc-cell:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+        .bmc-cell:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
         .bmc-cell .cell-title { font-weight: 800; color: #CC0000; font-size: 14px; margin-bottom: 2px; }
-        .bmc-cell .cell-question { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 10px; }
+        .bmc-cell .cell-question { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; }
         .bmc-cell .cell-explain {
-            font-size: 12.5px; color: #555; line-height: 1.7; margin-bottom: 12px;
-            padding-bottom: 12px; border-bottom: 1px dashed #e5e5e5;
+            font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px;
+            padding-bottom: 12px; border-bottom: 1px dashed var(--border);
         }
-        .bmc-cell .cell-explain strong { color: #1a1a1a; }
+        .bmc-cell .cell-explain strong { color: var(--text-primary); }
         .bmc-cell .cell-analogy {
             font-size: 11.5px; color: #92400e; background: #fffbeb;
             border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; line-height: 1.6;
@@ -271,7 +237,7 @@
         .bmc-cell .cell-tip-label {
             font-size: 10px; font-weight: 700; color: #2563eb; letter-spacing: 0.3px; margin-bottom: 6px;
         }
-        .bmc-cell ul { list-style: none; font-size: 12.5px; color: #444; }
+        .bmc-cell ul { list-style: none; font-size: 12.5px; color: var(--text-secondary); }
         .bmc-cell ul li { padding: 2px 0; }
         .bmc-cell ul li::before { content: '\2022 '; color: #2563eb; font-weight: 700; }
 
@@ -288,25 +254,28 @@
         /* ── Example Grid (green) ── */
         .bmc-grid-example .bmc-cell .cell-title { color: #16a34a; }
         .bmc-grid-example .bmc-cell ul li::before { color: #16a34a; }
-        .bmc-grid-example .bmc-cell { border-color: #d1fae5; background: #f0fdf4; }
-        .bmc-grid-example .bmc-cell:hover { box-shadow: 0 6px 20px rgba(22,163,74,0.1); }
+        .bmc-grid-example .bmc-cell { background: var(--bg-card); box-shadow: var(--nm-out); border: none; }
+        .bmc-grid-example .bmc-cell:hover { box-shadow: 10px 10px 22px rgba(163,177,198,0.8),-10px -10px 22px rgba(255,255,255,1); }
 
         .bmc-grid-label {
-            text-align: center; font-size: 14px; color: #999; margin-bottom: 16px;
+            text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 16px;
         }
         .bmc-grid-label strong { color: #16a34a; font-weight: 700; }
 
         /* ── Template Box ── */
         .template-box {
-            background: #eff6ff; border: 2px dashed #93c5fd; border-radius: 14px;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
+            border-radius: 14px;
             padding: 24px 28px; margin-bottom: 28px; position: relative;
         }
         .template-box .template-label { font-size: 13px; font-weight: 800; color: #2563eb; margin-bottom: 12px; }
         .template-box pre {
             font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 14px; color: #1e40af; line-height: 1.8; white-space: pre-wrap; word-break: break-word;
+            font-size: 14px; color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap; word-break: break-word;
         }
-        .template-box pre .blank { color: #60a5fa; text-decoration: underline; text-decoration-style: dotted; }
+        .template-box pre .blank { color: #2563eb; text-decoration: underline; text-decoration-style: dotted; }
 
         /* ── Copy Button ── */
         .copy-btn {
@@ -322,18 +291,6 @@
         }
         .copy-btn.copy-btn-dark:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* ── Footer ── */
-        .page-footer {
-            background: #fafafa; border-top: 1px solid #e5e5e5; padding: 40px 32px; margin-top: 24px;
-        }
-        .footer-inner { max-width: 780px; margin: 0 auto; }
-        .footer-nav { display: flex; justify-content: center; margin-top: 28px; }
-        .footer-nav a {
-            font-size: 15px; font-weight: 700; color: #CC0000; text-decoration: none;
-            padding: 12px 28px; border: 2px solid #CC0000; border-radius: 10px; transition: all 0.2s;
-        }
-        .footer-nav a:hover { background: #CC0000; color: #fff; }
-
         html { scroll-behavior: smooth; }
 
         /* ── Responsive ── */
@@ -342,8 +299,6 @@
             .bmc-kp,.bmc-ka,.bmc-kr,.bmc-vp,.bmc-cr,.bmc-ch,.bmc-cs,.bmc-cost,.bmc-rev { grid-column: auto; grid-row: auto; }
         }
         @media (max-width: 768px) {
-            h1 { font-size: 29px; }
-            header .desc { font-size: 15px; }
             .container { padding: 40px 20px; }
             .container-wide { padding: 0 16px; }
             .section-title { font-size: 25px; }
@@ -360,14 +315,64 @@
 </head>
 <body>
 
-<header>
+<header class="stage-header">
     <a href="index.html" class="back-link">&larr; 전체 과정 보기</a>
     <h1>비즈니스 모델 캔버스</h1>
     <p class="desc">"우리 사업은 이렇게 돈을 번다"를 한 장에 정리하는 설계도</p>
-    <div class="header-badge">사용 빈도 ★★★★★ &middot; 효과성 ★★★★☆</div>
+    <div class="header-badge">사용 빈도 ★★★★★ &middot; 3단계 방향 설정에서 활용</div>
 </header>
 
 <div class="container">
+
+    <!-- ── 프레임워크 간 네비게이션 ── -->
+    <div class="fw-inter-nav">
+        <a href="framework-bmc.html" class="current-fw">📊 비즈니스 모델 캔버스</a>
+        <a href="framework-market.html">📈 시장·수익 분석 6대 도구</a>
+        <a href="framework-ops.html">🏢 마케팅·조직·프로세스 9대 도구</a>
+    </div>
+
+    <!-- ── AI로 10분 만에 해보기 (FIRST!) ── -->
+    <div style="background:var(--bg-card);border-radius:20px;padding:28px 32px;margin-bottom:40px;box-shadow:var(--nm-out);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-size:22px;">⚡</span>
+            <span style="font-size:16px;font-weight:800;color:var(--text-primary);">AI로 10분 만에 BMC 초안 만들기</span>
+            <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,0.1);border-radius:20px;padding:3px 12px;">입문 · 바로 실습</span>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">아래 프롬프트를 복사해 ChatGPT나 Claude에 붙여넣으세요. 개념을 다 몰라도 초안이 바로 나옵니다.</p>
+        <div class="fw-quick-prompt">
+            <div class="fw-quick-prompt-label">📋 BMC 초안 생성 프롬프트 — 복사해서 바로 사용</div>
+            <pre id="bmc-quick-prompt">너는 비즈니스 전략 전문가야.
+아래 사업 아이디어에 대해 비즈니스 모델 캔버스(BMC) 9개 블록을 작성해줘.
+
+[사업 아이디어]
+(여기에 한 줄로 적으세요 — 예: "직장인 대상 점심 도시락 구독 서비스")
+
+[출력 형식]
+각 블록을 3~5개 핵심 포인트로 정리해줘:
+1. 고객 세그먼트 — 누구한테 팔 건지
+2. 가치 제안 — 왜 우리 걸 사야 하는지
+3. 채널 — 어디서 어떻게 팔지
+4. 고객 관계 — 어떻게 단골로 만들지
+5. 수익원 — 어떻게 돈 버는지
+6. 핵심 자원 — 없으면 못 하는 것
+7. 핵심 활동 — 매일 꼭 해야 하는 일
+8. 핵심 파트너 — 누구랑 협력해야 하는지
+9. 비용 구조 — 어디에 돈 나가는지
+
+마지막에 이 BMC의 강점 2가지와 가장 큰 위험 요소 2가지도 분석해줘.</pre>
+            <button class="fw-quick-btn" onclick="copyFwPrompt('bmc-quick-prompt', this)">📋 프롬프트 복사하기</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:#CC0000;margin-bottom:6px;">📌 초안 받은 후 → 경쟁사 비교</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 BMC와 경쟁사 [이름]의 BMC를 비교해서 우리가 지는 부분 3가지와 차별화 방안을 알려줘."</div>
+            </div>
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:#CC0000;margin-bottom:6px;">📌 초안 받은 후 → 약점 검증</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"이 BMC에서 투자자가 '이건 위험한데?' 할 부분 5가지를 찾고, 각각 어떻게 보완하면 좋을지 알려줘."</div>
+            </div>
+        </div>
+    </div>
 
     <!-- ── Intro ── -->
     <div class="intro-box">
@@ -813,16 +818,39 @@
 
 </div><!-- /.container -->
 
-
-<footer class="page-footer">
-    <div class="footer-inner">
-        <div class="footer-nav">
-            <a href="index.html">&larr; 전체 과정으로 돌아가기</a>
+<div style="padding:28px 32px 56px; max-width:800px; margin:0 auto;">
+    <div style="background:var(--bg-secondary);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--nm-in-sm);">
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">다른 프레임워크도 배워보세요</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="framework-market.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📈 시장·수익 분석 6대 도구 →</a>
+            <a href="framework-ops.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">🏢 마케팅·조직·프로세스 9대 도구 →</a>
+            <a href="stage3.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--accent);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#fff;box-shadow:0 4px 16px rgba(249,115,22,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">🎯 3단계 방향 설정 실습으로 →</a>
         </div>
     </div>
-</footer>
+    <div style="text-align:center;">
+        <a href="index.html" style="display:inline-flex; align-items:center; gap:8px; background:#e0e5ec; color:#4a5568; font-size:15px; font-weight:700; text-decoration:none; padding:14px 36px; border-radius:12px; box-shadow:6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9); transition:all 0.25s ease;" onmouseover="this.style.boxShadow='8px 8px 18px rgba(163,177,198,0.8),-8px -8px 18px rgba(255,255,255,1)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9)'; this.style.transform='translateY(0)'">&larr; 목록으로</a>
+    </div>
+</div>
+
+<div id="app-footer"></div>
 
 <script>
+function copyFwPrompt(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var text = el.textContent || el.innerText;
+    navigator.clipboard.writeText(text.trim()).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = '✓ 복사됨!';
+        btn.style.background = '#16a34a';
+        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = text.trim();
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        var orig = btn.textContent; btn.textContent = '✓ 복사됨!';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+}
 (function() {
     var nav = document.getElementById('tocNav');
     var links = nav.querySelectorAll('a[data-section]');
@@ -875,5 +903,6 @@ function copyBox(btn) {
     });
 }
 </script>
+<script src="js/common.js"></script>
 </body>
 </html>

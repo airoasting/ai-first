@@ -3,101 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/common.css">
     <title>마케팅·조직·프로세스 9대 도구 | AI Roasting</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.75;
-            font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             word-break: keep-all;
             overflow-wrap: break-word;
         }
 
-        /* ── Header ── */
-        header {
-            text-align: center;
-            padding: 56px 32px 48px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 4px solid #CC0000;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #e8706a;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: opacity 0.2s;
-        }
-        .back-link:hover { opacity: 0.7; }
-
-        h1 {
-            font-size: 43px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1.5px;
-            margin-bottom: 12px;
-            line-height: 1.25;
-        }
-
-        header .desc {
-            font-size: 18px;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.6;
-        }
-
-        .header-badge {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8706a;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 6px 20px;
-            border-radius: 24px;
-            margin-top: 16px;
-        }
+        /* ── Stage Header ── */
+        .stage-header { text-align: center; padding: 56px 32px 48px; background: #1e2235; box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); min-height: 320px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; transition: opacity 0.2s; }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 { font-size: 43px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.25; }
+        .stage-header .desc { font-size: 18px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: #1e2235; border: none; padding: 6px 20px; border-radius: 24px; margin-top: 16px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { .stage-header { padding: 40px 20px 32px; min-height: 260px; } .stage-header h1 { font-size: 28px; } }
 
         /* ── Container ── */
         .container {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 56px 32px 40px;
         }
 
         /* ── Intro Box ── */
         .intro-box {
-            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-            border: 1px solid #bbf7d0;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 48px;
             font-size: 16px;
-            color: #14532d;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
         .intro-box .intro-title {
             font-size: 15px;
             font-weight: 700;
-            color: #16a34a;
+            color: #CC0000;
             margin-bottom: 8px;
             letter-spacing: -0.3px;
         }
-        .intro-box strong { color: #166534; }
+        .intro-box strong { color: var(--text-primary); }
 
         /* ── TOC Nav ── */
         .toc-nav {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #fff;
-            border-bottom: 1px solid #e5e5e5;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            background: var(--bg-primary);
+            border-bottom: none;
+            box-shadow: 0 6px 20px rgba(163,177,198,0.55), 0 2px 6px rgba(255,255,255,0.8);
             margin-bottom: 32px;
             width: 100vw;
             margin-left: calc(-50vw + 50%);
@@ -105,7 +65,7 @@
         }
         .toc-nav-inner {
             display: flex;
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .toc-nav a {
@@ -121,12 +81,12 @@
             position: relative;
         }
         .toc-nav a:hover {
-            background: #fafafa;
-            border-bottom-color: #e5e5e5;
+            background: var(--bg-secondary);
+            border-bottom-color: var(--border);
         }
         .toc-nav a.active {
             border-bottom-color: #CC0000;
-            background: #fff5f5;
+            background: var(--bg-secondary);
         }
         .toc-nav .toc-num {
             display: flex;
@@ -147,7 +107,7 @@
         .toc-nav .toc-label {
             font-size: 11px;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
             text-align: center;
             line-height: 1.3;
             letter-spacing: -0.3px;
@@ -166,13 +126,13 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: var(--border);
         }
         .step-badge {
             font-size: 13px;
             font-weight: 800;
             color: #CC0000;
-            background: #fff;
+            background: var(--bg-card);
             border: 2px solid #CC0000;
             padding: 6px 20px;
             border-radius: 24px;
@@ -184,7 +144,7 @@
         .section-title {
             font-size: 31px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             padding-left: 20px;
             border-left: 5px solid #CC0000;
             margin-bottom: 8px;
@@ -193,30 +153,32 @@
         }
         .section-subtitle {
             font-size: 16px;
-            color: #777;
+            color: var(--text-muted);
             padding-left: 26px;
+            margin-top: 8px;
             margin-bottom: 32px;
         }
 
         /* ── Text ── */
         .text-block {
             font-size: 16px;
-            color: #333;
+            color: var(--text-secondary);
             line-height: 1.85;
             margin-bottom: 24px;
         }
-        .text-block strong { color: #1a1a1a; font-weight: 700; }
+        .text-block strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Analogy Box ── */
         .analogy-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
             border-left: 4px solid #f59e0b;
             border-radius: 12px;
             padding: 24px 28px;
             margin-bottom: 32px;
             font-size: 16px;
-            color: #78350f;
+            color: var(--text-secondary);
             line-height: 1.85;
         }
         .analogy-box .analogy-label {
@@ -227,23 +189,23 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .analogy-box strong { color: #92400e; }
+        .analogy-box strong { color: var(--text-primary); }
 
         /* ── Info Box ── */
         .info-box {
-            background: #f8f8f8;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 24px 28px;
             margin-bottom: 32px;
             font-size: 15px;
-            color: #444;
+            color: var(--text-secondary);
             line-height: 1.85;
         }
-        .info-box strong { color: #1a1a1a; }
+        .info-box strong { color: var(--text-primary); }
         .info-box.highlight {
-            background: #fff5f5;
-            border-color: #fecaca;
+            background: var(--bg-secondary);
+            border-color: var(--border);
             border-left: 4px solid #CC0000;
         }
         .info-box-title {
@@ -257,7 +219,7 @@
         h3.sub-title {
             font-size: 23px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin: 40px 0 16px;
             letter-spacing: -0.3px;
         }
@@ -269,7 +231,7 @@
         }
         .styled-list li {
             font-size: 16px;
-            color: #333;
+            color: var(--text-secondary);
             padding: 8px 0 8px 24px;
             position: relative;
             line-height: 1.75;
@@ -284,7 +246,7 @@
             border-radius: 50%;
             background: #CC0000;
         }
-        .styled-list li strong { color: #1a1a1a; font-weight: 700; }
+        .styled-list li strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Example Block ── */
         .example-block {
@@ -321,17 +283,17 @@
 
         /* ── Example Explain ── */
         .example-explain {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-top: none;
             border-radius: 0 0 14px 14px;
             padding: 18px 24px;
             margin-bottom: 28px;
             font-size: 15px;
-            color: #64748b;
+            color: var(--text-muted);
             line-height: 1.75;
         }
-        .example-explain strong { color: #334155; }
+        .example-explain strong { color: var(--text-secondary); }
 
         /* ── Copy Button ── */
         .copy-btn {
@@ -367,10 +329,10 @@
         }
         .rating-item {
             font-size: 14px;
-            color: #666;
+            color: var(--text-muted);
         }
         .rating-item strong {
-            color: #1a1a1a;
+            color: var(--text-primary);
             font-weight: 700;
         }
         .stars {
@@ -396,19 +358,19 @@
         /* ── Section End ── */
         .section-end {
             height: 1px;
-            background: #eee;
+            background: var(--border);
             margin: 48px 0;
         }
 
         /* ── Footer ── */
         .page-footer {
-            background: #fafafa;
-            border-top: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
             padding: 40px 32px;
             margin-top: 24px;
         }
         .footer-inner {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .footer-nav {
@@ -433,8 +395,6 @@
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
-            h1 { font-size: 29px; }
-            header .desc { font-size: 15px; }
             .container { padding: 40px 20px; }
             .section-title { font-size: 25px; }
             h3.sub-title { font-size: 19px; }
@@ -448,14 +408,60 @@
 </head>
 <body>
 
-<header>
+<header class="stage-header">
     <a href="index.html" class="back-link">&larr; 전체 과정 보기</a>
     <h1>마케팅·조직·프로세스 9대 도구</h1>
     <p class="desc">4P부터 RACI까지, 실행 전략 수립과 운영 구조 분석을 위한 핵심 도구</p>
-    <div class="header-badge">9개 프레임워크 &middot; 실행과 운영의 핵심</div>
+    <div class="header-badge">9개 프레임워크 &middot; 5단계 결과물 완성에서 활용</div>
 </header>
 
 <div class="container">
+
+    <!-- ── 프레임워크 간 네비게이션 ── -->
+    <div class="fw-inter-nav">
+        <a href="framework-bmc.html">📊 비즈니스 모델 캔버스</a>
+        <a href="framework-market.html">📈 시장·수익 분석 6대 도구</a>
+        <a href="framework-ops.html" class="current-fw">🏢 마케팅·조직·프로세스 9대 도구</a>
+    </div>
+
+    <!-- ── AI로 10분 만에 해보기 ── -->
+    <div style="background:var(--bg-card);border-radius:20px;padding:28px 32px;margin-bottom:40px;box-shadow:var(--nm-out);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-size:22px;">⚡</span>
+            <span style="font-size:16px;font-weight:800;color:var(--text-primary);">AI로 10분 만에 실행 전략 초안 만들기</span>
+            <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,0.1);border-radius:20px;padding:3px 12px;">입문 · 바로 실습</span>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">아래 프롬프트를 복사해 ChatGPT나 Claude에 붙여넣으세요. 실행 전략이 구체화됩니다.</p>
+        <div class="fw-quick-prompt">
+            <div class="fw-quick-prompt-label">📋 마케팅·실행 전략 프롬프트 — 복사해서 바로 사용</div>
+            <pre id="ops-quick-prompt">너는 마케팅·경영 전략 전문가야.
+아래 사업/제품에 대해 실행 전략을 수립해줘.
+
+[사업 정보]
+- 제품/서비스: (예: 직장인 대상 AI 생산성 앱)
+- 타깃 고객: (예: 30~40대 팀장급 직장인)
+- 현재 상황: (예: 베타 출시 완료, 유료 전환 필요)
+
+[분석 및 전략 수립]
+1. 4P 마케팅 믹스 — Product(제품), Price(가격), Place(유통), Promotion(프로모션) 각 핵심 전략
+2. STP 전략 — 시장 세분화(S), 타겟팅(T), 포지셔닝(P)
+3. OKR 초안 — Objective 1개 + Key Results 3개
+4. 90일 실행 로드맵 — 월별 핵심 과제 3개씩
+
+마지막에 "가장 먼저 해야 할 단 하나의 행동"을 알려줘.</pre>
+            <button class="fw-quick-btn" onclick="copyFwPrompt('ops-quick-prompt', this)">📋 프롬프트 복사하기</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 실행 전략 후 → 조직 역할 분배</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 90일 로드맵의 과제들을 RACI 매트릭스로 정리해줘. 담당자(R), 최종책임(A), 협조(C), 정보공유(I) 역할로 나눠서 표 형식으로."</div>
+            </div>
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 전략 수립 후 → 리스크 점검</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 실행 계획에서 실패할 확률이 높은 병목 3가지를 찾고, 각각의 예방 방법과 플랜B를 제안해줘."</div>
+            </div>
+        </div>
+    </div>
 
     <!-- ── Intro ── -->
     <div class="intro-box">
@@ -907,27 +913,48 @@
 
 
     <!-- ── 마무리 ── -->
-    <div class="intro-box" style="background: linear-gradient(135deg, #fefce8, #fef9c3); border-color: #fde68a; color: #713f12; margin-top: 56px;">
-        <div class="intro-title" style="color: #a16207;">9가지 도구, 한꺼번에 다 쓸 필요 없습니다</div>
-        현재 풀어야 할 문제에 맞는 <strong style="color: #854d0e;">1-2개 도구부터 시작</strong>하세요.<br>
-        마케팅 전략이라면 <strong style="color: #854d0e;">4P + STP</strong>, 조직 진단이라면 <strong style="color: #854d0e;">7S + 성숙도 평가</strong>, 프로세스 개선이라면 <strong style="color: #854d0e;">프로세스 분해 + SIPOC + RACI</strong>를 조합하면 됩니다.<br>
-        AI에게 프레임워크 이름과 구체적 맥락을 함께 주면, <strong style="color: #854d0e;">실무에 바로 적용할 수 있는 분석 결과</strong>를 얻을 수 있습니다.
+    <div class="intro-box" style="margin-top: 56px;">
+        <div class="intro-title">9가지 도구, 한꺼번에 다 쓸 필요 없습니다</div>
+        현재 풀어야 할 문제에 맞는 <strong>1-2개 도구부터 시작</strong>하세요.<br>
+        마케팅 전략이라면 <strong>4P + STP</strong>, 조직 진단이라면 <strong>7S + 성숙도 평가</strong>, 프로세스 개선이라면 <strong>프로세스 분해 + SIPOC + RACI</strong>를 조합하면 됩니다.<br>
+        AI에게 프레임워크 이름과 구체적 맥락을 함께 주면, <strong>실무에 바로 적용할 수 있는 분석 결과</strong>를 얻을 수 있습니다.
     </div>
 
 </div><!-- .container -->
 
-<!-- ══════════════════════════════════════ -->
-<!-- Footer                                -->
-<!-- ══════════════════════════════════════ -->
-<footer class="page-footer">
-    <div class="footer-inner">
-        <div class="footer-nav">
-            <a href="index.html">&larr; 전체 과정으로 돌아가기</a>
+<div style="padding:0 32px 56px; max-width:800px; margin:0 auto;">
+    <div style="background:var(--bg-secondary);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--nm-in-sm);">
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">다른 프레임워크도 배워보세요</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="framework-bmc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📊 비즈니스 모델 캔버스 →</a>
+            <a href="framework-market.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📈 시장·수익 분석 6대 도구 →</a>
+            <a href="stage5.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--accent);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#fff;box-shadow:0 4px 16px rgba(249,115,22,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">🚀 5단계 결과물 완성 실습으로 →</a>
         </div>
     </div>
-</footer>
+    <div style="text-align:center;">
+        <a href="index.html" style="display:inline-flex; align-items:center; gap:8px; background:#e0e5ec; color:#4a5568; font-size:15px; font-weight:700; text-decoration:none; padding:14px 36px; border-radius:12px; box-shadow:6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9); transition:all 0.25s ease;" onmouseover="this.style.boxShadow='8px 8px 18px rgba(163,177,198,0.8),-8px -8px 18px rgba(255,255,255,1)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9)'; this.style.transform='translateY(0)'">&larr; 목록으로</a>
+    </div>
+</div>
 
+<div id="app-footer"></div>
+
+<script src="js/common.js"></script>
 <script>
+function copyFwPrompt(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var text = el.textContent || el.innerText;
+    navigator.clipboard.writeText(text.trim()).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = '✓ 복사됨!'; btn.style.background = '#16a34a';
+        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = text.trim();
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        var orig = btn.textContent; btn.textContent = '✓ 복사됨!';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+}
 (function() {
     /* ── TOC Nav: scroll tracking + click ── */
     var nav = document.getElementById('tocNav');

@@ -3,100 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/common.css">
     <title>시장·수익분석 6대 도구 | AI Roasting</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.75;
             font-size: 16px;
             word-break: keep-all;
             overflow-wrap: break-word;
         }
 
-        /* ── Header ── */
-        header {
-            text-align: center;
-            padding: 56px 32px 48px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 4px solid #CC0000;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #e8706a;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: opacity 0.2s;
-        }
-        .back-link:hover { opacity: 0.7; }
-
-        h1 {
-            font-size: 43px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1.5px;
-            margin-bottom: 12px;
-            line-height: 1.25;
-        }
-
-        header .desc {
-            font-size: 18px;
-            color: rgba(255,255,255,0.55);
-            line-height: 1.6;
-        }
-
-        .header-badge {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8706a;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 6px 20px;
-            border-radius: 24px;
-            margin-top: 16px;
-        }
+        /* ── Stage Header ── */
+        .stage-header { text-align: center; padding: 56px 32px 48px; background: #1e2235; box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); min-height: 320px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; transition: opacity 0.2s; }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 { font-size: 43px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.25; }
+        .stage-header .desc { font-size: 18px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: #1e2235; border: none; padding: 6px 20px; border-radius: 24px; margin-top: 16px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { .stage-header { padding: 40px 20px 32px; min-height: 260px; } .stage-header h1 { font-size: 28px; } }
 
         /* ── Container ── */
         .container {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 56px 32px 40px;
         }
 
         /* ── Intro Box ── */
         .intro-box {
-            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
-            border: 1px solid #bbf7d0;
+            background: var(--bg-secondary);
+            border: none;
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 48px;
             font-size: 16px;
-            color: #14532d;
+            color: var(--text-secondary);
             line-height: 1.8;
+            box-shadow: var(--nm-in);
         }
         .intro-box .intro-title {
             font-size: 15px;
             font-weight: 700;
-            color: #16a34a;
+            color: var(--accent);
             margin-bottom: 8px;
             letter-spacing: -0.3px;
         }
-        .intro-box strong { color: #166534; }
+        .intro-box strong { color: var(--text-primary); }
 
         /* ── TOC Nav ── */
         .toc-nav {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #fff;
-            border-bottom: 1px solid #e5e5e5;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
             box-shadow: 0 4px 16px rgba(0,0,0,0.08);
             margin-bottom: 32px;
             width: 100vw;
@@ -105,7 +68,7 @@
         }
         .toc-nav-inner {
             display: flex;
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .toc-nav a {
@@ -121,12 +84,12 @@
             position: relative;
         }
         .toc-nav a:hover {
-            background: #fafafa;
-            border-bottom-color: #e5e5e5;
+            background: var(--bg-secondary);
+            border-bottom-color: var(--border);
         }
         .toc-nav a.active {
-            border-bottom-color: #CC0000;
-            background: #fff5f5;
+            border-bottom-color: var(--accent);
+            background: var(--bg-secondary);
         }
         .toc-nav .toc-num {
             display: flex;
@@ -135,7 +98,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #CC0000;
+            background: var(--accent);
             color: #fff;
             font-size: 12px;
             font-weight: 800;
@@ -143,23 +106,23 @@
             transition: transform 0.2s;
         }
         .toc-nav a:hover .toc-num { transform: scale(1.1); }
-        .toc-nav a.active .toc-num { background: #990000; }
+        .toc-nav a.active .toc-num { background: var(--accent-hover); }
         .toc-nav .toc-label {
             font-size: 13px;
             font-weight: 700;
-            color: #333;
+            color: var(--text-primary);
             text-align: center;
             line-height: 1.3;
             letter-spacing: -0.3px;
         }
-        .toc-nav a.active .toc-label { color: #CC0000; }
+        .toc-nav a.active .toc-label { color: var(--accent); }
         .toc-nav .toc-sub {
             font-size: 11px;
-            color: #999;
+            color: var(--text-muted);
             text-align: center;
             line-height: 1.2;
         }
-        .toc-nav a.active .toc-sub { color: #CC0000; opacity: 0.7; }
+        .toc-nav a.active .toc-sub { color: var(--accent); opacity: 0.7; }
 
         /* ── Section Divider ── */
         .step-divider {
@@ -176,14 +139,14 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: var(--border);
         }
         .step-badge {
             font-size: 13px;
             font-weight: 800;
-            color: #CC0000;
-            background: #fff;
-            border: 2px solid #CC0000;
+            color: var(--accent);
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
             padding: 6px 20px;
             border-radius: 24px;
             letter-spacing: 0.5px;
@@ -201,9 +164,9 @@
         .section-title {
             font-size: 31px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             padding-left: 20px;
-            border-left: 5px solid #CC0000;
+            border-left: 5px solid var(--accent);
             margin-bottom: 0;
             line-height: 1.3;
             letter-spacing: -0.5px;
@@ -217,47 +180,50 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: #f8f8f8;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 20px;
             padding: 7px 14px;
             font-size: 13px;
             font-weight: 700;
-            color: #555;
+            color: var(--text-secondary);
             white-space: nowrap;
+            box-shadow: var(--nm-out-xs);
         }
         .title-rating-item .rating-stars {
             font-size: 14px;
-            color: #CC0000;
+            color: var(--accent);
             letter-spacing: 1px;
         }
         .section-subtitle {
             font-size: 16px;
-            color: #777;
+            color: var(--text-muted);
             padding-left: 26px;
+            margin-top: 8px;
             margin-bottom: 32px;
         }
 
         /* ── Text ── */
         .text-block {
             font-size: 16px;
-            color: #333;
+            color: var(--text-secondary);
             line-height: 1.85;
             margin-bottom: 24px;
         }
-        .text-block strong { color: #1a1a1a; font-weight: 700; }
+        .text-block strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Analogy Box ── */
         .analogy-box {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: var(--bg-secondary);
+            border: none;
             border-left: 4px solid #f59e0b;
             border-radius: 12px;
             padding: 24px 28px;
             margin-bottom: 32px;
             font-size: 16px;
-            color: #78350f;
+            color: var(--text-secondary);
             line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
         }
         .analogy-box .analogy-label {
             font-size: 13px;
@@ -267,29 +233,29 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .analogy-box strong { color: #92400e; }
+        .analogy-box strong { color: var(--text-primary); }
 
         /* ── Info Box ── */
         .info-box {
-            background: #f8f8f8;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 24px 28px;
             margin-bottom: 32px;
             font-size: 15px;
-            color: #444;
+            color: var(--text-secondary);
             line-height: 1.85;
         }
-        .info-box strong { color: #1a1a1a; }
+        .info-box strong { color: var(--text-primary); }
         .info-box.highlight {
-            background: #fff5f5;
-            border-color: #fecaca;
-            border-left: 4px solid #CC0000;
+            background: var(--bg-secondary);
+            border-color: var(--border);
+            border-left: 4px solid var(--accent);
         }
         .info-box-title {
             font-size: 15px;
             font-weight: 800;
-            color: #CC0000;
+            color: var(--accent);
             margin-bottom: 8px;
         }
 
@@ -297,7 +263,7 @@
         h3.sub-title {
             font-size: 23px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin: 40px 0 16px;
             letter-spacing: -0.3px;
         }
@@ -309,7 +275,7 @@
         }
         .styled-list li {
             font-size: 16px;
-            color: #333;
+            color: var(--text-secondary);
             padding: 8px 0 8px 24px;
             position: relative;
             line-height: 1.75;
@@ -322,9 +288,9 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #CC0000;
+            background: var(--accent);
         }
-        .styled-list li strong { color: #1a1a1a; font-weight: 700; }
+        .styled-list li strong { color: var(--text-primary); font-weight: 700; }
 
         /* ── Example Block ── */
         .example-block {
@@ -361,17 +327,17 @@
 
         /* ── Example Explain ── */
         .example-explain {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-top: none;
             border-radius: 0 0 14px 14px;
             padding: 18px 24px;
             margin-bottom: 28px;
             font-size: 15px;
-            color: #64748b;
+            color: var(--text-muted);
             line-height: 1.75;
         }
-        .example-explain strong { color: #334155; }
+        .example-explain strong { color: var(--text-secondary); }
 
         /* ── App Card ── */
         .app-grid {
@@ -379,21 +345,22 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-bottom: 32px;
-            /* break out of 780px container */
+            /* break out of 800px container */
             width: calc(100vw - 64px);
-            max-width: 1100px;
+            max-width: 800px;
             margin-left: 50%;
             transform: translateX(-50%);
         }
         .app-card {
-            background: #fff;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-card);
+            border: none;
             border-radius: 14px;
             padding: 18px 16px 16px;
+            box-shadow: var(--nm-out);
             transition: box-shadow 0.2s, transform 0.2s;
         }
         .app-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            box-shadow: var(--nm-out);
             transform: translateY(-2px);
         }
         .app-card .emoji {
@@ -404,12 +371,12 @@
         .app-card h4 {
             font-size: 14px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 6px;
         }
         .app-card p {
             font-size: 12.5px;
-            color: #666;
+            color: var(--text-muted);
             line-height: 1.6;
         }
         .app-grid-4col {
@@ -424,21 +391,22 @@
             margin-bottom: 28px;
         }
         .tool-card {
-            background: #f8f8f8;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border: none;
             border-radius: 12px;
             padding: 22px 22px;
+            box-shadow: var(--nm-in-sm);
         }
         .tool-card h4 {
             font-size: 15px;
             font-weight: 700;
-            color: #CC0000;
+            color: var(--accent);
             margin-bottom: 10px;
         }
         .tool-card ul { list-style: none; }
         .tool-card ul li {
             font-size: 14px;
-            color: #555;
+            color: var(--text-secondary);
             padding: 4px 0 4px 16px;
             position: relative;
             line-height: 1.6;
@@ -447,65 +415,67 @@
             content: '\2022';
             position: absolute;
             left: 0;
-            color: #CC0000;
+            color: var(--accent);
             font-weight: 700;
         }
 
         /* ── Separator ── */
         .section-end {
             height: 1px;
-            background: #eee;
+            background: var(--border);
             margin: 48px 0;
         }
 
         /* ── Rating Stars (used in title-rating-item) ── */
         .rating-stars {
             font-size: 15px;
-            color: #CC0000;
+            color: var(--accent);
             letter-spacing: 1px;
         }
 
         /* ── When-to-use Box ── */
         .when-box {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background: var(--bg-secondary);
+            border: none;
             border-left: 4px solid #3b82f6;
             border-radius: 12px;
             padding: 20px 24px;
             margin-bottom: 28px;
             font-size: 15px;
-            color: #1e3a5f;
+            color: var(--text-secondary);
             line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
         }
         .when-box .when-label {
             font-size: 13px;
             font-weight: 800;
-            color: #2563eb;
+            color: #3b82f6;
             margin-bottom: 8px;
             letter-spacing: 0.3px;
         }
-        .when-box strong { color: #1e40af; }
+        .when-box strong { color: var(--text-primary); }
 
         /* ── Limit Box ── */
         .limit-box {
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            border-left: 4px solid #f97316;
+            background: var(--bg-secondary);
+            border: none;
+            border-left: 4px solid var(--accent);
             border-radius: 12px;
             padding: 20px 24px;
             margin-bottom: 28px;
             font-size: 15px;
-            color: #7c2d12;
+            color: var(--text-secondary);
             line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
         }
         .limit-box .limit-label {
             font-size: 13px;
             font-weight: 800;
-            color: #ea580c;
+            color: var(--accent);
             margin-bottom: 8px;
             letter-spacing: 0.3px;
         }
-        .limit-box strong { color: #9a3412; }
+        .limit-box strong { color: var(--text-primary); }
 
         /* ── Prompt Box (AI Prompt Example) ── */
         .prompt-box {
@@ -566,15 +536,16 @@
             margin-bottom: 28px;
         }
         .component-card {
-            background: #fff;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-card);
+            border: none;
             border-radius: 12px;
             padding: 18px 20px;
             text-align: center;
+            box-shadow: var(--nm-out);
             transition: box-shadow 0.2s, transform 0.2s;
         }
         .component-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: var(--nm-out);
             transform: translateY(-2px);
         }
         .component-card .comp-icon {
@@ -585,7 +556,7 @@
         .component-card h4 {
             font-size: 15px;
             font-weight: 700;
-            color: #CC0000;
+            color: var(--accent);
             margin-bottom: 4px;
         }
 
@@ -606,25 +577,26 @@
             min-height: 100px;
         }
         .forces-card {
-            background: #fff;
-            border: 1.5px solid #e5e5e5;
+            background: var(--bg-card);
+            border: none;
             border-radius: 14px;
             padding: 20px 16px;
             text-align: center;
             width: 100%;
+            box-shadow: var(--nm-out);
             transition: box-shadow 0.2s, transform 0.2s;
         }
         .forces-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            box-shadow: var(--nm-out);
             transform: translateY(-2px);
         }
         .forces-card .comp-icon { font-size: 28px; display: block; margin-bottom: 8px; }
-        .forces-card h4 { font-size: 15px; font-weight: 700; color: #CC0000; margin-bottom: 4px; }
-        .forces-card p { font-size: 13px; color: #666; line-height: 1.5; margin: 0; }
+        .forces-card h4 { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+        .forces-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
         /* center card (rivalry) */
         .forces-card.center-force {
-            background: #CC0000;
-            border-color: #CC0000;
+            background: var(--accent);
+            border-color: var(--accent);
         }
         .forces-card.center-force .comp-icon { filter: grayscale(1) brightness(10); }
         .forces-card.center-force h4 { color: #fff; }
@@ -635,7 +607,7 @@
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            color: #CC0000;
+            color: var(--accent);
             font-weight: 700;
             opacity: 0.5;
         }
@@ -655,29 +627,29 @@
             grid-template-rows: auto 12px auto 12px auto;
         }
         .f-top    { grid-column: 3; grid-row: 1; }
-        .f-arr-t  { grid-column: 3; grid-row: 2; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #CC0000; opacity: 0.45; }
+        .f-arr-t  { grid-column: 3; grid-row: 2; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
         .f-left   { grid-column: 1; grid-row: 3; }
-        .f-arr-l  { grid-column: 2; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #CC0000; opacity: 0.45; }
+        .f-arr-l  { grid-column: 2; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
         .f-center { grid-column: 3; grid-row: 3; }
-        .f-arr-r  { grid-column: 4; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #CC0000; opacity: 0.45; }
+        .f-arr-r  { grid-column: 4; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
         .f-right  { grid-column: 5; grid-row: 3; }
-        .f-arr-b  { grid-column: 3; grid-row: 4; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #CC0000; opacity: 0.45; }
+        .f-arr-b  { grid-column: 3; grid-row: 4; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
         .f-bottom { grid-column: 3; grid-row: 5; }
         .component-card p {
             font-size: 13px;
-            color: #666;
+            color: var(--text-muted);
             line-height: 1.55;
         }
 
-        /* ── Footer ── */
+        /* ── Page Nav ── */
         .page-footer {
-            background: #fafafa;
-            border-top: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
             padding: 40px 32px;
             margin-top: 24px;
         }
         .footer-inner {
-            max-width: 780px;
+            max-width: 800px;
             margin: 0 auto;
         }
         .footer-nav {
@@ -688,22 +660,20 @@
         .footer-nav a {
             font-size: 15px;
             font-weight: 700;
-            color: #CC0000;
+            color: var(--accent);
             text-decoration: none;
             padding: 12px 28px;
-            border: 2px solid #CC0000;
+            border: 2px solid var(--accent);
             border-radius: 10px;
             transition: all 0.2s;
         }
-        .footer-nav a:hover { background: #CC0000; color: #fff; }
+        .footer-nav a:hover { background: var(--accent); color: #fff; }
 
         /* ── Smooth scroll ── */
         html { scroll-behavior: smooth; }
 
         /* ── Responsive ── */
         @media (max-width: 768px) {
-            h1 { font-size: 29px; }
-            header .desc { font-size: 15px; }
             .container { padding: 40px 20px; }
             .section-title { font-size: 25px; }
             h3.sub-title { font-size: 19px; }
@@ -728,14 +698,58 @@
 </head>
 <body>
 
-<header>
+<header class="stage-header">
     <a href="index.html" class="back-link">&larr; 전체 과정 보기</a>
     <h1>시장&middot;수익분석 6대 도구</h1>
     <p class="desc">3C 분석부터 이익 방정식까지, 시장과 수익 구조를 읽는 핵심 분석 도구</p>
-    <div class="header-badge">6개 프레임워크 &middot; 시장 분석의 핵심</div>
+    <div class="header-badge">6개 프레임워크 &middot; 2단계 정보 탐색에서 활용</div>
 </header>
 
 <div class="container">
+
+    <!-- ── 프레임워크 간 네비게이션 ── -->
+    <div class="fw-inter-nav">
+        <a href="framework-bmc.html">📊 비즈니스 모델 캔버스</a>
+        <a href="framework-market.html" class="current-fw">📈 시장·수익 분석 6대 도구</a>
+        <a href="framework-ops.html">🏢 마케팅·조직·프로세스 9대 도구</a>
+    </div>
+
+    <!-- ── AI로 10분 만에 해보기 ── -->
+    <div style="background:var(--bg-card);border-radius:20px;padding:28px 32px;margin-bottom:40px;box-shadow:var(--nm-out);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-size:22px;">⚡</span>
+            <span style="font-size:16px;font-weight:800;color:var(--text-primary);">AI로 10분 만에 시장 분석 초안 만들기</span>
+            <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,0.1);border-radius:20px;padding:3px 12px;">입문 · 바로 실습</span>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">아래 프롬프트를 복사해 ChatGPT나 Claude에 붙여넣으세요. 시장 구조가 10분 안에 정리됩니다.</p>
+        <div class="fw-quick-prompt">
+            <div class="fw-quick-prompt-label">📋 시장 분석 통합 프롬프트 — 복사해서 바로 사용</div>
+            <pre id="mkt-quick-prompt">너는 시장 분석 전문가야.
+아래 사업/제품에 대해 시장 분석을 해줘.
+
+[분석 대상]
+(여기에 한 줄로 적으세요 — 예: "국내 직장인 대상 AI 생산성 앱")
+
+[분석 항목]
+1. 3C 분석 — 고객(Customer), 경쟁자(Competitor), 자사(Company) 각각 핵심 3가지
+2. SWOT 분석 — 강점·약점·기회·위협 각 3개 항목
+3. PEST 분석 — 정치/경제/사회/기술 트렌드 각 2개 항목
+4. 주요 경쟁사 3곳의 가격·강점·약점 비교표
+
+마지막에 "가장 시급하게 대응해야 할 위협 1가지"와 "지금 당장 잡을 수 있는 기회 1가지"를 요약해줘.</pre>
+            <button class="fw-quick-btn" onclick="copyFwPrompt('mkt-quick-prompt', this)">📋 프롬프트 복사하기</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 3C 초안 후 → Porter's 5 Forces</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 분석을 바탕으로 포터의 5가지 경쟁 요소(신규진입/대체재/공급자/구매자/경쟁강도)를 각각 점수(1~5점)로 평가하고 가장 위험한 요소를 설명해줘."</div>
+            </div>
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 시장 분석 후 → 수익 모델 설계</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 시장 구조를 바탕으로 우리가 취할 수 있는 수익 모델 3가지를 제안하고, 각각의 장단점과 적합한 고객 세그먼트를 알려줘."</div>
+            </div>
+        </div>
+    </div>
 
     <!-- ── Intro ── -->
     <div class="intro-box">
@@ -1140,14 +1154,21 @@
 
 </div><!-- /.container -->
 
-
-<footer class="page-footer">
-    <div class="footer-inner">
-        <div class="footer-nav">
-            <a href="index.html">&larr; 전체 과정으로 돌아가기</a>
+<div style="padding:0 32px 56px; max-width:800px; margin:0 auto;">
+    <div style="background:var(--bg-secondary);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--nm-in-sm);">
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">다른 프레임워크도 배워보세요</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="framework-bmc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📊 비즈니스 모델 캔버스 →</a>
+            <a href="framework-ops.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">🏢 마케팅·조직·프로세스 9대 도구 →</a>
+            <a href="stage2.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--accent);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#fff;box-shadow:0 4px 16px rgba(249,115,22,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">🔭 2단계 정보 탐색 실습으로 →</a>
         </div>
     </div>
-</footer>
+    <div style="text-align:center;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 600; padding: 14px 32px; background: var(--bg-card); border-radius: 12px; box-shadow: var(--nm-out); transition: all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-in-sm)';this.style.color='#CC0000'" onmouseout="this.style.boxShadow='var(--nm-out)';this.style.color='var(--text-secondary)'">← 목록으로</a>
+    </div>
+</div>
+
+<div id="app-footer"></div>
 
 <script>
 (function() {
@@ -1197,6 +1218,22 @@
     onScroll();
 })();
 
+function copyFwPrompt(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var text = el.textContent || el.innerText;
+    navigator.clipboard.writeText(text.trim()).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = '✓ 복사됨!'; btn.style.background = '#16a34a';
+        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = text.trim();
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        var orig = btn.textContent; btn.textContent = '✓ 복사됨!';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+}
+
 /* ── Copy Prompt Button ── */
 function copyPrompt(btn) {
     var box = btn.closest('.prompt-box');
@@ -1226,5 +1263,6 @@ function copyPrompt(btn) {
     });
 }
 </script>
+<script src="js/common.js"></script>
 </body>
 </html>
