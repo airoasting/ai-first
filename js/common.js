@@ -16,11 +16,6 @@ function injectHeader() {
   <p class="brand">AI Roasting</p>
   <h1>AI 퍼스트로 일한다는 것</h1>
   <p class="header-sub">5단계 실전 훈련</p>
-  <div class="header-newsletter">
-    <span class="header-newsletter-label">📊 AI Roasting 뉴스레터</span>
-    <span class="header-newsletter-sub">주간 AI 소식</span>
-    <a class="header-newsletter-btn" href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener">구독하기 →</a>
-  </div>
   <div class="mobile-notice">
     <span class="mobile-notice-icon">🖥️</span>
     이 가이드는 데스크탑에 최적화되어 있습니다
@@ -173,22 +168,40 @@ function injectStagePDBanner() {
 
   el.innerHTML =
     '<div class="pd-stage-banner">' +
-      '<div class="pd-stage-banner-inner">' +
-        '<div class="pd-stage-banner-left">' +
-          '<span class="pd-stage-banner-icon">' + comp.icon + '</span>' +
-          '<div class="pd-stage-banner-text">' +
-            '<div class="pd-stage-banner-title">진단 결과 연동 · <strong>' + comp.name + '</strong></div>' +
-            '<div class="pd-stage-banner-reason">' + reason + '</div>' +
+      '<div class="pd-stage-banner-wrap">' +
+        '<div class="pd-stage-banner-inner">' +
+          '<div class="pd-stage-banner-left">' +
+            '<span class="pd-stage-banner-icon">' + comp.icon + '</span>' +
+            '<div class="pd-stage-banner-text">' +
+              '<div class="pd-stage-banner-title">진단 결과 연동 · <strong>' + comp.name + '</strong></div>' +
+              '<div class="pd-stage-banner-reason">' + reason + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="pd-stage-banner-right">' +
+            '<div class="pd-stage-banner-score" style="color:' + comp.color + '">' + scaled + '<span>/10</span></div>' +
+            '<div class="pd-stage-banner-bar"><div class="pd-stage-banner-fill" style="width:' + pct + '%;background:' + comp.color + '"></div></div>' +
+            '<div class="pd-stage-banner-level" style="color:' + levelColor + '">' + levelText + '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="pd-stage-banner-right">' +
-          '<div class="pd-stage-banner-score" style="color:' + comp.color + '">' + scaled + '<span>/10</span></div>' +
-          '<div class="pd-stage-banner-bar"><div class="pd-stage-banner-fill" style="width:' + pct + '%;background:' + comp.color + '"></div></div>' +
-          '<div class="pd-stage-banner-level" style="color:' + levelColor + '">' + levelText + '</div>' +
-        '</div>' +
+        '<a class="pd-stage-banner-link" href="pd-result.html">전체 진단 결과 보기 →</a>' +
       '</div>' +
-      '<a class="pd-stage-banner-link" href="pd-result.html">전체 진단 결과 보기 →</a>' +
     '</div>';
+}
+
+// ════════════════════════════════════════════════
+// OPEN IN AI (딥링크 버튼)
+// ════════════════════════════════════════════════
+function openInAI(text, tool) {
+  var urls = {
+    chatgpt: 'https://chatgpt.com/',
+    claude: 'https://claude.ai/new'
+  };
+  navigator.clipboard.writeText(text).then(function() {
+    showToast('📋 복사 완료! 열리는 창에 붙여넣으세요 (Ctrl+V)', 2800);
+    window.open(urls[tool] || urls.chatgpt, '_blank');
+  }).catch(function() {
+    window.open(urls[tool] || urls.chatgpt, '_blank');
+  });
 }
 
 // ════════════════════════════════════════════════

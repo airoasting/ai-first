@@ -50,10 +50,14 @@
         </div>
       </div>
 
-      <!-- Quick share (below summary) -->
-      <div class="pd-result-share pd-result-share-top">
-        <button class="pd-btn-share" onclick="pdSaveImage()">📸 결과 카드 저장</button>
-        <button class="pd-btn-share" onclick="pdShareLink()">🔗 링크 공유</button>
+      <!-- Quick share (below summary) — HERO version -->
+      <div class="pd-share-hero">
+        <div class="pd-share-hero-label">결과 공유하기</div>
+        <div class="pd-share-hero-title">나의 문제 정의력 유형을 팀원·동료와 공유해보세요 👇</div>
+        <div class="pd-share-hero-btns">
+          <button class="pd-btn-share-primary" onclick="pdSaveImage()">📸 결과 카드 저장 (SNS 공유용)</button>
+          <button class="pd-btn-share" onclick="pdShareLink()">🔗 링크로 공유</button>
+        </div>
       </div>
 
       <!-- Score bars -->
@@ -67,9 +71,21 @@
       <!-- Learning path -->
       <div id="pd-learning-path"></div>
 
+      <!-- Next Step CTA -->
+      <a class="pd-next-cta" href="stage1.html" id="pd-next-step-cta">
+        <span class="pd-next-cta-icon">🚀</span>
+        <div class="pd-next-cta-body">
+          <div class="pd-next-cta-eyebrow">권장 다음 행동</div>
+          <div class="pd-next-cta-title" id="pd-next-step-title">학습 과정 시작하기</div>
+          <div class="pd-next-cta-sub" id="pd-next-step-sub">결과를 바탕으로 맞춤 학습 경로를 따라가보세요</div>
+        </div>
+        <span class="pd-next-cta-arrow">→</span>
+      </a>
+
       <!-- Retry -->
       <div class="pd-result-share">
-        <a class="pd-btn-share" href="pd-diagnosis.html">🔄 다시 진단하기</a>
+        <a class="pd-btn-share" href="pd-diagnosis.html">🔄 4주 후 재진단 (진행 상황 확인)</a>
+        <a class="pd-btn-share" href="index.html">🏠 전체 과정 목록으로</a>
       </div>
     </div>
   </div>
@@ -95,7 +111,7 @@
       <span class="sc-score-num" id="sc-score-num"></span>
       <span class="sc-score-max">/ 50점</span>
     </div>
-    <span class="sc-url">AI 네이티브로 일한다는 것</span>
+    <span class="sc-url">AI 퍼스트로 일한다는 것</span>
   </div>
 </div>
 
@@ -106,6 +122,35 @@
 document.addEventListener('DOMContentLoaded', function() {
   initCommon();
   initPDResult();
+  // Update next-step CTA based on weakest competency
+  // pd-result.js의 renderPDLearningPath가 이미 맞춤 학습경로를 처리함
+  // 아래는 하단 "권장 다음 행동" CTA 업데이트 (올바른 area key 사용)
+  setTimeout(function() {
+    var diag = typeof load === 'function' ? load('pd_diagnosis') : null;
+    if (!diag) return;
+    // 저장된 구조: { selfdirect: {total, dims}, limitless: {...}, ... }
+    var scores = diag;
+    var compStageMap = {
+      selfdirect:     { stage: 'stage1.html', label: '1단계: 프롬프트 실전 훈련', sub: '자기주도적 AI 활용, 프롬프트 설계 역량을 강화하세요' },
+      limitless:      { stage: 'stage2.html', label: '2단계: 정보 탐색 훈련', sub: 'Limitless Mindset — 낯선 영역을 AI로 탐색하는 역량을 강화하세요' },
+      unlearnrelearn: { stage: 'stage3.html', label: '3단계: 방향 설정 훈련', sub: 'Unlearn-Relearn — 기존 방식을 버리고 방향을 재설계하는 역량을 강화하세요' },
+      fastloop:       { stage: 'stage4.html', label: '4단계: 근거 확인 훈련', sub: 'AI 결과물 교차검증과 빠른 반복 역량을 강화하세요' },
+      deadline:       { stage: 'stage5.html', label: '5단계: 결과물 완성 훈련', sub: '1/10 데드라인 — 1시간 안에 완성하는 역량을 강화하세요' }
+    };
+    var weakest = null, minScore = 999;
+    Object.keys(scores).forEach(function(k) {
+      var val = scores[k] && typeof scores[k].total !== 'undefined' ? scores[k].total : scores[k];
+      if (typeof val === 'number' && val < minScore) { minScore = val; weakest = k; }
+    });
+    var mapping = weakest && compStageMap[weakest];
+    if (!mapping) return;
+    var cta = document.getElementById('pd-next-step-cta');
+    var title = document.getElementById('pd-next-step-title');
+    var sub = document.getElementById('pd-next-step-sub');
+    if (cta) cta.href = mapping.stage;
+    if (title) title.textContent = mapping.label;
+    if (sub) sub.textContent = mapping.sub;
+  }, 600);
 });
 </script>
 </body>

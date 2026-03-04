@@ -269,8 +269,12 @@ function buildStageHTML(m, done) {
           <button class="prompt-toggle-btn" onclick="togglePrompt('ptw-${i}', this)">▼ 전체 프롬프트 보기</button>
         </div>
         ${p.why ? `<div class="prompt-why">💡 <strong>왜 이렇게 쓸까?</strong> : ${p.why}</div>` : ''}
+        <div class="prompt-ai-btns">
+          <button class="btn-open-ai btn-open-chatgpt" onclick="openInAI(${JSON.stringify(p.text)}, 'chatgpt')">ChatGPT에서 열기 ↗</button>
+          <button class="btn-open-ai btn-open-claude" onclick="openInAI(${JSON.stringify(p.text)}, 'claude')">Claude에서 열기 ↗</button>
+        </div>
       </div>
-      <p class="prompt-hint">→ 복사 후 ChatGPT · Claude 등에 붙여넣고 결과를 확인해보세요</p>
+      <p class="prompt-hint">→ 버튼 클릭 시 프롬프트가 클립보드에 복사되고 AI 창이 열립니다</p>
     `).join('')}
   </div>
 
@@ -360,6 +364,70 @@ function buildStageHTML(m, done) {
 }
 
 // ════════════════════════════════════════════════
+// GRADUATION SCREEN (stage5 완료 후)
+// ════════════════════════════════════════════════
+function buildGraduationHTML() {
+  var progress = load('ps_progress') || {};
+  var hasPD = !!load('pd_diagnosis');
+  var stagesDone = ['stage1','stage2','stage3','stage4','stage5'].filter(function(s){ return !!progress[s]; }).length;
+  var totalDone = hasPD ? stagesDone + 1 : stagesDone;
+
+  return `
+    <div class="graduation-screen">
+      <div class="graduation-confetti" aria-hidden="true">🎉🏆🎊🚀✨</div>
+      <h2 class="graduation-title">전 과정 수료!</h2>
+      <p class="graduation-sub">AI 퍼스트로 일하는 5단계 훈련을 모두 완주했습니다.</p>
+
+      <div class="graduation-stats">
+        <div class="graduation-stat">
+          <span class="graduation-stat-num">${totalDone}</span>
+          <span class="graduation-stat-label">완료한 단계</span>
+        </div>
+        <div class="graduation-stat">
+          <span class="graduation-stat-num">5대</span>
+          <span class="graduation-stat-label">습득 역량</span>
+        </div>
+        <div class="graduation-stat">
+          <span class="graduation-stat-num">약 2.5h</span>
+          <span class="graduation-stat-label">투자한 시간</span>
+        </div>
+      </div>
+
+      <div class="graduation-recap">
+        <div class="graduation-recap-title">당신이 습득한 것</div>
+        <ul class="graduation-recap-list">
+          <li>AI에게 역할·맥락을 설계해 원하는 결과물을 1회에 뽑아내는 법</li>
+          <li>시장·경쟁·기술 변화를 AI로 10분 안에 구조화하는 법</li>
+          <li>가설 10개 중 근거 있는 3개를 골라 반대 논거까지 정리하는 법</li>
+          <li>AI 결과물의 신뢰도를 수치로 평가하고 검증하는 법</li>
+          <li>경영진 보고용 슬라이드와 수익 모델을 AI와 함께 완성하는 법</li>
+        </ul>
+      </div>
+
+      <div class="graduation-actions">
+        <a href="pd-diagnosis.html" class="btn-graduation-primary">📊 4주 후 재진단으로 성장 확인하기</a>
+        <div class="graduation-share-row">
+          <span class="graduation-share-label">수료를 공유하세요</span>
+          <button class="btn-graduation-share" onclick="shareGraduation('copy')">🔗 링크 복사</button>
+        </div>
+        <a href="index.html" class="btn-graduation-back">처음으로 돌아가기</a>
+      </div>
+    </div>`;
+}
+
+function shareGraduation(type) {
+  var text = 'AI 퍼스트로 일하는 5단계 훈련을 완주했습니다! 🏆\n문제 정의력부터 결과물 완성까지 — AI와 함께 일하는 방법을 체계적으로 훈련했습니다.';
+  if (type === 'linkedin') {
+    var url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(location.origin + '/index.html');
+    window.open(url, '_blank');
+  } else {
+    navigator.clipboard.writeText(text + '\n' + location.origin + '/index.html').then(function() {
+      showToast('🔗 수료 메시지가 복사되었습니다!');
+    });
+  }
+}
+
+// ════════════════════════════════════════════════
 // TEMPLATE
 // ════════════════════════════════════════════════
 function buildTemplateHTML(m) {
@@ -437,11 +505,45 @@ function buildCompleteSectionHTML(stageId, done) {
   const nextId = NEXT_STAGE[stageId];
   const nextM = nextId ? MODULES.find(x => x.id === nextId) : null;
   if (done) {
+    if (!nextM) {
+      // Stage5 완료 → 진단 + 1~4단계 모두 완료 여부 확인 후 수료 화면
+      var progress = load('ps_progress') || {};
+      var hasPD = !!load('pd_diagnosis');
+      var allDone = hasPD
+        && !!progress.stage1
+        && !!progress.stage2
+        && !!progress.stage3
+        && !!progress.stage4
+        && !!progress.stage5;
+      if (allDone) {
+        return buildGraduationHTML();
+      }
+      // 미완료 단계 목록 생성
+      var remaining = [];
+      if (!hasPD)          remaining.push({ href: 'pd-diagnosis.html', label: '문제 정의력 진단' });
+      if (!progress.stage1) remaining.push({ href: 'stage1.html',      label: '1단계' });
+      if (!progress.stage2) remaining.push({ href: 'stage2.html',      label: '2단계' });
+      if (!progress.stage3) remaining.push({ href: 'stage3.html',      label: '3단계' });
+      if (!progress.stage4) remaining.push({ href: 'stage4.html',      label: '4단계' });
+      var remainingHtml = remaining.map(function(r) {
+        return '<a href="' + r.href + '" class="btn-complete-next" style="font-size:14px;padding:10px 20px;">' + r.label + ' 완료하기 →</a>';
+      }).join('');
+      return `
+        <div class="stage-complete-done">
+          <span class="complete-check-icon">✅</span>
+          <div class="complete-done-text">5단계 완료!</div>
+          <p style="font-size:14px;color:var(--text-secondary);margin:8px 0 16px;line-height:1.6;">
+            전 과정 수료까지 아직 완료하지 않은 단계가 있어요.<br>
+            모든 단계를 마쳐야 수료 화면이 표시됩니다.
+          </p>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">${remainingHtml}</div>
+        </div>`;
+    }
     return `
       <div class="stage-complete-done">
         <span class="complete-check-icon">✅</span>
         <div class="complete-done-text">이 단계 완료!</div>
-        ${nextM ? `<a href="${nextId}.html" class="btn-complete-next">다음 단계: ${nextM.step}단계 ${nextM.shortTitle} →</a>` : `<a href="index.html" class="btn-complete-next">처음으로 돌아가기 →</a>`}
+        <a href="${nextId}.html" class="btn-complete-next">다음 단계: ${nextM.step}단계 ${nextM.shortTitle} →</a>
       </div>`;
   }
   const hasChecklist = m && m.checklist && m.checklist.length > 0;

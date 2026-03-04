@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>환각을 줄이는 법 | AI Roasting</title>
+    <link rel="stylesheet" href="css/common.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.75;
-            font-size: 16px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             word-break: keep-all;
             overflow-wrap: break-word;
         }
@@ -20,9 +16,9 @@
         /* ── Header ── */
         header {
             text-align: center;
-            padding: 56px 32px 48px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 4px solid #CC0000;
+            padding: 48px 32px 40px;
+            background: linear-gradient(160deg, #1e2235 0%, #1c1f2e 100%);
+            box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
         }
 
         .back-link {
@@ -31,24 +27,25 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             transition: opacity 0.2s;
         }
         .back-link:hover { opacity: 0.7; }
 
         h1 {
-            font-size: 43px;
+            font-size: 40px;
             font-weight: 800;
             color: #ffffff;
-            letter-spacing: -1.5px;
-            margin-bottom: 12px;
-            line-height: 1.25;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            word-break: keep-all;
         }
 
         header .desc {
-            font-size: 18px;
-            color: rgba(255,255,255,0.55);
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
             line-height: 1.6;
+            word-break: keep-all;
         }
 
         .header-badge {
@@ -56,48 +53,51 @@
             font-size: 13px;
             font-weight: 600;
             color: #e8706a;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 6px 20px;
-            border-radius: 24px;
-            margin-top: 16px;
+            background: rgba(232,112,106,0.12);
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-top: 12px;
+            box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4);
         }
+        @media (max-width: 768px) { header { padding: 36px 24px 32px; } h1 { font-size: 28px; } }
 
         /* ── Container ── */
         .container {
             max-width: 780px;
             margin: 0 auto;
-            padding: 56px 32px 40px;
+            padding: 24px 32px 40px;
         }
 
         /* ── Intro Box ── */
         .intro-box {
-            background: linear-gradient(135deg, #fef2f2, #fef2f2);
-            border: 1px solid #fecaca;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 48px;
             font-size: 16px;
-            color: #7f1d1d;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
         .intro-box .intro-title {
             font-size: 15px;
             font-weight: 700;
-            color: #dc2626;
+            color: var(--accent);
             margin-bottom: 8px;
             letter-spacing: -0.3px;
         }
-        .intro-box strong { color: #991b1b; }
+        .intro-box strong { color: var(--text-primary); }
 
         /* ── TOC Nav ── */
         .toc-nav {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #fff;
-            border-bottom: 1px solid #e5e5e5;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            background: var(--bg-primary);
+            border-bottom: none;
+            box-shadow: var(--nm-out);
             margin: 0 calc(-50vw + 50%) 48px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -119,32 +119,37 @@
             transition: all 0.2s;
             flex-shrink: 0;
         }
-        .toc-nav a:hover { background: #fafafa; }
+        .toc-nav a:hover { background: var(--bg-secondary); }
         .toc-nav a.active {
-            border-bottom-color: #CC0000;
-            background: #fff5f5;
+            border-bottom-color: var(--accent);
+            background: var(--bg-secondary);
         }
         .toc-num {
             font-size: 12px;
             font-weight: 800;
-            color: #CC0000;
-            background: #fff5f5;
-            border: 1px solid #f0c0c0;
-            width: 23px;
-            height: 23px;
+            color: #fff;
+            background: var(--accent);
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.2s;
         }
+        .toc-nav a:hover .toc-num { transform: scale(1.1); }
+        .toc-nav a.active .toc-num { background: var(--accent-hover); }
         .toc-label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-secondary);
+            text-align: center;
         }
+        .toc-nav a.active .toc-label { color: var(--accent); }
         .toc-sub {
-            font-size: 12px;
-            color: #999;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
         }
 
         /* ── Section ── */
@@ -153,41 +158,50 @@
             scroll-margin-top: 100px;
         }
 
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
         .section-num {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             width: 36px;
             height: 36px;
-            background: #CC0000;
+            background: var(--accent);
             color: #fff;
             font-size: 16px;
             font-weight: 800;
             border-radius: 50%;
-            margin-bottom: 12px;
+            flex-shrink: 0;
+            box-shadow: var(--nm-out-sm);
         }
 
         .section h2 {
             font-size: 26px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 0;
             line-height: 1.3;
         }
 
         .section .section-desc {
             font-size: 16px;
-            color: #666;
+            color: var(--text-secondary);
             line-height: 1.7;
             margin-bottom: 24px;
         }
 
         /* ── Concept Box ── */
         .concept-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-left: 4px solid #CC0000;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
+            border-left: 4px solid var(--accent);
             border-radius: 12px;
             padding: 24px 28px;
             margin-bottom: 28px;
@@ -195,23 +209,24 @@
         .concept-box h3 {
             font-size: 16px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 10px;
         }
         .concept-box p {
             font-size: 15px;
-            color: #475569;
+            color: var(--text-secondary);
             line-height: 1.75;
         }
-        .concept-box strong { color: #1a1a1a; }
+        .concept-box strong { color: var(--text-primary); }
 
         /* ── Prompt Example ── */
         .prompt-example {
-            background: #1a1a2e;
+            background: #1e1e2e;
             border-radius: 14px;
             padding: 0;
             margin-bottom: 28px;
             overflow: hidden;
+            box-shadow: var(--nm-out);
         }
         .prompt-example-header {
             display: flex;
@@ -239,6 +254,11 @@
         }
         .prompt-copy-btn:hover {
             background: rgba(255,255,255,0.18);
+            color: #fff;
+        }
+        .prompt-copy-btn.copied {
+            background: #16a34a;
+            border-color: #16a34a;
             color: #fff;
         }
         .prompt-body {
@@ -269,8 +289,10 @@
             display: flex;
             gap: 12px;
             align-items: flex-start;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
+            border-left: 4px solid #f59e0b;
             border-radius: 12px;
             padding: 18px 22px;
             margin-bottom: 28px;
@@ -282,10 +304,10 @@
         }
         .why-box .why-content {
             font-size: 14px;
-            color: #92400e;
+            color: var(--text-secondary);
             line-height: 1.7;
         }
-        .why-box strong { color: #78350f; }
+        .why-box strong { color: var(--text-primary); }
 
         /* ── Advanced Grid ── */
         .advanced-grid {
@@ -295,10 +317,16 @@
             margin-bottom: 28px;
         }
         .advanced-card {
-            background: #f8f8f8;
-            border: 1px solid #e5e5e5;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
             border-radius: 14px;
             padding: 24px 24px 20px;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .advanced-card:hover {
+            box-shadow: var(--nm-out);
+            transform: translateY(-2px);
         }
         .advanced-card .emoji {
             font-size: 27px;
@@ -308,43 +336,53 @@
         .advanced-card h4 {
             font-size: 16px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 6px;
         }
         .advanced-card p {
             font-size: 14px;
-            color: #666;
+            color: var(--text-secondary);
             line-height: 1.65;
         }
 
         /* ── Closing Box ── */
         .closing-box {
-            background: linear-gradient(135deg, #fefce8, #fef9c3);
-            border: 1px solid #fde68a;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in);
+            border: none;
+            border-left: 4px solid #f59e0b;
             border-radius: 16px;
             padding: 28px 32px;
             margin-bottom: 48px;
             font-size: 16px;
-            color: #713f12;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
         .closing-box .closing-title {
             font-size: 15px;
             font-weight: 700;
-            color: #a16207;
+            color: #d97706;
             margin-bottom: 8px;
         }
-        .closing-box strong { color: #854d0e; }
+        .closing-box strong { color: var(--text-primary); }
 
         /* ── Footer ── */
         .page-footer {
-            background: #fafafa;
-            border-top: 1px solid #e5e5e5;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
             padding: 40px 32px;
         }
         .footer-inner {
             max-width: 780px;
             margin: 0 auto;
+        }
+        .footer-source {
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
         }
         .footer-nav {
             text-align: center;
@@ -354,15 +392,15 @@
             display: inline-block;
             font-size: 15px;
             font-weight: 700;
-            color: #CC0000;
+            color: var(--accent);
             text-decoration: none;
             padding: 12px 28px;
-            border: 2px solid #CC0000;
+            border: 2px solid var(--accent);
             border-radius: 12px;
             transition: all 0.2s;
         }
         .footer-nav a:hover {
-            background: #CC0000;
+            background: var(--accent);
             color: #fff;
         }
 
@@ -371,7 +409,6 @@
             h1 { font-size: 32px; }
             header .desc { font-size: 15px; }
             .container { padding: 36px 20px 32px; }
-            .toc-nav { margin: 0 -20px 36px; }
             .toc-nav a { padding: 12px 14px; }
             .toc-label { font-size: 12px; }
             .section h2 { font-size: 22px; }
@@ -384,6 +421,31 @@
             .container { padding: 28px 16px 24px; }
             .section { margin-bottom: 48px; }
         }
+
+        /* ── Bottom Back Button ── */
+        .bottom-back-wrap {
+            text-align: center;
+            padding: 32px 32px 56px;
+        }
+        .bottom-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 14px 36px;
+            border-radius: 12px;
+            box-shadow: var(--nm-out);
+            transition: all 0.25s ease;
+        }
+        .bottom-back-btn:hover {
+            box-shadow: var(--nm-out-sm);
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
@@ -392,10 +454,17 @@
     <a href="index.html" class="back-link">&larr; 목록으로</a>
     <h1>환각을 줄이는 법</h1>
     <p class="desc">AI가 그럴듯하게 지어낸 거짓 정보를 걸러내는 실전 기법</p>
-    <div class="header-badge">기본 3가지 + 고급 4가지 기법 &middot; 2단계 정보 탐색</div>
+    <div class="header-badge">기본 3가지 + 고급 4가지 기법 &middot; 2단계 정보 탐색 &middot; <span style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:12px;">입문~중급</span></div>
 </header>
 
 <div class="container">
+
+    <nav class="fw-inter-nav">
+        <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-right:6px;flex-shrink:0;">AI 활용 심화 시리즈</span>
+        <a href="ai-fluency.html">11가지 습관</a>
+        <a href="multi-persona.html">멀티 페르소나</a>
+        <a class="current-fw" href="reduce-hallucinations.html">환각 줄이기</a>
+    </nav>
 
     <!-- ── Intro ── -->
     <div class="intro-box">
@@ -419,8 +488,10 @@
     <!-- 섹션 1: "모르겠습니다"라고 말할 수 있게 하기 -->
     <!-- ═══════════════════════════════════ -->
     <div class="section" id="sec1">
-        <div class="section-num">1</div>
-        <h2>"모르겠습니다"라고 말할 수 있게 하기</h2>
+        <div class="section-header">
+            <div class="section-num">1</div>
+            <h2>"모르겠습니다"라고 말할 수 있게 하기</h2>
+        </div>
         <p class="section-desc">
             AI에게 불확실할 때 솔직히 인정하도록 <strong>명시적으로 허용</strong>하세요.
             이 한 줄만 추가해도 거짓 정보가 크게 줄어듭니다.
@@ -466,8 +537,10 @@
     <!-- 섹션 2: 직접 인용으로 사실 근거 확보 -->
     <!-- ═══════════════════════════════════ -->
     <div class="section" id="sec2">
-        <div class="section-num">2</div>
-        <h2>직접 인용으로 사실 근거 확보하기</h2>
+        <div class="section-header">
+            <div class="section-num">2</div>
+            <h2>직접 인용으로 사실 근거 확보하기</h2>
+        </div>
         <p class="section-desc">
             긴 문서를 분석할 때, AI에게 <strong>원문에서 정확한 문장을 먼저 추출</strong>하게 한 뒤
             그 인용문을 바탕으로 분석하도록 지시하세요.
@@ -514,8 +587,10 @@
     <!-- 섹션 3: 인용과 출처로 검증하기 -->
     <!-- ═══════════════════════════════════ -->
     <div class="section" id="sec3">
-        <div class="section-num">3</div>
-        <h2>인용과 출처로 검증하기</h2>
+        <div class="section-header">
+            <div class="section-num">3</div>
+            <h2>인용과 출처로 검증하기</h2>
+        </div>
         <p class="section-desc">
             AI가 작성한 내용을 <strong>감사 가능(auditable)</strong>하게 만드세요.
             모든 주장에 출처 인용을 요구하고, 근거를 찾지 못하면 해당 주장을 <strong>스스로 철회</strong>하도록 지시합니다.
@@ -560,8 +635,10 @@
     <!-- 섹션 4: 고급 기법 -->
     <!-- ═══════════════════════════════════ -->
     <div class="section" id="sec4">
-        <div class="section-num">4</div>
-        <h2>고급 기법</h2>
+        <div class="section-header">
+            <div class="section-num">4</div>
+            <h2>고급 기법</h2>
+        </div>
         <p class="section-desc">
             기본 기법 위에 추가로 적용할 수 있는 검증 방법들입니다.
             여러 기법을 조합하면 환각을 더욱 효과적으로 줄일 수 있습니다.
@@ -608,21 +685,64 @@
 
 </div><!-- .container -->
 
+<!-- 이 기법을 써도 해결되지 않는 상황 -->
+<div style="max-width:960px;margin:0 auto;padding:0 32px 32px;">
+    <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:28px 32px;border-left:4px solid #CC0000;">
+        <div style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#CC0000;margin-bottom:16px;">⚠️ 이 기법을 써도 해결되지 않는 상황 (AI의 구조적 한계)</div>
+        <div style="background:rgba(204,0,0,0.05);border-radius:10px;padding:16px;margin-bottom:16px;font-size:14px;color:var(--text-muted);line-height:1.7;">
+            환각 방지 기법을 아무리 잘 써도 <strong style="color:var(--text-primary);">AI가 절대로 알 수 없는 것들</strong>이 있습니다. 이 한계를 이해하지 못하면, 기법을 잘 써도 잘못된 신뢰를 가지게 됩니다.
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+            <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📅 학습 데이터 이후 사건</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">AI의 지식 기준일(cutoff) 이후 발생한 사건, 최신 수치, 가격 변동은 아무리 잘 물어봐도 AI가 알 수 없습니다. 항상 최신 뉴스·공식 사이트로 검증하세요.</div>
+            </div>
+            <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🏢 내부·비공개 데이터</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">우리 회사 실적, 내부 규정, 비공개 계약 내용 — AI는 추측만 합니다. 이런 데이터는 직접 제공하거나, 답변하지 말라고 명시해야 합니다.</div>
+            </div>
+            <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                <div style="font-weight:700;font-size:14px;margin-bottom:6px;">⚖️ 법률·의료 최종 판단</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">AI가 법률 조항이나 의학적 진단을 그럴듯하게 설명해도, 실제 적용은 전문가만 할 수 있습니다. 중요한 의사결정에는 반드시 전문가 확인이 필요합니다.</div>
+            </div>
+            <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔢 복잡한 수치 계산</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">여러 단계의 수치 계산에서 AI는 중간 오류를 그럴듯하게 이어나갑니다. 중요한 계산은 스프레드시트나 계산기로 반드시 검증하세요.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 시리즈 더 보기 -->
+    <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:24px 28px;margin-top:16px;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">AI 활용 심화 시리즈 더 보기</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <a href="ai-fluency.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                <span style="font-size:28px;">📊</span>
+                <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">11가지 습관</div><div style="font-size:12px;color:var(--text-muted);">AI 활용 행동 지표 셀프 진단</div></div>
+            </a>
+            <a href="multi-persona.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                <span style="font-size:28px;">🎭</span>
+                <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">멀티 페르소나</div><div style="font-size:12px;color:var(--text-muted);">AI 팀을 구성해 토론시키기</div></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-back-wrap">
+    <a href="index.html" class="bottom-back-btn">&larr; 목록으로</a>
+</div>
+
 <!-- ══════════════════════════════════════ -->
 <!-- Footer: 출처 + 네비게이션 -->
 <!-- ══════════════════════════════════════ -->
 <footer class="page-footer">
     <div class="footer-inner">
-        <div style="background:#fff; border:1px solid #e5e5e5; border-radius:14px; padding:28px 32px; margin-bottom:24px;">
-            <div style="font-size:12px; font-weight:800; color:#999; letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px;">출처</div>
-            <div style="font-size:18px; font-weight:800; color:#1a1a1a; margin-bottom:4px;">Reduce Hallucinations</div>
-            <div style="font-size:14px; color:#999; margin-bottom:14px;">Anthropic · Claude Documentation</div>
-            <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" style="font-size:13px; color:#CC0000; text-decoration:none; word-break:break-all; display:inline-block; margin-bottom:14px;">https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations</a>
-            <div style="font-size:13px; color:#888; line-height:1.6;">이 페이지는 Anthropic 공식 문서의 주요 내용을 한국어로 재구성한 것입니다.</div>
-        </div>
-
-        <div class="footer-nav">
-            <a href="index.html">&larr; 목록으로 돌아가기</a>
+        <div class="footer-source">
+            <div style="font-size:12px; font-weight:800; color:var(--text-muted); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:16px;">출처</div>
+            <div style="font-size:18px; font-weight:800; color:var(--text-primary); margin-bottom:4px;">Reduce Hallucinations</div>
+            <div style="font-size:14px; color:var(--text-muted); margin-bottom:14px;">Anthropic · Claude Documentation</div>
+            <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations" target="_blank" style="font-size:13px; color:var(--accent); text-decoration:none; word-break:break-all; display:inline-block; margin-bottom:14px;">https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations</a>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">이 페이지는 Anthropic 공식 문서의 주요 내용을 한국어로 재구성한 것입니다.</div>
         </div>
     </div>
 </footer>

@@ -1,9 +1,15 @@
 /* ── HEADER OVERRIDE ── */
-header{background:linear-gradient(135deg,#1a1a1a 0%,#2d1a1a 100%);border-bottom:3px solid #CC0000;padding:48px 32px 40px;}
+header{
+  background:linear-gradient(160deg,#1e2235 0%,#1c1f2e 100%);
+  border-bottom:none;border-top:none;
+  box-shadow:0 8px 32px rgba(8,10,18,0.5),inset 0 1px 0 rgba(255,255,255,0.07);
+  padding:48px 32px 56px;
+  border-radius:0 0 32px 32px;
+}
 .back-link{display:inline-block;color:#e8706a;text-decoration:none;font-size:14px;font-weight:600;margin-bottom:20px;transition:opacity 0.2s;}
 .back-link:hover{opacity:0.7;}
 header p{font-size:17px;color:rgba(255,255,255,0.6);}
-.header-badge{display:inline-block;font-size:13px;font-weight:600;color:#e8706a;background:rgba(255,255,255,0.1);border:1px solid rgba(232,112,106,0.3);padding:4px 16px;border-radius:20px;margin-top:12px;}
+.header-badge{display:inline-block;font-size:13px;font-weight:600;color:#e8706a;background:#1e2235;border:none;padding:6px 18px;border-radius:20px;margin-top:12px;box-shadow:4px 4px 10px rgba(8,10,18,0.75),-4px -4px 10px rgba(40,44,62,0.4);}
 
 /* ── QUIZ SECTION ── */
 #diag-intro,#pd-diag-intro{max-width:720px;margin-left:auto;margin-right:auto;}
@@ -12,22 +18,74 @@ header p{font-size:17px;color:rgba(255,255,255,0.6);}
 .quiz-header{margin-bottom:32px;}
 .quiz-area-label{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
 .quiz-progress-wrap{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.quiz-progress-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.quiz-progress-bar{flex:1;height:6px;background:var(--bg-secondary);border-radius:3px;overflow:hidden;box-shadow:var(--nm-in-sm);}
 .quiz-progress-fill{height:100%;background:var(--accent);border-radius:3px;transition:width 0.4s ease;}
 .quiz-progress-text{font-size:13px;font-weight:600;color:var(--text-muted);white-space:nowrap;}
-.quiz-q-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:32px;margin-bottom:24px;animation:fadeIn 0.3s ease;}
+.quiz-q-card{background:var(--bg-card);border:none;border-radius:12px;padding:32px;margin-bottom:24px;animation:fadeIn 0.3s ease;box-shadow:var(--nm-out-sm);}
 .quiz-q-num{font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:12px;}
 .quiz-q-title{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;}
 .quiz-q-scenario{font-size:16px;color:var(--text-primary);line-height:1.7;margin-bottom:28px;}
 .quiz-options{display:flex;flex-direction:column;gap:10px;}
-.quiz-opt{background:var(--bg-secondary);border:1.5px solid var(--border);border-radius:10px;padding:14px 18px;font-size:15px;color:var(--text-primary);cursor:pointer;text-align:left;transition:all 0.2s ease;line-height:1.5;}
-.quiz-opt:hover{border-color:var(--accent);background:var(--accent-light);}
-.quiz-opt.selected{border-color:var(--accent);background:var(--accent);color:#fff;}
+.quiz-opt{background:var(--bg-card);border:none;border-radius:10px;padding:14px 18px;font-size:15px;color:var(--text-primary);cursor:pointer;text-align:left;transition:box-shadow 0.2s ease;line-height:1.5;box-shadow:var(--nm-out-xs);}
+.quiz-opt:hover{background:var(--accent-light);box-shadow:var(--nm-out-sm);}
+.quiz-opt.selected{background:var(--accent);color:#fff;box-shadow:var(--nm-in-sm);}
 .quiz-nav{display:flex;gap:12px;justify-content:space-between;}
 .quiz-nudge{background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--text-secondary);margin-bottom:24px;}
 .quiz-nudge a{color:var(--accent);font-weight:700;text-decoration:none;}
 
 /* ── REDIAGNOSIS ── */
-.rediag-intro{background:var(--accent-light);border:1px solid rgba(249,115,22,0.2);border-radius:12px;padding:20px 24px;margin-bottom:28px;}
+.rediag-intro{background:var(--accent-light);border:none;border-radius:12px;padding:20px 24px;margin:0 auto 28px;max-width:720px;box-shadow:var(--nm-out-sm);}
 .rediag-intro p{font-size:15px;color:var(--text-secondary);line-height:1.6;}
 .rediag-intro strong{color:var(--text-primary);}
+
+/* ── STEP PROGRESS (진단 → 1~5단계) ── */
+.diag-step-progress{display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.step-dot{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.32);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-dot.diag-label{font-size:10px;line-height:1.1;}
+.step-dot.current{background:#ffffff;border:none;box-shadow:0 0 0 3px rgba(255,255,255,0.15),0 4px 14px rgba(0,0,0,0.35);color:#1c1f2e;}
+.step-dot.done{background:rgba(255,255,255,0.11);border:1px solid rgba(255,255,255,0.16);box-shadow:inset 2px 2px 5px rgba(0,0,0,0.2),inset -1px -1px 3px rgba(255,255,255,0.03);color:rgba(255,255,255,0.55);}
+.step-line{width:36px;height:2px;background:rgba(255,255,255,0.07);flex-shrink:0;}
+.step-line.done{background:rgba(255,255,255,0.22);}
+a.step-dot{text-decoration:none;cursor:pointer;transition:opacity 0.15s,transform 0.15s;}
+a.step-dot:hover{opacity:0.75;transform:scale(1.1);}
+@media(max-width:768px){.step-dot{width:30px;height:30px;font-size:11px;}.step-dot.diag-label{font-size:9px;}.step-line{width:20px;}}
+
+/* ── 문항 선택 마이크로 인터랙션 ── */
+@keyframes opt-select {
+  0%  { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100%{ transform: scale(1); }
+}
+.quiz-opt.selected {
+  border-color: var(--accent) !important;
+  background: rgba(249,115,22,0.08) !important;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+.quiz-opt:disabled { cursor: default; }
+
+/* ── 문항 카드 슬라이드인 ── */
+.quiz-q-card {
+  animation: slide-in-diag 0.35s ease;
+}
+@keyframes slide-in-diag {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 마일스톤 카드 ── */
+.quiz-milestone-card {
+  text-align: center;
+  padding: 40px 28px;
+  background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.03));
+  border-radius: 16px;
+  animation: milestone-pop 0.5s ease;
+}
+@keyframes milestone-pop {
+  0%  { opacity: 0; transform: scale(0.9); }
+  60% { transform: scale(1.04); }
+  100%{ opacity: 1; transform: scale(1); }
+}
+.milestone-emoji { font-size: 36px; margin-bottom: 10px; }
+.milestone-title { font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.milestone-sub   { font-size: 14px; color: var(--text-muted); line-height: 1.6; }

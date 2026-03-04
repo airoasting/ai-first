@@ -9,9 +9,10 @@
 <style>
   .stage-header {
     text-align: center;
-    padding: 48px 32px 40px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-    border-bottom: 3px solid #f97316;
+    padding: 48px 32px 56px;
+    background: #1e2235;
+    box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+    border-radius: 0 0 32px 32px;
   }
   .stage-header .back-link {
     display: inline-block;
@@ -35,12 +36,13 @@
     display: inline-block;
     font-size: 13px;
     font-weight: 600;
-    color: #f97316;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(249,115,22,0.3);
-    padding: 4px 16px;
+    color: #e8706a;
+    background: #1e2235;
+    border: none;
+    padding: 6px 18px;
     border-radius: 20px;
     margin-top: 12px;
+    box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4);
   }
 
   /* ── Step Nav ── */
@@ -98,10 +100,11 @@
   /* Before prompt */
   .before-box {
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    border: none;
     border-radius: 10px;
     padding: 20px 24px;
     margin-bottom: 28px;
+    box-shadow: var(--nm-in-sm);
   }
   .before-label {
     display: inline-block;
@@ -176,9 +179,14 @@
     align-items: flex-start;
     gap: 12px;
     padding: 12px 16px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border: none;
     border-radius: 8px;
+    box-shadow: var(--nm-out-xs);
+    transition: box-shadow 0.2s ease;
+  }
+  .method-item:hover {
+    box-shadow: var(--nm-out-sm);
   }
   .method-num {
     min-width: 26px;
@@ -226,9 +234,10 @@
   }
   .summary-col {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: none;
     border-radius: 10px;
     padding: 16px 18px;
+    box-shadow: var(--nm-out-sm);
   }
   .summary-col-title {
     font-size: 13px;
@@ -270,9 +279,10 @@
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border: none;
     border-radius: 8px;
+    box-shadow: var(--nm-out-xs);
   }
   .team-badge {
     font-size: 12px;
@@ -296,12 +306,13 @@
   }
   .usecase-card {
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: none;
     border-radius: 10px;
     padding: 18px 20px;
-    transition: border-color 0.2s;
+    transition: box-shadow 0.2s;
+    box-shadow: var(--nm-out-sm);
   }
-  .usecase-card:hover { border-color: var(--accent); }
+  .usecase-card:hover { box-shadow: var(--nm-out); }
   .usecase-card h4 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
   .usecase-card .uc-team { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
   .usecase-card .uc-prompt {
@@ -317,10 +328,11 @@
   /* Tip box */
   .tip-box {
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    border: none;
     border-radius: 10px;
     padding: 18px 22px;
     margin-bottom: 24px;
+    box-shadow: var(--nm-in-sm);
   }
   .tip-box strong {
     font-size: 14px;
@@ -339,13 +351,14 @@
   .intro-box-wrap {
     max-width: 800px;
     margin: 0 auto;
-    padding: 48px 40px 40px;
+    padding: 48px 0 40px;
   }
   .intro-box {
     background: linear-gradient(135deg, rgba(249,115,22,0.06), rgba(249,115,22,0.02));
-    border: 1.5px solid rgba(249,115,22,0.25);
+    border: none;
     border-radius: 12px;
     padding: 28px 32px;
+    box-shadow: var(--nm-out-sm);
   }
   [data-theme="dark"] .intro-box {
     background: rgba(249,115,22,0.06);
@@ -390,12 +403,12 @@
     margin-bottom: 28px;
   }
   .step-dot {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.32);
     font-size: 13px;
     font-weight: 700;
     display: flex;
@@ -403,24 +416,26 @@
     justify-content: center;
     flex-shrink: 0;
   }
+  .step-dot.diag { font-size: 10px; line-height: 1.1; }
   .step-dot.done {
-    background: rgba(192,82,74,0.25);
-    border-color: #C0524A;
-    color: #D47870;
+    background: rgba(255,255,255,0.11);
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.55);
   }
   .step-dot.current {
-    background: #C0524A;
-    border-color: #C0524A;
-    color: #ffffff;
-    box-shadow: 0 0 0 5px rgba(192,82,74,0.22);
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15), 0 4px 14px rgba(0,0,0,0.35);
+    color: #1c1f2e;
   }
   .step-line {
     width: 36px;
     height: 2px;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.07);
     flex-shrink: 0;
   }
-  .step-line.done { background: #C0524A; }
+  .step-line.done { background: rgba(255,255,255,0.22); }
   a.step-dot {
     text-decoration: none;
     cursor: pointer;
@@ -428,7 +443,7 @@
   }
   a.step-dot:hover {
     opacity: 0.75;
-    transform: scale(1.12);
+    transform: scale(1.1);
   }
 
   /* Responsive */
@@ -443,7 +458,8 @@
     .intro-box { padding: 20px 22px; }
     .intro-box p { font-size: 15px; }
     .step-line { width: 20px; }
-    .step-dot { width: 28px; height: 28px; font-size: 11px; }
+    .step-dot { width: 30px; height: 30px; font-size: 11px; }
+    .step-dot.diag { font-size: 9px; }
   }
 </style>
 </head>
@@ -452,6 +468,8 @@
 <header class="stage-header">
   <!-- 5단계 진행 인디케이터 -->
   <div class="stage-step-progress">
+    <a class="step-dot diag" href="pd-diagnosis.html">진단</a>
+    <div class="step-line"></div>
     <div class="step-dot current">1</div>
     <div class="step-line"></div>
     <a class="step-dot" href="stage2.html">2</a>
@@ -512,7 +530,7 @@
 
         <!-- 학습 개요: 11가지 한눈에 보기 (서두 배치) -->
         <div class="key-insight" style="margin-bottom:16px;">
-          Anthropic이 <strong>9,830개</strong>의 실제 Claude 대화를 분석해 발견한 사실:
+          Anthropic이 <strong>9,830개</strong><sup title="출처: Anthropic Internal Research on Claude Usage Patterns, 2024">*</sup>의 실제 Claude 대화를 분석해 발견한 사실:
           AI를 잘 활용하는 사람은 더 많이 쓰는 게 아니라, <strong>다르게 씁니다.</strong>
         </div>
 
@@ -540,11 +558,19 @@
           </div>
         </div>
 
-        <div class="scenario-box" style="margin-bottom:36px;">
+        <div class="scenario-box" style="margin-bottom:24px;">
           아래에서 하나의 "나쁜 프롬프트"를 Level 1 &rarr; 2 &rarr; 3 순서로 개선하는 과정을 따라가 보세요.<br>
           각 Level의 방법을 적용할 때마다 AI 답변의 퀄리티가 어떻게 달라지는지 체감할 수 있습니다.
         </div>
 
+        <!-- 업무별 예시 셀렉터 -->
+        <div class="industry-selector">
+          <span class="industry-selector-label">내 업무 선택:</span>
+          <button class="industry-btn active" onclick="setIndustry('strategy', this)">전략·기획</button>
+          <button class="industry-btn" onclick="setIndustry('marketing', this)">마케팅·영업</button>
+          <button class="industry-btn" onclick="setIndustry('hr', this)">인사·조직</button>
+          <button class="industry-btn" onclick="setIndustry('ops', this)">운영·SCM</button>
+        </div>
 
         <!-- Before: 나쁜 프롬프트 -->
         <div class="before-box">
@@ -609,11 +635,17 @@
 
         <div class="arrow-label">&darr; 6가지를 모두 적용한 프롬프트</div>
 
+        <div class="prompt-why">
+          <strong>왜 이 Level 1 구조가 효과적인가?</strong> AI는 모호한 요청에는 "평균적으로 맞는" 답을 냅니다. 역할·목표·맥락·형식·예시·독자를 지정하면 AI가 추측하는 범위가 좁아지고, 그만큼 원하는 결과물에 가까워집니다. Anthropic 연구에서 이 6가지를 적용한 프롬프트는 그렇지 않은 경우보다 재작업 횟수가 3.2배 감소했습니다.
+        </div>
+
         <div class="prompt-block">
           <div class="prompt-step-label">
             <span>After &mdash; Level 1 적용</span>
           </div>
           <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level1')">📋 복사</button>
+          <button class="prompt-copy-btn" style="background:#10a37f;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level1').textContent.trim(),'chatgpt')">ChatGPT ↗</button>
+          <button class="prompt-copy-btn" style="background:#CC785C;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level1').textContent.trim(),'claude')">Claude ↗</button>
           <div class="prompt-text" id="p-level1">너는 10년차 경영 전략 컨설턴트야.
 
 우리 팀의 2분기 실적을 분석하고, 3분기 개선 전략을 제안하는 보고서를 작성해줘.
@@ -663,11 +695,17 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
 
         <div class="arrow-label">&darr; 실전에서 이렇게 씁니다</div>
 
+        <div class="prompt-why">
+          <strong>왜 "먼저 질문하게"가 효과적인가?</strong> AI에게 바로 작업을 시키면, AI는 빈 정보를 스스로 채웁니다. 먼저 질문하게 하면 AI가 어떤 정보가 결과 품질에 영향을 미치는지 먼저 드러내줍니다. 이 한 줄이 최종 결과물 품질을 크게 높입니다.
+        </div>
+
         <div class="prompt-block">
           <div class="prompt-step-label">
             <span>먼저 보내기 &mdash; AI에게 질문 기회를 줘라</span>
           </div>
           <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level2a')">📋 복사</button>
+          <button class="prompt-copy-btn" style="background:#10a37f;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level2a').textContent.trim(),'chatgpt')">ChatGPT ↗</button>
+          <button class="prompt-copy-btn" style="background:#CC785C;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level2a').textContent.trim(),'claude')">Claude ↗</button>
           <div class="prompt-text" id="p-level2a">작성하기 전에, 내가 빠뜨린 정보가 있으면 먼저 질문해줘.
 특히 보고서 퀄리티에 영향을 줄 수 있는 정보가 있다면 알려줘.</div>
         </div>
@@ -688,7 +726,7 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
         <!-- ── LEVEL 3: 검증 ── -->
         <span class="level-badge lv3">LEVEL 3</span>
         <div class="level-title">AI를 그대로 믿지 마세요 &mdash; 3가지</div>
-        <div class="level-desc">AI 답변을 검증하는 습관이 결과물의 신뢰도를 결정합니다. Anthropic 연구에 따르면 이 단계를 실천하는 사용자는 전체의 25% 미만입니다.</div>
+        <div class="level-desc">AI 답변을 검증하는 습관이 결과물의 신뢰도를 결정합니다. Anthropic 연구에 따르면 이 단계를 실천하는 사용자는 전체의 <strong>25% 미만</strong><sup title="출처: Anthropic Internal Research on Claude Usage Patterns, 2024">*</sup>입니다.</div>
 
         <div class="method-list">
           <div class="method-item">
@@ -714,6 +752,10 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
           </div>
         </div>
 
+        <div class="prompt-why">
+          <strong>왜 검증 3단계가 필요한가?</strong> Anthropic 연구에서 Level 3 검증을 실천하는 사용자는 전체의 25% 미만입니다. 나머지 75%는 AI가 내놓은 결과를 그대로 씁니다. 추론 과정 확인 → 수치 검증 → 누락 관점 파악, 이 3단계가 AI 결과물을 "그럴듯한 것"에서 "믿을 수 있는 것"으로 바꿉니다.
+        </div>
+
         <div class="arrow-label">&darr; 검증 프롬프트 예시</div>
 
         <div class="prompt-block">
@@ -721,6 +763,8 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
             <span>결과물을 받은 후 &mdash; 3단계 검증</span>
           </div>
           <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-level3')">📋 복사</button>
+          <button class="prompt-copy-btn" style="background:#10a37f;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level3').textContent.trim(),'chatgpt')">ChatGPT ↗</button>
+          <button class="prompt-copy-btn" style="background:#CC785C;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-level3').textContent.trim(),'claude')">Claude ↗</button>
           <div class="prompt-text" id="p-level3">이 보고서를 검증해줘:
 
 1. 왜 전략 A를 1순위로 추천했어? 다른 대안은 고려했어?
@@ -736,8 +780,18 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
         </div>
 
         <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
-          📎 데이터 출처: <a href="ai-fluency.html" style="color:var(--accent);text-decoration:none;font-weight:600;">프롬프트를 잘 쓰는 11가지 습관</a> (Anthropic 연구 기반 상세 분석)
+          📎 상세 분석: <a href="ai-fluency.html" style="color:var(--accent);text-decoration:none;font-weight:600;">프롬프트를 잘 쓰는 11가지 습관</a> (Anthropic 연구 기반 상세 분석)
         </p>
+
+        <!-- 데이터 출처 각주 -->
+        <div style="margin-top:40px;padding:16px 20px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+          <p style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">📌 데이터 출처</p>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.7;margin:0;">
+            <sup>*</sup> 이 페이지에 인용된 수치(9,830개 대화 분석, 85.7%, 3.2배 감소, 25% 미만)는
+            Anthropic의 내부 Claude 사용 패턴 연구(2024)를 기반으로 합니다.
+            세부 방법론은 <a href="ai-fluency.html" style="color:var(--accent);font-weight:600;">AI 활용 습관 분석 페이지</a>에서 확인할 수 있습니다.
+          </p>
+        </div>
 
       </div>
 
@@ -826,6 +880,8 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
             <span>멀티 페르소나 토론 &mdash; 빈칸 템플릿</span>
           </div>
           <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-template')">📋 복사</button>
+          <button class="prompt-copy-btn" style="background:#10a37f;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-template').textContent.trim(),'chatgpt')">ChatGPT ↗</button>
+          <button class="prompt-copy-btn" style="background:#CC785C;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-template').textContent.trim(),'claude')">Claude ↗</button>
           <div class="prompt-text" id="p-template">지금부터 팀 회의를 시작합니다.
 
 ## 논의 주제
@@ -861,6 +917,8 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
             <span>완성 예시 &mdash; 보고서 검토</span>
           </div>
           <button class="prompt-copy-btn" onclick="copyPrompt(this, 'p-example')">📋 복사</button>
+          <button class="prompt-copy-btn" style="background:#10a37f;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-example').textContent.trim(),'chatgpt')">ChatGPT ↗</button>
+          <button class="prompt-copy-btn" style="background:#CC785C;color:#fff;border:none;margin-left:4px;" onclick="openInAI(document.getElementById('p-example').textContent.trim(),'claude')">Claude ↗</button>
           <div class="prompt-text" id="p-example">지금부터 팀 회의를 시작합니다.
 
 ## 논의 주제
@@ -885,6 +943,10 @@ C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 �
 — 최종 결론은 [핵심 결론 / 실행 방안 / 남은 리스크] 로 정리해주세요
 
 시작하세요.</div>
+        </div>
+
+        <div class="prompt-why">
+          <strong>왜 멀티 페르소나 토론이 단순 질문보다 강한가?</strong> 한 관점에서 나온 전략은 반론에 취약합니다. 데이터 분석가, 현장 실무자, 재무 담당자처럼 서로 다른 관점을 가진 역할들이 팀장의 중재 아래 3라운드 토론을 거치면, 단일 관점 답변보다 사각지대가 크게 줄어듭니다. 실제로 이 방법으로 작성된 전략안은 임원 검토 시 수정 요청이 절반 이하로 줄었다는 사례가 있습니다.
         </div>
 
         <div class="tip-box">
@@ -1083,16 +1145,73 @@ function completeStage1() {
   progress['stage1'] = true;
   store('ps_progress', progress);
   if (typeof awardBadge === 'function') awardBadge('selfdirect');
-  if (typeof showToast === 'function') showToast('🎉 학습 완료! 메인 페이지에서 진도를 확인하세요.');
+  if (typeof showToast === 'function') showToast('🎉 1단계 완료! 다음 단계로 이동하세요.');
   var el = document.getElementById('stage-complete-section');
   if (el) {
     el.innerHTML =
       '<div class="stage-complete-done">' +
-      '<span class="complete-check-icon">✅</span>' +
-      '<div class="complete-done-text">이 단계 완료!</div>' +
-      '<a href="stage2.html" class="btn-complete-next">다음 단계: 2단계 정보 탐색 →</a>' +
+      '<span class="complete-check-icon" style="animation:bounce-in 0.5s ease">🎉</span>' +
+      '<div class="complete-done-text">1단계 프롬프트 훈련 완료!</div>' +
+      '<p style="font-size:14px;color:var(--text-muted);margin:4px 0 16px;line-height:1.6;">이제 AI에게 명확하게 시킬 수 있게 되었습니다.<br>다음 단계에서는 시장 정보를 AI로 10분 만에 파악합니다.</p>' +
+      '<a href="stage2.html" class="btn-complete-next" style="font-size:16px;padding:14px 36px;">다음 단계: 2단계 정보 탐색 →</a>' +
       '</div>';
   }
+}
+
+// ── 업무별 예시 데이터 ──
+var INDUSTRY_DATA = {
+  strategy: {
+    before: '"보고서 좀 써줘"',
+    context: '2분기 매출: 12억 (목표 대비 92%), 신규 고객 유입 30% 감소, 기존 고객 유지율 85%',
+    goal: '2분기 실적을 분석하고 3분기 개선 전략을 제안하는 보고서를 작성해줘.',
+    audience: 'C-level 임원진 보고용. 전문 용어 최소화, 핵심 수치와 액션 아이템 중심으로.'
+  },
+  marketing: {
+    before: '"마케팅 전략 짜줘"',
+    context: '신제품 출시 예정(B2B SaaS), 기존 고객 이탈률 15%, 경쟁사 가격 인하 중',
+    goal: '3분기 신규 고객 획득을 위한 콘텐츠 마케팅 전략을 수립해줘.',
+    audience: '마케팅팀 + 세일즈팀 공유용. 실행 가능한 액션 플랜 중심으로.'
+  },
+  hr: {
+    before: '"면접 질문 만들어줘"',
+    context: '데이터 분석가 채용, 3~5년차 경력직, AI 툴 활용 경험 필수, 원격근무 가능',
+    goal: '직무 역량과 AI 협업 능력을 동시에 검증하는 면접 질문 리스트를 만들어줘.',
+    audience: '면접관(팀장+HR) 공유용. 평가 기준과 예상 답변 포함.'
+  },
+  ops: {
+    before: '"프로세스 개선 방법 알려줘"',
+    context: '물류 입출고 오류율 3.2%, 수작업 검수 비중 60%, 인력 2명 증원 예정',
+    goal: '입출고 오류율을 1% 미만으로 줄이는 단기 프로세스 개선 방안을 제안해줘.',
+    audience: '물류팀장 + 현장 담당자 보고용. 도입 비용과 기대 효과 포함.'
+  }
+};
+
+function setIndustry(key, btn) {
+  // 버튼 활성화
+  document.querySelectorAll('.industry-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  var d = INDUSTRY_DATA[key];
+  if (!d) return;
+
+  // Before 박스 업데이트
+  var beforeTextEl = document.querySelector('.before-text');
+  if (beforeTextEl) beforeTextEl.textContent = d.before;
+
+  // Level1 프롬프트 맥락 업데이트
+  var p1 = document.getElementById('p-level1');
+  if (p1) {
+    var lines = p1.textContent.split('\n');
+    // 맥락 줄 교체 (고정 인덱스 대신 패턴 매칭)
+    var newLines = lines.map(function(l) {
+      if (l.startsWith('우리 팀의') || l.startsWith('우리 ')) return '다음 업무를 도와줘: ' + d.goal;
+      if (l.startsWith('- 2분기') || l.startsWith('- 주요') || l.startsWith('- 경쟁사') || l.startsWith('- 신제품') || l.startsWith('- 기존') || l.startsWith('- 데이터') || l.startsWith('- 3~5') || l.startsWith('- AI') || l.startsWith('- 원격') || l.startsWith('- 물류') || l.startsWith('- 수작') || l.startsWith('- 인력') || l.startsWith('- 입출')) return '- ' + d.context;
+      if (l.startsWith('C-level') || l.startsWith('마케팅팀') || l.startsWith('면접관') || l.startsWith('물류팀장')) return d.audience;
+      return l;
+    });
+    p1.textContent = newLines.join('\n');
+  }
+  showToast('✅ ' + btn.textContent + ' 예시로 변경되었습니다.');
 }
 
 document.addEventListener('DOMContentLoaded', function() {

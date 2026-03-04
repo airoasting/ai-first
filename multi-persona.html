@@ -3,549 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/common.css">
     <title>AI 토론 설계법 (멀티 페르소나) | AI Roasting</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-primary); color: var(--text-primary); }
 
-        body {
-            font-family: 'Helvetica Neue', Arial, -apple-system, system-ui, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.6;
-        }
-
-        header {
+        /* ── Stage Header ── */
+        .stage-header {
             text-align: center;
             padding: 48px 32px 40px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 3px solid #CC0000;
+            background: linear-gradient(160deg, #1e2235 0%, #1c1f2e 100%);
+            box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+        }
+        .stage-header .back-link {
+            display: inline-block; color: #e8706a; text-decoration: none;
+            font-size: 14px; font-weight: 600; margin-bottom: 20px; transition: opacity 0.2s;
+        }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 {
+            font-size: 40px; font-weight: 800; color: #ffffff;
+            letter-spacing: -1px; margin-bottom: 8px; word-break: keep-all;
+        }
+        .stage-header > p { font-size: 17px; color: rgba(255,255,255,0.6); word-break: keep-all; }
+        .stage-header .header-badge {
+            display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a;
+            background: rgba(232,112,106,0.12); padding: 6px 18px; border-radius: 20px; margin-top: 12px;
+            box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4);
+        }
+        @media (max-width: 768px) {
+            .stage-header { padding: 36px 24px 32px; }
+            .stage-header h1 { font-size: 28px; }
+
         }
 
-        .back-link {
-            display: inline-block;
-            color: #e8706a;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            transition: opacity 0.2s;
-        }
+        /* ── Container ── */
+        .container { max-width: 960px; margin: 0 auto; padding: 24px 32px 64px; }
 
-        .back-link:hover { opacity: 0.7; }
-
-        header h1 {
-            font-size: 40px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-        }
-
-        header p { font-size: 16px; color: rgba(255,255,255,0.6); }
-
-        .header-badge {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8706a;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 4px 16px;
-            border-radius: 20px;
-            margin-top: 12px;
-        }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 48px 32px 64px;
-        }
-
-        /* ── Section Title ── */
-        .section-block {
-            margin-bottom: 48px;
-        }
-
+        /* ── Section ── */
+        .section-block { margin-bottom: 48px; }
         .section-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #1a1a1a;
-            padding-left: 16px;
-            border-left: 4px solid #CC0000;
-            margin-bottom: 6px;
+            font-size: 22px; font-weight: 700; color: var(--text-primary);
+            padding-left: 16px; border-left: 4px solid #CC0000;
+            margin-bottom: 6px; word-break: keep-all;
         }
-
         .section-subtitle {
-            font-size: 15px;
-            color: #666;
-            padding-left: 20px;
-            margin-bottom: 24px;
+            font-size: 15px; color: var(--text-muted);
+            padding-left: 20px; margin-top: 8px; margin-bottom: 24px; word-break: keep-all;
         }
 
-        /* ── 비교: Before vs After ── */
+        /* ── Compare ── */
         .compare-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 16px; margin-bottom: 24px;
         }
-
         .compare-card {
-            border-radius: 12px;
-            padding: 24px;
-            position: relative;
+            border-radius: 16px; padding: 24px;
+            word-break: break-word; overflow-wrap: break-word;
         }
-
-        .compare-card.before {
-            background: #f5f5f5;
-            border: 1px solid #e0e0e0;
-        }
-
-        .compare-card.after {
-            background: #fff5f5;
-            border: 1px solid #f0c0c0;
-        }
+        .compare-card.before { background: var(--bg-secondary); box-shadow: var(--nm-in-sm); }
+        .compare-card.after  { background: var(--bg-card); box-shadow: var(--nm-out); }
 
         .compare-label {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            padding: 3px 12px;
-            border-radius: 4px;
-            margin-bottom: 14px;
+            display: inline-block; font-size: 11px; font-weight: 800;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 4px 12px; border-radius: 20px; margin-bottom: 14px;
         }
+        .before .compare-label { background: var(--bg-primary); color: var(--text-muted); box-shadow: var(--nm-out-xs); }
+        .after  .compare-label { background: #CC0000; color: #fff; }
 
-        .before .compare-label {
-            background: #e0e0e0;
-            color: #666;
-        }
-
-        .after .compare-label {
-            background: #CC0000;
-            color: #fff;
-        }
-
-        .compare-card h3 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 12px;
-        }
+        .compare-card h3 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
 
         .compare-prompt {
-            font-size: 14px;
-            color: #333;
-            background: #2d2d2d;
-            color: #fff;
-            padding: 14px 16px;
-            border-radius: 8px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            line-height: 1.6;
-            margin-bottom: 14px;
-        }
-
-        .compare-result {
             font-size: 13px;
-            color: #555;
-            line-height: 1.7;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 14px 16px; border-radius: 12px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            line-height: 1.7; margin-bottom: 14px;
+            box-shadow: var(--nm-in-sm);
+            word-break: break-all; overflow-wrap: break-word;
         }
+        .compare-result { font-size: 13px; color: var(--text-secondary); line-height: 1.7; word-break: keep-all; }
+        .compare-result strong { color: var(--text-primary); }
 
-        .compare-result strong {
-            color: #1a1a1a;
-        }
-
-        .compare-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #CC0000;
-            font-weight: 800;
-        }
-
-        /* ── 핵심 원리 ── */
+        /* ── Principle ── */
         .principle-box {
-            background: #f9f9f9;
-            border: 1px solid #e8e8e8;
-            border-radius: 12px;
-            padding: 28px;
-            margin-bottom: 32px;
+            background: var(--bg-primary); box-shadow: var(--nm-in-sm);
+            border-radius: 16px; padding: 28px; margin-bottom: 32px;
         }
-
-        .principle-box h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 16px;
-        }
-
-        .principle-items {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-
+        .principle-box h3 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
+        .principle-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         .principle-item {
-            text-align: center;
-            padding: 20px 16px;
-            background: #fff;
-            border: 1px solid #e8e8e8;
-            border-radius: 10px;
+            text-align: center; padding: 24px 16px;
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 14px; transition: box-shadow 0.2s;
         }
+        .principle-item:hover { box-shadow: var(--nm-out-sm); }
+        .principle-item .p-icon { font-size: 32px; margin-bottom: 12px; }
+        .principle-item .p-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; word-break: keep-all; }
+        .principle-item .p-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; word-break: keep-all; }
 
-        .principle-item .p-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
+        /* ── Research Box ── */
+        .research-box {
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 16px; padding: 28px; margin-bottom: 16px;
         }
-
-        .principle-item .p-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 4px;
+        .research-intro { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+        .research-intro-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+        .research-intro-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; word-break: keep-all; }
+        .research-intro-text { font-size: 14px; color: var(--text-secondary); line-height: 1.8; word-break: keep-all; }
+        .research-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .research-item {
+            background: var(--bg-secondary); box-shadow: var(--nm-in-sm);
+            border-radius: 12px; padding: 20px 16px; text-align: center;
         }
-
-        .principle-item .p-desc {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.5;
+        .research-item-icon { font-size: 24px; margin-bottom: 10px; }
+        .research-item-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; word-break: keep-all; }
+        .research-item-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; word-break: keep-all; }
+        .research-summary {
+            margin-top: 20px; padding: 16px 18px;
+            background: var(--bg-secondary); box-shadow: var(--nm-in-sm); border-radius: 12px;
         }
+        .research-summary p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin: 0; word-break: keep-all; }
+        .citation { font-size: 12px; color: var(--text-muted); line-height: 1.6; padding-left: 2px; margin-top: 14px; }
 
-        /* ── 팀 구성 ── */
-        .team-setup {
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 32px;
-        }
-
-        .team-header {
-            background: #1a1a1a;
-            color: #fff;
-            padding: 18px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .team-header h3 {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .team-roles {
-            padding: 24px;
-        }
-
-        .role-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .role-row:last-child { border-bottom: none; }
-
-        .role-badge {
-            min-width: 80px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 6px 12px;
-            border-radius: 6px;
-            flex-shrink: 0;
-        }
-
-        .role-badge.leader {
-            background: #CC0000;
-            color: #fff;
-        }
-
-        .role-badge.member {
-            background: #f0f0f0;
-            color: #555;
-        }
-
-        .role-info { flex: 1; }
-
-        .role-info .role-name {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 2px;
-        }
-
-        .role-info .role-desc {
-            font-size: 13px;
-            color: #888;
-        }
-
-        .role-tip {
-            font-size: 12px;
-            color: #CC0000;
-            font-weight: 600;
-            background: #fff5f5;
-            padding: 3px 10px;
-            border-radius: 4px;
-            flex-shrink: 0;
-        }
-
-        /* ── 프롬프트 템플릿 ── */
-        .template-box {
-            background: #1a1a1a;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-
-        .template-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 20px;
-            background: #2d2d2d;
-            border-bottom: 1px solid #3a3a3a;
-        }
-
-        .template-bar span {
-            font-size: 13px;
-            font-weight: 600;
-            color: #999;
-        }
-
-        .copy-btn {
-            font-size: 12px;
-            font-weight: 600;
-            color: #CC0000;
-            background: rgba(204,0,0,0.1);
-            border: 1px solid rgba(204,0,0,0.3);
-            padding: 4px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background: #CC0000;
-            color: #fff;
-        }
-
-        .template-body {
-            padding: 20px 24px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 13px;
-            color: #e0e0e0;
-            line-height: 1.8;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .template-body .t-comment {
-            color: #666;
-        }
-
-        .template-body .t-role {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .template-body .t-keyword {
-            color: #CC0000;
-            font-weight: 600;
-        }
-
-        .template-note {
-            font-size: 13px;
-            color: #888;
-            padding: 12px 16px;
-            background: #f8f8f8;
-            border: 1px solid #e8e8e8;
-            border-radius: 8px;
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-
-        .template-note strong {
-            color: #CC0000;
-        }
-
-        /* ── 활용 예시 ── */
-        .usecase-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-
-        .usecase-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            transition: border-color 0.2s;
-        }
-
-        .usecase-card:hover {
-            border-color: #CC0000;
-        }
-
-        .usecase-card h4 {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-        }
-
-        .usecase-card .usecase-team {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .usecase-card .usecase-prompt {
-            font-size: 13px;
-            color: #555;
-            line-height: 1.6;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            background: #f8f8f8;
-            padding: 12px;
-            border-radius: 6px;
-        }
-
-        /* ── 핵심 팁 ── */
-        .tips-section {
-            background: #f9f9f9;
-            border: 1px solid #e8e8e8;
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .tips-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 14px;
-        }
-
-        .tips-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .tips-list li {
-            font-size: 14px;
-            color: #4a4a4a;
-            padding-left: 20px;
-            position: relative;
-            line-height: 1.6;
-        }
-
-        .tips-list li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #CC0000;
-            font-weight: 700;
-        }
-
-        /* ── 프로세스 흐름도 ── */
+        /* ── Flow Steps ── */
         .flow-steps {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            margin-bottom: 32px;
-            flex-wrap: wrap;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0; margin-bottom: 32px; flex-wrap: wrap; row-gap: 12px;
         }
-
         .flow-step {
-            text-align: center;
-            padding: 16px 20px;
-            background: #fff;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            min-width: 140px;
+            text-align: center; padding: 20px 14px;
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 14px; flex: 1; min-width: 130px; max-width: 195px;
         }
-
-        .flow-step.active {
-            border-color: #CC0000;
-            background: #fff5f5;
-        }
-
-        .flow-step .fs-num {
-            font-size: 11px;
-            font-weight: 800;
-            color: #CC0000;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .flow-step .fs-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 2px;
-        }
-
-        .flow-step .fs-desc {
-            font-size: 11px;
-            color: #888;
-        }
-
+        .flow-step.active { background: var(--bg-secondary); box-shadow: var(--nm-in-sm); }
+        .flow-step .fs-num { font-size: 10px; font-weight: 800; color: #CC0000; letter-spacing: 1px; margin-bottom: 6px; }
+        .flow-step .fs-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; word-break: keep-all; }
+        .flow-step .fs-desc { font-size: 11px; color: var(--text-muted); word-break: keep-all; line-height: 1.4; }
         .flow-arrow {
-            font-size: 20px;
-            color: #CC0000;
-            font-weight: 800;
-            padding: 0 8px;
+            font-size: 18px; color: #CC0000; font-weight: 800;
+            padding: 0 10px; display: flex; align-items: center; flex-shrink: 0;
         }
 
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 32px;
-            border-top: 1px solid #e0e0e0;
-            background: #f4f4f4;
+        /* ── Team Setup ── */
+        .team-setup {
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 16px; overflow: hidden; margin-bottom: 24px;
+        }
+        .team-header {
+            background: var(--bg-secondary);
+            box-shadow: inset 0 -3px 6px rgba(163,177,198,0.35);
+            color: var(--text-primary); padding: 18px 24px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        [data-theme="dark"] .team-header { box-shadow: inset 0 -3px 6px rgba(0,0,0,0.4); }
+        .team-header h3 { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+        .team-roles { padding: 8px 24px 16px; }
+        .role-row {
+            display: flex; align-items: center; gap: 14px;
+            padding: 14px 0; border-bottom: 1px solid var(--border);
+        }
+        .role-row:last-child { border-bottom: none; }
+        .role-badge {
+            min-width: 72px; text-align: center; font-size: 12px; font-weight: 800;
+            padding: 6px 12px; border-radius: 20px; flex-shrink: 0;
+        }
+        .role-badge.leader {
+            background: #CC0000; color: #fff;
+            box-shadow: 3px 3px 7px rgba(163,177,198,0.5), -2px -2px 5px rgba(255,255,255,0.6);
+        }
+        .role-badge.member { background: var(--bg-secondary); color: var(--text-muted); box-shadow: var(--nm-in-sm); }
+        .role-info { flex: 1; min-width: 0; }
+        .role-info .role-name { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; word-break: keep-all; }
+        .role-info .role-desc { font-size: 13px; color: var(--text-muted); word-break: keep-all; }
+        .role-tip {
+            font-size: 12px; color: #CC0000; font-weight: 600; white-space: nowrap;
+            background: var(--bg-card); box-shadow: var(--nm-out-xs);
+            padding: 4px 12px; border-radius: 20px; flex-shrink: 0;
         }
 
-        footer .footer-brand {
-            font-size: 14px;
-            font-weight: 700;
-            color: #CC0000;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
+        /* ── Template Box ── */
+        .template-box { background: #12121e; border-radius: 16px; overflow: hidden; margin-bottom: 16px; box-shadow: var(--nm-out); }
+        .template-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 20px; background: #0d0d1a; border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .template-bar span { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.45); }
+        .copy-btn {
+            font-size: 12px; font-weight: 600; color: #f87171;
+            background: rgba(204,0,0,0.15); border: 1px solid rgba(204,0,0,0.3);
+            padding: 5px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
+        }
+        .copy-btn:hover { background: #CC0000; color: #fff; border-color: #CC0000; }
+        .template-body {
+            padding: 24px; font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px; color: #e2e8f0; line-height: 1.9;
+            white-space: pre-wrap; word-break: break-word;
+        }
+        .template-body .t-comment { color: rgba(255,255,255,0.3); }
+        .template-body .t-role { color: #fbbf24; font-weight: 600; }
+        .template-body .t-keyword { color: #f87171; font-weight: 600; }
+
+        /* ── Template Note ── */
+        .template-note {
+            font-size: 13px; color: var(--text-secondary);
+            padding: 16px 20px; background: var(--bg-secondary);
+            box-shadow: var(--nm-in-sm); border-radius: 12px;
+            margin-bottom: 32px; line-height: 1.7; word-break: keep-all;
+        }
+        .template-note strong { color: #CC0000; }
+
+        /* ── Use Case Cards ── */
+        .usecase-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .usecase-card {
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 16px; padding: 22px; transition: box-shadow 0.25s;
+        }
+        .usecase-card:hover { box-shadow: var(--nm-out-sm); }
+        .usecase-card h4 { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+        .usecase-card .usecase-team {
+            font-size: 12px; color: var(--text-muted);
+            margin-bottom: 12px; padding-bottom: 12px;
+            border-bottom: 1px solid var(--border); word-break: keep-all;
+        }
+        .usecase-card .usecase-prompt {
+            font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: var(--bg-secondary); box-shadow: var(--nm-in-sm);
+            padding: 12px 14px; border-radius: 10px; word-break: break-all;
         }
 
-        footer .footer-text { font-size: 13px; color: #999; }
+        /* ── Project Box ── */
+        .project-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--bg-card); box-shadow: var(--nm-out-sm);
+            border-radius: 12px; padding: 10px 18px; margin-bottom: 20px;
+        }
+        .project-badge-text { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+        .project-box {
+            background: var(--bg-card); box-shadow: var(--nm-out);
+            border-radius: 16px; padding: 28px; margin-bottom: 20px;
+        }
+        .project-intro { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; word-break: keep-all; }
+        .project-steps { display: flex; flex-direction: column; gap: 20px; }
+        .project-step { display: flex; align-items: flex-start; gap: 16px; }
+        .project-step-num {
+            min-width: 38px; height: 38px; background: #CC0000; color: #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 800; flex-shrink: 0;
+            box-shadow: 4px 4px 10px rgba(163,177,198,0.55), -2px -2px 6px rgba(255,255,255,0.6);
+        }
+        .project-step-body { flex: 1; padding-top: 6px; }
+        .project-step-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; word-break: keep-all; }
+        .project-step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; word-break: keep-all; }
+        .step-tag {
+            display: inline-block; background: var(--bg-secondary); box-shadow: var(--nm-in-sm);
+            padding: 2px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;
+            color: var(--text-secondary); margin: 0 2px;
+        }
 
+        /* ── Tips Section ── */
+        .tips-section {
+            background: var(--bg-primary); box-shadow: var(--nm-in-sm);
+            border-radius: 16px; padding: 28px; margin-bottom: 0;
+        }
+        .tips-title {
+            font-size: 16px; font-weight: 700; color: var(--text-primary);
+            margin-bottom: 16px; padding-left: 14px; border-left: 3px solid #CC0000;
+        }
+        .tips-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .tips-list li {
+            font-size: 14px; color: var(--text-secondary);
+            padding: 12px 14px 12px 36px; position: relative; line-height: 1.6;
+            background: var(--bg-card); box-shadow: var(--nm-out-xs);
+            border-radius: 10px; word-break: keep-all;
+        }
+        .tips-list li::before { content: '→'; position: absolute; left: 14px; color: #CC0000; font-weight: 700; }
+
+        /* ── Responsive ── */
         @media (max-width: 768px) {
-            header { padding: 40px 20px 24px; }
-            header h1 { font-size: 28px; }
             .container { padding: 32px 16px 48px; }
             .compare-grid { grid-template-columns: 1fr; }
             .principle-items { grid-template-columns: 1fr; }
+            .research-items { grid-template-columns: 1fr; }
             .usecase-cards { grid-template-columns: 1fr; }
-            .flow-steps { flex-direction: column; }
-            .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+            .flow-steps { flex-direction: column; align-items: stretch; row-gap: 8px; }
+            .flow-arrow { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+            .flow-step { max-width: none; }
             .role-row { flex-wrap: wrap; }
             .role-tip { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body>
-    <header>
+    <header class="stage-header">
         <a class="back-link" href="index.html">&larr; 목록으로</a>
         <h1>AI 토론 설계법 (멀티 페르소나)</h1>
         <p>AI 한 명에게 묻지 말고, AI 팀을 구성해서 토론시키세요</p>
-        <span class="header-badge">대화만으로 퀄리티 2배 &middot; 5분 소요</span>
+        <span class="header-badge">대화만으로 퀄리티 2배 &middot; 5분 소요 &middot; <span style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:12px;">중급~고급</span></span>
     </header>
 
     <main class="container">
+
+        <nav class="fw-inter-nav">
+            <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-right:6px;flex-shrink:0;">AI 활용 심화 시리즈</span>
+            <a href="ai-fluency.html">11가지 습관</a>
+            <a class="current-fw" href="multi-persona.html">멀티 페르소나</a>
+            <a href="reduce-hallucinations.html">환각 줄이기</a>
+        </nav>
 
         <!-- 핵심 비교: Before vs After -->
         <div class="section-block">
@@ -565,7 +331,7 @@
                 </div>
                 <div class="compare-card after">
                     <span class="compare-label">After &mdash; 팀 토론</span>
-                    <div class="compare-prompt">"총 4명의 팀을 구성해줘. 마케팅 디렉터가 팀장이고, 데이터 분석가, 고객 전문가, 재무 담당이 3명의 팀원이야. 마케팅 디렉터가 각 팀원과 3차례 비판적으로 토론한 후, 최종 결론을 도출해줘."</div>
+                    <div class="compare-prompt">"총 4명의 팀을 구성해줘. 마케팅 디렉터가 팀장이고, 데이터 분석가, 고객 전문가, 재무 담당이 팀원이야. 마케팅 디렉터가 각 팀원과 3차례 비판적으로 토론한 후, 최종 결론을 도출해줘."</div>
                     <div class="compare-result">
                         <strong>결과:</strong> 3라운드 비판적 토론을 거친 전략<br>
                         &bull; 1라운드: 각 팀원의 초기 주장<br>
@@ -587,17 +353,17 @@
                     <div class="principle-item">
                         <div class="p-icon">🔍</div>
                         <div class="p-title">다각도 검증</div>
-                        <div class="p-desc">각 전문가가 자기 관점에서<br>빈틈을 찾아냅니다</div>
+                        <div class="p-desc">각 전문가가 자기 관점에서 빈틈을 찾아냅니다</div>
                     </div>
                     <div class="principle-item">
                         <div class="p-icon">💬</div>
                         <div class="p-title">순차적 토론</div>
-                        <div class="p-desc">앞사람 의견을 듣고<br>반박&middot;보완하며 깊어집니다</div>
+                        <div class="p-desc">앞사람 의견을 듣고 반박·보완하며 깊어집니다</div>
                     </div>
                     <div class="principle-item">
                         <div class="p-icon">✅</div>
                         <div class="p-title">팀장 종합</div>
-                        <div class="p-desc">토론 결과를 종합해<br>실행 가능한 결론을 냅니다</div>
+                        <div class="p-desc">토론 결과를 종합해 실행 가능한 결론을 냅니다</div>
                     </div>
                 </div>
             </div>
@@ -608,46 +374,44 @@
             <h2 class="section-title">Anthropic 연구가 증명한 원리</h2>
             <p class="section-subtitle">왜 "역할을 나눠라"고 하면 AI가 진짜 다르게 답할까?</p>
 
-            <div style="background: linear-gradient(135deg, #f0f4ff, #fff); border: 1px solid #d0daf0; border-radius: 12px; padding: 28px; margin-bottom: 20px;">
-                <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px;">
-                    <span style="font-size: 28px; flex-shrink: 0;">🎭</span>
+            <div class="research-box">
+                <div class="research-intro">
+                    <div class="research-intro-icon">🎭</div>
                     <div>
-                        <p style="font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;">AI는 "배우"처럼 작동합니다</p>
-                        <p style="font-size: 14px; color: #555; line-height: 1.8;">
-                            Anthropic의 <strong style="color: #1e40af;">Persona Selection Model(PSM)</strong> 연구에 따르면, Claude 같은 AI는 학습 과정에서 수많은 글을 읽으며 <strong>다양한 캐릭터를 연기하는 법</strong>을 배웁니다. 마치 배우가 여러 역할을 소화할 수 있는 것처럼요.
+                        <p class="research-intro-title">AI는 "배우"처럼 작동합니다</p>
+                        <p class="research-intro-text">
+                            Anthropic의 <strong style="color: #3b82f6;">Persona Selection Model(PSM)</strong> 연구에 따르면, Claude 같은 AI는 학습 과정에서 수많은 글을 읽으며 <strong>다양한 캐릭터를 연기하는 법</strong>을 배웁니다. 마치 배우가 여러 역할을 소화할 수 있는 것처럼요.
                         </p>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
-                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
-                        <div style="font-size: 24px; margin-bottom: 8px;">📚</div>
-                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">학습 = 캐릭터 습득</div>
-                        <div style="font-size: 12px; color: #666; line-height: 1.5;">수많은 텍스트를 읽으며<br>다양한 전문가의 사고방식을 학습</div>
+                <div class="research-items">
+                    <div class="research-item">
+                        <div class="research-item-icon">📚</div>
+                        <div class="research-item-title">학습 = 캐릭터 습득</div>
+                        <div class="research-item-desc">수많은 텍스트를 읽으며 다양한 전문가의 사고방식을 학습</div>
                     </div>
-                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
-                        <div style="font-size: 24px; margin-bottom: 8px;">🎯</div>
-                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">역할 부여 = 캐릭터 전환</div>
-                        <div style="font-size: 12px; color: #666; line-height: 1.5;">"데이터 분석가처럼 봐줘"라고 하면<br>그 캐릭터의 사고방식으로 전환</div>
+                    <div class="research-item">
+                        <div class="research-item-icon">🎯</div>
+                        <div class="research-item-title">역할 부여 = 캐릭터 전환</div>
+                        <div class="research-item-desc">"데이터 분석가처럼 봐줘"라고 하면 그 캐릭터의 사고방식으로 전환</div>
                     </div>
-                    <div style="background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 18px 16px; text-align: center;">
-                        <div style="font-size: 24px; margin-bottom: 8px;">🧠</div>
-                        <div style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">실제로 다른 관점</div>
-                        <div style="font-size: 12px; color: #666; line-height: 1.5;">단순 흉내가 아니라<br>AI 내부에서 실제로 다른 패턴이 활성화</div>
+                    <div class="research-item">
+                        <div class="research-item-icon">🧠</div>
+                        <div class="research-item-title">실제로 다른 관점</div>
+                        <div class="research-item-desc">단순 흉내가 아니라 AI 내부에서 실제로 다른 패턴이 활성화</div>
                     </div>
                 </div>
 
-                <div style="margin-top: 20px; padding: 14px 18px; background: #f8f5f0; border: 1px solid #e8e0d4; border-radius: 8px;">
-                    <p style="font-size: 13px; color: #555; line-height: 1.7; margin: 0;">
-                        <strong style="color: #1a1a1a;">그래서 멀티 페르소나가 효과적입니다.</strong> AI에게 서로 다른 역할을 부여하면, 각 역할마다 <strong>실제로 다른 전문가의 관점</strong>이 활성화됩니다.
+                <div class="research-summary">
+                    <p>
+                        <strong style="color: var(--text-primary);">그래서 멀티 페르소나가 효과적입니다.</strong> AI에게 서로 다른 역할을 부여하면, 각 역할마다 <strong>실제로 다른 전문가의 관점</strong>이 활성화됩니다.
                         한 명에게 물어보면 한 가지 관점만 나오지만, 팀을 구성하면 <strong>여러 관점이 충돌하며 더 깊은 답변</strong>이 나오는 이유입니다.
                     </p>
                 </div>
             </div>
 
-            <div style="font-size: 12px; color: #999; line-height: 1.6; padding-left: 2px;">
-                📎 출처: <a href="https://alignment.anthropic.com/2026/psm/" target="_blank" rel="noopener" style="color: #3b82f6; text-decoration: none;">Anthropic, "The Persona Selection Model" (2026)</a>
-            </div>
+            <p class="citation">📎 출처: <a href="https://alignment.anthropic.com/2026/psm/" target="_blank" rel="noopener" style="color: #3b82f6; text-decoration: none;">Anthropic, "The Persona Selection Model" (2026)</a></p>
         </div>
 
         <!-- 토론 프로세스 -->
@@ -771,7 +535,7 @@
             </div>
 
             <!-- 완성 예시 -->
-            <h3 style="font-size: 17px; font-weight: 700; color: #1a1a1a; margin: 32px 0 12px; padding-left: 2px;">📝 실제로 이렇게 채우면 됩니다</h3>
+            <h3 style="font-size: 17px; font-weight: 700; color: var(--text-primary); margin: 32px 0 12px; padding-left: 2px;">📝 실제로 이렇게 채우면 됩니다</h3>
             <div class="template-box">
                 <div class="template-bar">
                     <span>완성 예시 : 마케팅 전략 수립</span>
@@ -806,7 +570,7 @@
                 <strong>위 예시를 보세요:</strong> 빈칸 템플릿과 구조는 똑같고, <strong>주제와 역할만 구체적으로 채웠을 뿐</strong>입니다. 여러분도 본인 업무에 맞게 바꿔 넣으면 됩니다.
             </div>
 
-            <p style="font-size: 12px; color: #999; line-height: 1.6; margin-top: 8px; padding-left: 2px;">※ 토론 라운드 수(3회)는 "주장 → 반박 → 합의"의 최소 논증 구조를 기준으로 한 권장값입니다. 주제의 복잡도에 따라 2~5회로 자유롭게 조정할 수 있습니다.</p>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-top: -16px; padding-left: 2px;">※ 토론 라운드 수(3회)는 "주장 → 반박 → 합의"의 최소 논증 구조를 기준으로 한 권장값입니다. 주제의 복잡도에 따라 2~5회로 자유롭게 조정할 수 있습니다.</p>
         </div>
 
         <!-- 프로젝트 지침 활용법 -->
@@ -814,44 +578,41 @@
             <h2 class="section-title">프로젝트 지침에 넣어서 자동 적용하기</h2>
             <p class="section-subtitle">매번 복붙할 필요 없이, 프로젝트 안에서 자동으로 멀티 페르소나가 적용됩니다</p>
 
-            <div style="display: inline-flex; align-items: center; gap: 8px; background: #FEF3C7; border: 1px solid #F59E0B; border-radius: 8px; padding: 8px 16px; margin-bottom: 20px;">
+            <div class="project-badge">
                 <span style="font-size: 16px;">💎</span>
-                <span style="font-size: 13px; font-weight: 600; color: #92400E;">Pro · Team · Enterprise 플랜에서 사용 가능</span>
+                <span class="project-badge-text">Pro · Team · Enterprise 플랜에서 사용 가능</span>
             </div>
 
-            <div style="background: #f9f9f9; border: 1px solid #e8e8e8; border-radius: 12px; padding: 28px; margin-bottom: 20px;">
-                <p style="font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 20px;">
-                    Claude의 <strong style="color: #1a1a1a;">프로젝트(Projects)</strong> 기능을 사용하면, 위 프롬프트를 <strong style="color: #CC0000;">프로젝트 지침(Project Instructions)</strong>에 저장해둘 수 있습니다.<br>
-                    이렇게 하면 해당 프로젝트에서 새 대화를 시작할 때마다 <strong style="color: #1a1a1a;">자동으로 멀티 페르소나 토론 방식이 적용</strong>됩니다.
+            <div class="project-box">
+                <p class="project-intro">
+                    Claude의 <strong style="color: var(--text-primary);">프로젝트(Projects)</strong> 기능을 사용하면, 위 프롬프트를 <strong style="color: #CC0000;">프로젝트 지침(Project Instructions)</strong>에 저장해둘 수 있습니다.<br>
+                    이렇게 하면 해당 프로젝트에서 새 대화를 시작할 때마다 <strong style="color: var(--text-primary);">자동으로 멀티 페르소나 토론 방식이 적용</strong>됩니다.
                 </p>
 
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <!-- Step 1 -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">1</div>
-                        <div style="flex: 1; padding-top: 6px;">
-                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">프로젝트 만들기</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                                <a href="https://claude.ai" target="_blank" style="color: #CC0000; font-weight: 600; text-decoration: none;">claude.ai</a> 접속 → 왼쪽 사이드바에서 <strong style="background: #f0f0f0; padding: 1px 8px; border-radius: 4px; font-size: 12px;">+ 프로젝트 만들기</strong> 클릭 → 프로젝트 이름 입력 (예: "마케팅 전략 토론")
+                <div class="project-steps">
+                    <div class="project-step">
+                        <div class="project-step-num">1</div>
+                        <div class="project-step-body">
+                            <div class="project-step-title">프로젝트 만들기</div>
+                            <div class="project-step-desc">
+                                <a href="https://claude.ai" target="_blank" style="color: #CC0000; font-weight: 600; text-decoration: none;">claude.ai</a> 접속 → 왼쪽 사이드바에서 <span class="step-tag">+ 프로젝트 만들기</span> 클릭 → 프로젝트 이름 입력 (예: "마케팅 전략 토론")
                             </div>
                         </div>
                     </div>
-                    <!-- Step 2 -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">2</div>
-                        <div style="flex: 1; padding-top: 6px;">
-                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">프로젝트 지침에 프롬프트 붙여넣기</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                                프로젝트 상단의 <strong style="background: #f0f0f0; padding: 1px 8px; border-radius: 4px; font-size: 12px;">프로젝트 지침 설정</strong> 클릭 → 위에서 복사한 멀티 페르소나 프롬프트를 그대로 붙여넣기 → 저장
+                    <div class="project-step">
+                        <div class="project-step-num">2</div>
+                        <div class="project-step-body">
+                            <div class="project-step-title">프로젝트 지침에 프롬프트 붙여넣기</div>
+                            <div class="project-step-desc">
+                                프로젝트 상단의 <span class="step-tag">프로젝트 지침 설정</span> 클릭 → 위에서 복사한 멀티 페르소나 프롬프트를 그대로 붙여넣기 → 저장
                             </div>
                         </div>
                     </div>
-                    <!-- Step 3 -->
-                    <div style="display: flex; align-items: flex-start; gap: 16px;">
-                        <div style="min-width: 36px; height: 36px; background: #CC0000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;">3</div>
-                        <div style="flex: 1; padding-top: 6px;">
-                            <div style="font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">새 대화에서 주제만 입력하면 끝!</div>
-                            <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                    <div class="project-step">
+                        <div class="project-step-num">3</div>
+                        <div class="project-step-body">
+                            <div class="project-step-title">새 대화에서 주제만 입력하면 끝!</div>
+                            <div class="project-step-desc">
                                 이제 해당 프로젝트에서 새 대화를 시작하면 프롬프트가 자동 적용됩니다. 매번 긴 프롬프트를 복붙할 필요 없이, <strong style="color: #CC0000;">"이번 주제는 ○○야. 시작해줘."</strong>라고만 쓰면 됩니다.
                             </div>
                         </div>
@@ -873,22 +634,22 @@
                 <div class="usecase-card">
                     <h4>📄 보고서 검토</h4>
                     <div class="usecase-team">팀장: 부서장 / 팀원: 전략가, 현장 실무자, 경영진 관점</div>
-                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 부서장이 팀장, 전략가&middot;현장 실무자&middot;경영진 관점 담당이 팀원이야. 이 보고서를 검토하는데, 부서장이 각 팀원과 3차례 비판적으로 토론한 후 최종 결론을 내줘."</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 부서장이 팀장, 전략가·현장 실무자·경영진 관점 담당이 팀원이야. 이 보고서를 검토하는데, 부서장이 각 팀원과 3차례 비판적으로 토론한 후 최종 결론을 내줘."</div>
                 </div>
                 <div class="usecase-card">
                     <h4>💡 사업 아이디어 검증</h4>
                     <div class="usecase-team">팀장: CEO / 팀원: 시장분석가, 기술전문가, 투자심사역</div>
-                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. CEO가 팀장, 시장분석가&middot;기술전문가&middot;투자심사역이 팀원이야. 이 사업 아이디어를 각자 평가하고, CEO가 각 팀원과 3차례 비판적 토론 후 투자 여부를 결론 내줘."</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. CEO가 팀장, 시장분석가·기술전문가·투자심사역이 팀원이야. 이 사업 아이디어를 각자 평가하고, CEO가 각 팀원과 3차례 비판적 토론 후 투자 여부를 결론 내줘."</div>
                 </div>
                 <div class="usecase-card">
                     <h4>📧 중요 이메일 작성</h4>
                     <div class="usecase-team">팀장: 커뮤니케이션 전문가 / 팀원: 수신자 입장, 법무 검토, 브랜드 담당</div>
-                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 커뮤니케이션 전문가가 팀장, 수신자 입장&middot;법무 담당&middot;브랜드 담당이 팀원이야. 이 이메일 초안을 각자 평가하고, 팀장이 각 팀원과 3차례 토론한 후 최종 이메일을 완성해줘."</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. 커뮤니케이션 전문가가 팀장, 수신자 입장·법무 담당·브랜드 담당이 팀원이야. 이 이메일 초안을 각자 평가하고, 팀장이 각 팀원과 3차례 토론한 후 최종 이메일을 완성해줘."</div>
                 </div>
                 <div class="usecase-card">
                     <h4>🎯 채용 면접 준비</h4>
                     <div class="usecase-team">팀장: HR 디렉터 / 팀원: 직무 전문가, 조직문화 담당, 면접자 입장</div>
-                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. HR 디렉터가 팀장, 직무 전문가&middot;조직문화 담당&middot;면접자 입장이 팀원이야. 면접 질문을 각자 제안하고, HR 디렉터가 각 팀원과 3차례 비판적 토론 후 최종 질문 리스트를 확정해줘."</div>
+                    <div class="usecase-prompt">"총 4명 팀을 구성해줘. HR 디렉터가 팀장, 직무 전문가·조직문화 담당·면접자 입장이 팀원이야. 면접 질문을 각자 제안하고, HR 디렉터가 각 팀원과 3차례 비판적 토론 후 최종 질문 리스트를 확정해줘."</div>
                 </div>
             </div>
         </div>
@@ -904,18 +665,54 @@
                 <li>한 번 좋은 팀 구성을 찾으면, 비슷한 주제에 계속 재활용하세요</li>
             </ul>
         </div>
+
+        <!-- 이 기법을 쓰면 안 되는 상황 -->
+        <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:28px 32px;margin-bottom:32px;border-left:4px solid #CC0000;">
+            <div style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#CC0000;margin-bottom:16px;">⚠️ 이 기법을 쓰면 안 되는 상황</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">⚡ 빠른 답변이 필요할 때</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">멀티 페르소나 토론은 시간이 걸립니다. 단순 정보 검색이나 긴급한 초안 작업에는 직접 질문이 훨씬 빠릅니다.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📐 정답이 하나인 작업</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">수학 계산, 코드 오류 수정, 번역 등 명확한 정답이 있는 작업에서는 토론이 불필요하고 오히려 혼란을 줄 수 있습니다.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🎨 창의적 자유가 필요할 때</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">소설, 시, 광고 카피 등 창의적 작업에서는 역할 제약이 오히려 AI의 창의성을 제한합니다. 자유롭게 시도하게 두세요.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔒 민감한 개인 정보 포함 시</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">여러 역할에 민감한 정보를 반복 노출하면 데이터 관리 리스크가 높아집니다. 개인정보·기밀 데이터는 최소한의 맥락만 제공하세요.</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <nav class="page-nav" style="max-width: 960px; margin: 0 auto; padding: 0 32px 48px; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
-        <a href="ai-fluency.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">← 이전: 프롬프트 11가지 습관</a>
-        <a href="extensions.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff; margin-left: auto;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">다음: 쓰던 앱 안에서 Claude →</a>
-    </nav>
+    <div style="max-width:960px;margin:0 auto;padding:0 32px 24px;">
+        <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:24px 28px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">AI 활용 심화 시리즈 더 보기</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <a href="ai-fluency.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                    <span style="font-size:28px;">📊</span>
+                    <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">11가지 습관</div><div style="font-size:12px;color:var(--text-muted);">AI 활용 행동 지표 셀프 진단</div></div>
+                </a>
+                <a href="reduce-hallucinations.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                    <span style="font-size:28px;">🔍</span>
+                    <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">환각 줄이기</div><div style="font-size:12px;color:var(--text-muted);">AI 거짓 정보를 걸러내는 기법</div></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; padding: 0 32px 56px;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 600; padding: 14px 32px; background: var(--bg-card); border-radius: 12px; box-shadow: var(--nm-out); transition: all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-in-sm)';this.style.color='#CC0000'" onmouseout="this.style.boxShadow='var(--nm-out)';this.style.color='var(--text-secondary)'">← 목록으로</a>
+    </div>
 
-    <footer>
-        <p class="footer-brand">AI Roasting</p>
-        <p class="footer-text">Claude 실전 가이드</p>
-    </footer>
+    <div id="app-footer"></div>
 
+    <script src="js/common.js"></script>
     <script>
         function copyExample() {
             const example = `지금부터 팀 회의를 시작합니다.

@@ -6,171 +6,395 @@
 <title>AI 퍼스트로 일한다는 것 | AI Roasting</title>
 <link rel="stylesheet" href="css/common.css">
 <style>
-/* ── BRAND COLOR 통일 ── */
-:root { --brand: #CC0000; --brand-light: #fff0f0; }
+/* ── BRAND COLOR ── */
+:root { --brand: #CC0000; --brand-light: rgba(204,0,0,0.1); }
 [data-theme="dark"] { --brand-light: rgba(204,0,0,0.08); }
 
-/* ── Section headers ── */
-.section-label { font-size: 20px; font-weight: 800; color: var(--brand); letter-spacing: -0.3px; margin-bottom: 14px; margin-top: 40px; padding-left: 16px; border-left: 4px solid var(--brand); line-height: 1.3; }
-.section-label.first { margin-top: 8px; }
-
 /* ── Grid layouts ── */
-.cards-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.cards-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 /* ── Step section: 실전(넓음) + 참고자료(좁음) ── */
-.step-section-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; align-items: stretch; }
-.ref-col { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+.step-section-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 20px; align-items: stretch; }
+.ref-col { display: flex; flex-direction: column; gap: 14px; height: 100%; }
 .ref-col-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; padding-left: 2px; }
 
+/* ── Section headers ── */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--brand);
+  letter-spacing: 0.3px;
+  margin-bottom: 16px;
+  margin-top: 48px;
+  padding: 10px 22px 10px 18px;
+  border-left: 4px solid var(--brand);
+  border-radius: 0 14px 14px 0;
+  background: var(--bg-card);
+  box-shadow: var(--nm-out-sm);
+}
+.section-label.first { margin-top: 8px; }
+
 /* ── Card variants ── */
-.card.card-primary { border-left: 4px solid var(--accent); background: var(--accent-light); }
-.card.card-primary:hover { border-color: var(--accent); }
-[data-theme="dark"] .card.card-primary { background: rgba(249,115,22,0.06); }
-.card.card-ref { opacity: 0.82; border-style: dashed; }
-.card.card-ref:hover { opacity: 1; }
+.card.card-primary {
+  box-shadow: var(--nm-out);
+  border-top: 4px solid var(--accent);
+}
+.card.card-primary:hover {
+  box-shadow: 10px 10px 22px rgba(163,177,198,0.8), -10px -10px 22px rgba(255,255,255,1);
+}
+[data-theme="dark"] .card.card-primary {
+  border-top-color: var(--accent);
+}
+[data-theme="dark"] .card.card-primary:hover {
+  box-shadow: 9px 9px 18px rgba(8,10,18,0.9), -9px -9px 18px rgba(40,44,62,0.6);
+}
+.card.card-ref {
+  opacity: 0.85;
+  box-shadow: var(--nm-out-sm);
+}
+.card.card-ref:hover {
+  opacity: 1;
+  box-shadow: var(--nm-out);
+}
 
 /* ── Badges ── */
-.badge-ref { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 2px 10px; margin-bottom: 8px; align-self: flex-start; }
-.badge-practical { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--accent); background: var(--accent-light); border: 1px solid rgba(249,115,22,0.25); border-radius: 10px; padding: 2px 10px; margin-bottom: 8px; align-self: flex-start; }
-.badge-time-est { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: var(--text-muted); background: var(--bg-secondary); border: 1px solid var(--border); padding: 2px 9px; border-radius: 10px; margin-left: auto; }
+.badge-ref {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  background: var(--bg-card); border: none; border-radius: 10px;
+  padding: 3px 10px; margin-bottom: 8px; align-self: flex-start;
+  box-shadow: var(--nm-in-sm);
+}
+.badge-practical {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  background: var(--bg-card); border: none; border-radius: 10px;
+  padding: 3px 10px; margin-bottom: 8px; align-self: flex-start;
+  box-shadow: var(--nm-out-xs);
+}
+.badge-time-est {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  background: var(--bg-card); border: none;
+  padding: 3px 10px; border-radius: 10px; margin-left: auto;
+  box-shadow: var(--nm-in-sm);
+}
 
 /* ── Card Status ── */
-.card-status { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; border-radius: 10px; padding: 2px 10px; margin-top: 10px; align-self: flex-start; }
-.card-status.done, .card-status.diagnosed { background: #edf7ed; color: #2a7a2a; border: 1px solid #c3e6c3; }
-.card-status.not-diagnosed { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(249,115,22,0.2); }
-.card-status.locked { background: var(--bg-secondary); color: var(--text-muted); border: 1px solid var(--border); }
+.card-status {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 700; border-radius: 10px;
+  padding: 4px 12px; margin-top: 12px; align-self: flex-start; border: none;
+}
+.card-status.done, .card-status.diagnosed { background: #edf7ed; color: #2a7a2a; box-shadow: var(--nm-in-sm); }
+.card-status.not-diagnosed { color: var(--accent); background: var(--bg-card); box-shadow: var(--nm-out-xs); }
+.card-status.locked { background: var(--bg-card); color: var(--text-muted); box-shadow: var(--nm-in-sm); }
 
 /* ── Card Preview ── */
-.card-preview { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--border); display: flex; align-items: center; gap: 6px; }
+.card-preview { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
 .card-preview-label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.3px; flex-shrink: 0; }
 .card-preview-text { font-size: 13px; color: var(--text-muted); }
 
-/* ── Learning Objective (NEW) ── */
-.card-objective { margin-top: 10px; padding: 8px 12px; background: var(--bg-secondary); border-radius: 8px; font-size: 12px; color: var(--text-secondary); line-height: 1.5; border-left: 3px solid var(--brand); }
+/* ── Learning Objective ── */
+.card-objective {
+  margin-top: 12px; padding: 10px 14px;
+  background: var(--bg-secondary); border-radius: 10px;
+  font-size: 12px; color: var(--text-secondary); line-height: 1.5;
+  border-left: 3px solid var(--brand); box-shadow: var(--nm-in-sm);
+}
 .card-objective strong { color: var(--text-primary); font-weight: 700; }
 
 /* ── Tooltip ── */
 .tipword { border-bottom: 1px dashed var(--text-muted); cursor: help; position: relative; }
 .tipword[data-tip]:hover::after {
   content: attr(data-tip);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1a1a1a;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 8px;
-  z-index: 50;
-  pointer-events: none;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  line-height: 1.5;
-  max-width: 220px;
-  white-space: normal;
-  text-align: center;
-  font-style: normal;
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%); background: #1a1a1a; color: #fff;
+  font-size: 12px; font-weight: 500; padding: 8px 14px;
+  border-radius: 10px; z-index: 50; pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25); line-height: 1.5;
+  max-width: 220px; white-space: normal; text-align: center; font-style: normal;
 }
 [data-theme="dark"] .tipword[data-tip]:hover::after { background: #f0f0f5; color: #1a1a1a; }
 
-/* ── Hero Stats ── */
-.hero-stats { display: flex; gap: 36px; margin-top: 28px; flex-wrap: wrap; }
-.hero-stat { display: flex; flex-direction: column; gap: 2px; }
-.hero-stat-num { font-size: 32px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; line-height: 1; }
-.hero-stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+/* ── Hero Outcome Row (result box + stats side by side) ── */
+.hero-outcome-row { display: flex; align-items: stretch; gap: 20px; margin-top: 32px; }
 
-/* ── Hero Result Box (NEW) ── */
-.hero-result-box { background: var(--bg-card); border: 1.5px solid var(--border); border-left: 4px solid var(--brand); border-radius: 12px; padding: 18px 22px; max-width: 560px; margin-top: 28px; margin-bottom: 8px; }
-.hero-result-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 10px; }
-.hero-result-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 6px; }
+/* ── Hero Result Box ── */
+.hero-result-box {
+  background: var(--bg-card); border: none;
+  border-left: 4px solid var(--brand); border-radius: 16px;
+  padding: 20px 24px; flex: 6 1 0; min-width: 0;
+  box-shadow: var(--nm-out);
+}
+
+/* ── Hero Stats ── */
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 4 1 0; min-width: 0; }
+.hero-stat {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--bg-card); border-radius: 16px;
+  padding: 20px 28px;
+  box-shadow: var(--nm-out-sm);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.hero-stat:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
+.hero-stat-num { font-size: 32px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; line-height: 1; }
+.hero-stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 6px; }
+.hero-result-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 12px; }
+.hero-result-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 7px; }
 .hero-result-item:last-child { margin-bottom: 0; }
 .hero-result-item::before { content: '✓'; font-weight: 700; color: var(--brand); flex-shrink: 0; margin-top: 1px; }
 
 /* ── Roadmap Section ── */
-.roadmap-section { background: var(--bg-secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 44px 0; }
+.roadmap-section {
+  background: var(--bg-secondary);
+  border-top: none; border-bottom: none; padding: 56px 0;
+  box-shadow: inset 0 6px 16px rgba(163,177,198,0.35), inset 0 -6px 16px rgba(255,255,255,0.65);
+}
+[data-theme="dark"] .roadmap-section {
+  box-shadow: inset 0 6px 14px rgba(8,10,18,0.65), inset 0 -6px 14px rgba(40,44,62,0.35);
+}
 .roadmap-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
-.roadmap-header { text-align: center; margin-bottom: 32px; }
-.roadmap-header h3 { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.roadmap-header { text-align: center; margin-bottom: 36px; }
+.roadmap-header h3 { font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; }
 .roadmap-header p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-.roadmap-flow { display: flex; align-items: stretch; justify-content: center; gap: 6px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
-.roadmap-step { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 6px; padding: 16px 16px 14px; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px; min-width: 100px; transition: all 0.3s ease; flex-shrink: 0; text-decoration: none; cursor: pointer; }
-.roadmap-step.completed { border-color: #2a7a2a; background: #f0fdf4; }
-[data-theme="dark"] .roadmap-step.completed { background: #0d1f0d; border-color: #2a7a2a; }
-.roadmap-step.recommended { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 4px 16px rgba(249,115,22,0.12); }
-.roadmap-step.current-section { border-color: var(--accent); border-bottom: 3px solid var(--accent); background: var(--accent-light); box-shadow: 0 4px 16px rgba(249,115,22,0.12); }
+.roadmap-flow {
+  display: flex; align-items: stretch; justify-content: center;
+  gap: 8px; margin-bottom: 24px; overflow-x: auto;
+  padding-bottom: 8px; -webkit-overflow-scrolling: touch;
+}
+.roadmap-step {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: space-between; gap: 8px; padding: 18px 16px 16px;
+  background: var(--bg-card); border: none; border-radius: 16px;
+  min-width: 106px; transition: all 0.3s ease; flex-shrink: 0;
+  text-decoration: none; cursor: pointer; box-shadow: var(--nm-out-sm);
+}
+.roadmap-step:hover { box-shadow: var(--nm-out); transform: translateY(-3px); }
+.roadmap-step.completed { box-shadow: var(--nm-in-sm); }
+.roadmap-step.completed .roadmap-label,
+.roadmap-step.completed .roadmap-time { color: #2a7a2a; }
+[data-theme="dark"] .roadmap-step.completed .roadmap-label,
+[data-theme="dark"] .roadmap-step.completed .roadmap-time { color: #5cb85c; }
+.roadmap-step.recommended,
+.roadmap-step.current-section { box-shadow: var(--nm-out-sm), 0 0 0 2.5px var(--accent); }
 .roadmap-icon { font-size: 24px; line-height: 1; }
 .roadmap-label { font-size: 13px; font-weight: 700; color: var(--text-primary); text-align: center; line-height: 1.4; }
-.roadmap-time { font-size: 11px; font-weight: 600; color: var(--text-muted); background: var(--bg-secondary); padding: 2px 8px; border-radius: 10px; }
-.roadmap-step.completed .roadmap-time { background: #dcfce7; color: #166534; }
-.roadmap-arrow { font-size: 16px; color: var(--text-muted); flex-shrink: 0; font-weight: 600; display: flex; align-items: center; }
-.roadmap-arrow.loop { color: var(--accent); font-size: 14px; }
+.roadmap-time {
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  background: var(--bg-card); padding: 2px 8px; border-radius: 10px;
+  box-shadow: var(--nm-in-sm);
+}
+.roadmap-arrow { font-size: 16px; color: var(--text-muted); flex-shrink: 0; font-weight: 600; display: flex; align-items: center; opacity: 0.5; }
+.roadmap-arrow.loop { color: var(--accent); font-size: 14px; opacity: 0.85; }
 .roadmap-stage-label { font-size: 11px; font-weight: 700; color: #fff; background: var(--brand); padding: 3px 10px; border-radius: 10px; letter-spacing: 0.3px; white-space: nowrap; }
 
+/* ── Sticky Roadmap Flow ── */
+.roadmap-section .roadmap-flow {
+  position: relative; z-index: 50; background: var(--bg-secondary);
+  padding: 16px 40px; margin: 0 -40px;
+  border-top: none; border-bottom: none;
+  transition: box-shadow 0.3s ease;
+}
+.roadmap-section .roadmap-flow.scrolled {
+  box-shadow: 0 4px 20px rgba(163,177,198,0.5), 0 -2px 10px rgba(255,255,255,0.6);
+}
+[data-theme="dark"] .roadmap-section .roadmap-flow { background: var(--bg-secondary); }
+[data-theme="dark"] .roadmap-section .roadmap-flow.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+
 /* ── Iteration note ── */
-.iteration-note { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 10px; padding: 16px 18px; max-width: 600px; margin: 20px auto 28px; line-height: 1.5; text-align: center; }
+.iteration-note {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 13px; color: var(--text-secondary);
+  background: var(--bg-card); border: none; border-radius: 14px;
+  padding: 16px 22px; max-width: 600px; margin: 20px auto 32px;
+  line-height: 1.5; text-align: center; box-shadow: var(--nm-in-sm);
+}
 .iteration-note strong { color: var(--text-primary); }
 
 /* ── Start label ── */
-.start-label { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-light); border: 1px solid rgba(249,115,22,0.2); border-radius: 10px; padding: 4px 12px; margin-bottom: 10px; }
-
-/* ── Sticky Roadmap Flow ── */
-.roadmap-section .roadmap-flow { position: relative; z-index: 50; background: var(--bg-secondary); padding: 16px 0; margin: 0 -40px; padding: 16px 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s ease; }
-.roadmap-section .roadmap-flow.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-[data-theme="dark"] .roadmap-section .roadmap-flow { background: var(--bg-secondary); }
+.start-label {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 700; color: var(--accent); line-height: 1;
+  background: var(--bg-card); border: none; border-radius: 14px 0 0 14px;
+  padding: 15px 16px; margin-bottom: 10px; box-shadow: var(--nm-out-xs);
+}
 
 /* ── Progress Section ── */
-.progress-section { margin-top: 48px; padding: 28px 32px; background: var(--bg-secondary); border-radius: 14px; border: 1px solid var(--border); }
-.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+.progress-section {
+  margin-top: 56px; padding: 32px 36px;
+  background: var(--bg-card); border-radius: 20px;
+  border: none; box-shadow: var(--nm-out);
+}
+.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
 .progress-header h3 { font-size: 18px; font-weight: 800; color: var(--text-primary); margin: 0; }
 .progress-summary { font-size: 13px; color: var(--text-muted); font-weight: 600; }
 .progress-bar-wrap { margin-bottom: 12px; }
-.progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--brand), var(--accent)); border-radius: 4px; transition: width 0.6s ease; min-width: 0; }
-.progress-bar-text { font-size: 12px; color: var(--text-muted); margin-top: 6px; text-align: right; }
+.progress-bar { height: 10px; background: var(--bg-secondary); border-radius: 5px; overflow: hidden; box-shadow: var(--nm-in-sm); }
+.progress-bar-fill {
+  height: 100%; background: linear-gradient(90deg, var(--brand), var(--accent));
+  border-radius: 5px; transition: width 0.7s ease; min-width: 0;
+  box-shadow: 0 0 10px rgba(249,115,22,0.45);
+}
+.progress-bar-text { font-size: 12px; color: var(--text-muted); margin-top: 8px; text-align: right; }
 
-/* ── Next Step Callout (NEW) ── */
-.next-step-callout { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--bg-card); border: 1.5px solid var(--accent); border-radius: 12px; margin-top: 16px; margin-bottom: 20px; text-decoration: none; color: inherit; transition: all 0.2s ease; }
-.next-step-callout:hover { box-shadow: 0 4px 16px rgba(249,115,22,0.15); transform: translateY(-1px); }
+/* ── Next Step Callout ── */
+.next-step-callout {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; background: var(--bg-card); border: none; border-radius: 14px;
+  margin-top: 16px; margin-bottom: 24px;
+  text-decoration: none; color: inherit;
+  transition: all 0.25s ease; box-shadow: var(--nm-out-sm);
+}
+.next-step-callout:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
+.next-step-callout:active { box-shadow: var(--nm-in-sm); transform: translateY(0); }
 .next-step-icon { font-size: 26px; flex-shrink: 0; }
 .next-step-label { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
 .next-step-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
 .next-step-arrow { margin-left: auto; font-size: 20px; color: var(--accent); flex-shrink: 0; }
 
 /* ── Reset Button ── */
-.btn-reset { font-size: 12px; font-weight: 600; color: var(--text-muted); background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 4px 12px; cursor: pointer; transition: all 0.2s; }
-.btn-reset:hover { color: var(--brand); border-color: var(--brand); }
+.btn-reset {
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  background: var(--bg-card); border: none; border-radius: 10px;
+  padding: 6px 14px; cursor: pointer;
+  transition: all 0.25s ease; box-shadow: var(--nm-out-xs);
+}
+.btn-reset:hover { color: var(--brand); box-shadow: var(--nm-out-sm); }
+.btn-reset:active { box-shadow: var(--nm-in-sm); }
 
-/* ── Badges ── */
-.badges-section { padding-top: 16px; border-top: 1px solid var(--border); }
+/* ── Badges Section ── */
+.badges-section { padding-top: 20px; border-top: 1px solid var(--border); margin-top: 8px; }
 .badges-section-title { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-.badges-empty { font-size: 14px; color: var(--text-muted); padding: 12px 16px; background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border); margin-top: 14px; }
+.badges-empty {
+  font-size: 14px; color: var(--text-muted);
+  padding: 14px 18px; background: var(--bg-card);
+  border-radius: 10px; border: none; margin-top: 14px;
+  box-shadow: var(--nm-in-sm);
+}
 
 /* ── Fade-in ── */
-.fade-up { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Hero Impact Bar ── */
+.hero-impact-bar {
+  display: flex; align-items: center; gap: 0;
+  background: var(--bg-card); border-radius: 14px; overflow: hidden;
+  box-shadow: var(--nm-in); margin-bottom: 32px;
+  max-width: 680px;
+}
+.hero-impact-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 14px 22px; flex: 1; text-align: center; gap: 4px;
+}
+.hero-impact-num {
+  font-size: 22px; font-weight: 800; color: var(--brand);
+  letter-spacing: -0.5px; line-height: 1;
+}
+.hero-impact-txt {
+  font-size: 11px; color: var(--text-muted); line-height: 1.4;
+  font-weight: 500;
+}
+.hero-impact-divider {
+  width: 1px; height: 40px; background: var(--border); flex-shrink: 0;
+}
+
+/* ── CTA Choice ── */
+.hero-cta-choice {
+  font-size: 13px; color: var(--text-muted); margin-top: 6px;
+}
+.hero-cta-choice a {
+  color: var(--text-secondary); text-decoration: underline;
+  text-underline-offset: 3px; font-weight: 600;
+}
+.hero-cta-choice a:hover { color: var(--text-primary); }
+
+@media (max-width: 600px) {
+  .hero-impact-bar { max-width: 100%; }
+  .hero-impact-item { padding: 12px 12px; }
+  .hero-impact-num { font-size: 18px; }
+  .hero-impact-txt { font-size: 10px; }
+}
+
+/* ── NEWSLETTER CTA SECTION ── */
+.newsletter-cta-section {
+  background: var(--bg-secondary);
+  padding: 64px 40px 72px;
+  box-shadow: inset 0 6px 16px rgba(163,177,198,0.35), inset 0 -6px 16px rgba(255,255,255,0.65);
+}
+[data-theme="dark"] .newsletter-cta-section {
+  box-shadow: inset 0 6px 14px rgba(8,10,18,0.65), inset 0 -6px 14px rgba(40,44,62,0.35);
+}
+.newsletter-cta-inner {
+  max-width: 900px; margin: 0 auto;
+  background: var(--bg-card); border-radius: 24px;
+  padding: 48px 52px; box-shadow: var(--nm-out);
+  display: flex; align-items: center; gap: 44px;
+}
+.newsletter-icon-wrap {
+  font-size: 40px; flex-shrink: 0;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-card); border-radius: 50%; box-shadow: var(--nm-in);
+}
+.newsletter-copy { flex: 1; min-width: 0; }
+.newsletter-eyebrow { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.newsletter-title { font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 10px; }
+.newsletter-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.newsletter-action { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+.newsletter-cta-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #0077B5; color: #fff;
+  font-size: 14px; font-weight: 700;
+  padding: 14px 28px; border-radius: 14px;
+  text-decoration: none; white-space: nowrap;
+  transition: all 0.25s ease;
+  box-shadow: 6px 6px 14px rgba(0,80,140,0.35), -3px -3px 8px rgba(255,255,255,0.65);
+}
+.newsletter-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 18px rgba(0,80,140,0.45), -4px -4px 12px rgba(255,255,255,0.75);
+}
+.newsletter-cta-btn:active {
+  transform: translateY(1px);
+  box-shadow: inset 4px 4px 10px rgba(0,50,100,0.5);
+}
+[data-theme="dark"] .newsletter-cta-btn { box-shadow: 5px 5px 12px rgba(0,0,0,0.6), -2px -2px 6px rgba(40,44,62,0.3); }
+[data-theme="dark"] .newsletter-cta-btn:hover { box-shadow: 7px 7px 16px rgba(0,0,0,0.7), -4px -4px 10px rgba(40,44,62,0.4); }
+.newsletter-note { font-size: 12px; color: var(--text-muted); text-align: center; }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .step-section-grid { grid-template-columns: 1fr; }
+  .newsletter-cta-inner { gap: 28px; padding: 40px 36px; }
 }
 @media (max-width: 768px) {
   .cards-2, .cards-3 { grid-template-columns: 1fr; }
   .roadmap-section .roadmap-flow { margin: 0 -20px; padding: 12px 20px; }
-  .hero-stats { gap: 24px; }
-  .hero-stat-num { font-size: 26px; }
+  .hero-outcome-row { flex-direction: column; }
+  .hero-stats { grid-template-columns: repeat(4, 1fr); }
+  .hero-stat { padding: 14px 16px; min-width: 80px; }
+  .hero-stat-num { font-size: 22px; }
   .roadmap-inner { padding: 0 20px; }
   .roadmap-flow { justify-content: flex-start; }
   .roadmap-step { min-width: 84px; padding: 12px 10px; }
   .roadmap-label { font-size: 11px; }
   .roadmap-arrow { font-size: 13px; }
-  .iteration-note { font-size: 12px; padding: 10px 14px; }
+  .iteration-note { font-size: 12px; padding: 12px 16px; }
   .progress-header { flex-direction: column; align-items: flex-start; }
-  .progress-section { padding: 24px 20px; }
-  .hero-result-box { max-width: 100%; }
+  .progress-section { padding: 28px 24px; }
+  .hero-outcome-row { gap: 16px; }
+  .hero-result-box { min-width: 0; }
+  .newsletter-cta-section { padding: 40px 20px 48px; }
+  .newsletter-cta-inner { flex-direction: column; text-align: center; padding: 32px 28px; gap: 24px; }
+  .newsletter-icon-wrap { margin: 0 auto; }
+  .newsletter-action { width: 100%; }
+  .newsletter-cta-btn { width: 100%; }
 }
-/* ── 모바일: 로드맵 수직 레이아웃 ── */
 @media (max-width: 600px) {
   .roadmap-flow { flex-direction: column; align-items: stretch; overflow-x: visible; }
   .roadmap-step { flex-direction: row; min-width: unset; padding: 12px 16px; justify-content: flex-start; gap: 12px; }
@@ -180,52 +404,121 @@
   .roadmap-label { text-align: left; }
 }
 @media (max-width: 480px) {
-  .hero-stats { gap: 16px; }
-  .hero-stat-num { font-size: 24px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .hero-stat-num { font-size: 22px; }
+  .newsletter-title { font-size: 20px; }
+}
+
+/* ── 소셜 증거 ── */
+.hero-social-proof {
+  display: flex; align-items: stretch; gap: 0;
+  background: var(--bg-card); border-radius: 14px;
+  overflow: hidden; box-shadow: var(--nm-in-sm);
+  margin-bottom: 24px; max-width: 640px;
+}
+.social-proof-item {
+  flex: 1; display: flex; flex-direction: column; gap: 5px;
+  padding: 14px 18px;
+}
+.social-proof-divider { width: 1px; background: var(--border); flex-shrink: 0; }
+.social-proof-stars { font-size: 11px; color: #f59e0b; letter-spacing: 1px; }
+.social-proof-quote { font-size: 12px; color: var(--text-secondary); line-height: 1.55; font-style: italic; }
+.social-proof-who { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+@media(max-width:600px) {
+  .hero-social-proof { flex-direction: column; }
+  .social-proof-divider { width: auto; height: 1px; }
+}
+
+/* ── Hero Navy Background ── */
+.index-hero {
+  background: linear-gradient(160deg, #dce6f5 0%, #e8edf8 60%, #dde5f3 100%);
+}
+[data-theme="dark"] .index-hero {
+  background: linear-gradient(160deg, #181f35 0%, #1e2640 60%, #1a2038 100%);
 }
 </style>
 <noscript><div style="padding:40px;text-align:center;font-family:sans-serif;"><h2>이 사이트는 JavaScript가 필요합니다.</h2></div></noscript>
 </head>
 <body>
-<div id="app-header"></div>
 
 <!-- ── HERO ── -->
 <section class="index-hero">
   <div class="hero-inner">
-    <div class="hero-badge">⚡ AI와 함께 일하는 5단계 실전 훈련</div>
+    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);color:var(--brand);border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:800;letter-spacing:0.5px;box-shadow:var(--nm-out-sm);">🔥 AI ROASTING</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);color:var(--accent);border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:700;box-shadow:var(--nm-out-sm);">⚡ AI와 함께 일하는 5단계 실전 훈련</div>
+    </div>
     <h2 class="hero-headline">AI는 쓰는데, 일은 왜 안 빨라질까?</h2>
-    <p class="hero-sub">AI에 질문만 던지고 있다면, <em>"무엇을 시킬지" 정의하는 방식의 문제입니다.</em></p>
+    <p class="hero-sub">AI에 질문만 던지고 있다면, <em>"무엇을 시킬지" 정의하는 방식의 문제입니다.</em><br>
+    <span style="font-size:15px;font-weight:400;color:var(--text-muted);">Anthropic이 분석한 9,830건의 대화에서 확인된 AI 활용 격차, 지금 진단해보세요.</span></p>
+
+    <!-- 비즈니스 임팩트 수치 -->
+    <div class="hero-impact-bar">
+      <div class="hero-impact-item">
+        <span class="hero-impact-num">85.7%</span>
+        <span class="hero-impact-txt">프롬프트를 반복 개선하는<br>AI 상위 활용자 비율</span>
+      </div>
+      <div class="hero-impact-divider"></div>
+      <div class="hero-impact-item">
+        <span class="hero-impact-num">3.2×</span>
+        <span class="hero-impact-txt">구조화 프롬프트가 줄이는<br>반복 수정 횟수</span>
+      </div>
+      <div class="hero-impact-divider"></div>
+      <div class="hero-impact-item">
+        <span class="hero-impact-num">25%</span>
+        <span class="hero-impact-txt">AI 출력을 실제로<br>검증하는 사용자 비율</span>
+      </div>
+    </div>
+
+    <!-- 소셜 증거 -->
+    <div class="hero-social-proof">
+      <div class="social-proof-item">
+        <span class="social-proof-stars">★★★★★</span>
+        <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
+        <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
+      </div>
+      <div class="social-proof-divider"></div>
+      <div class="social-proof-item">
+        <span class="social-proof-stars">★★★★★</span>
+        <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
+        <span class="social-proof-who">— 마케팅팀장, 38세</span>
+      </div>
+    </div>
 
     <div class="hero-cta-row">
-      <a href="pd-diagnosis.html" class="btn-primary btn-hero-cta">문제 정의력 진단부터 시작하기</a>
+      <a href="pd-diagnosis.html" class="btn-primary btn-hero-cta" style="background:linear-gradient(135deg,#CC0000,#e53e3e);box-shadow:0 8px 28px rgba(204,0,0,0.4),-2px -2px 8px rgba(255,255,255,0.5);">🎯 내 문제 정의력 진단하기</a>
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
-    <p class="hero-cta-note">20문항 · 약 8분 · 무료</p>
+    <p class="hero-cta-note">20문항 · 약 8분 · 무료 · 5대 역량별 맞춤 결과</p>
 
-    <!-- 이 교육을 마치면 (NEW) -->
-    <div class="hero-result-box">
-      <div class="hero-result-title">🎯 이 교육을 마치면</div>
-      <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 뽑아낼 수 있습니다</div>
-      <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
-      <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
-    </div>
-
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-num">5대</span>
-        <span class="hero-stat-label">문제 정의력 역량</span>
+    <!-- 이 교육을 마치면 + 통계 (한 줄) -->
+    <div class="hero-outcome-row">
+      <div class="hero-result-box">
+        <div class="hero-result-title">🎯 이 교육을 마치면</div>
+        <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
+        <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
+        <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
+          📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 업무에 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
+        </div>
       </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">20개</span>
-        <span class="hero-stat-label">진단 질문</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">5단계</span>
-        <span class="hero-stat-label">실전 훈련 과정</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-num">약 2.5h</span>
-        <span class="hero-stat-label">총 학습 시간</span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">5대</span>
+          <span class="hero-stat-label">문제 정의력 역량</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">20개</span>
+          <span class="hero-stat-label">진단 질문</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">5단계</span>
+          <span class="hero-stat-label">실전 훈련 과정</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">약 2.5h</span>
+          <span class="hero-stat-label">총 학습 시간</span>
+        </div>
       </div>
     </div>
   </div>
@@ -241,42 +534,36 @@
     <div class="roadmap-flow">
       <a class="roadmap-step" id="rm-diag" href="pd-diagnosis.html">
         <span class="roadmap-stage-label">진단</span>
-        <div class="roadmap-icon">🎯</div>
         <div class="roadmap-label">문제 정의력<br>진단</div>
         <div class="roadmap-time">8분</div>
       </a>
       <div class="roadmap-arrow">→</div>
       <a class="roadmap-step" id="rm-step1" href="stage1.html">
         <span class="roadmap-stage-label">1단계</span>
-        <div class="roadmap-icon">🛠️</div>
         <div class="roadmap-label">프롬프트</div>
         <div class="roadmap-time">20분</div>
       </a>
       <div class="roadmap-arrow">→</div>
       <a class="roadmap-step" id="rm-step2" href="stage2.html">
         <span class="roadmap-stage-label">2단계</span>
-        <div class="roadmap-icon">🔭</div>
         <div class="roadmap-label">정보 탐색</div>
         <div class="roadmap-time">25분</div>
       </a>
       <div class="roadmap-arrow">→</div>
       <a class="roadmap-step" id="rm-step3" href="stage3.html">
         <span class="roadmap-stage-label">3단계</span>
-        <div class="roadmap-icon">💡</div>
         <div class="roadmap-label">방향 설정</div>
         <div class="roadmap-time">30분</div>
       </a>
       <div class="roadmap-arrow loop">⇄</div>
       <a class="roadmap-step" id="rm-step4" href="stage4.html">
         <span class="roadmap-stage-label">4단계</span>
-        <div class="roadmap-icon">⚖️</div>
         <div class="roadmap-label">근거 확인</div>
         <div class="roadmap-time">40분</div>
       </a>
       <div class="roadmap-arrow">→</div>
       <a class="roadmap-step" id="rm-step5" href="stage5.html">
         <span class="roadmap-stage-label">5단계</span>
-        <div class="roadmap-icon">🚀</div>
         <div class="roadmap-label">결과물 완성</div>
         <div class="roadmap-time">60분</div>
       </a>
@@ -507,6 +794,24 @@
   </div>
 
 </main>
+
+<!-- ── NEWSLETTER CTA ── -->
+<section class="newsletter-cta-section">
+  <div class="newsletter-cta-inner">
+    <div class="newsletter-icon-wrap">📬</div>
+    <div class="newsletter-copy">
+      <p class="newsletter-eyebrow">무료 뉴스레터</p>
+      <h2 class="newsletter-title">AI 퍼스트 인사이트,<br>매주 직접 받아보세요</h2>
+      <p class="newsletter-sub">AI 활용법 · 실전 프롬프트 · 비즈니스 적용 사례 — 팀장·리더급을 위한 AI 실전 뉴스레터</p>
+    </div>
+    <div class="newsletter-action">
+      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-cta-btn">
+        LinkedIn 뉴스레터 구독하기 →
+      </a>
+      <p class="newsletter-note">무료 · 언제든 구독 취소 가능</p>
+    </div>
+  </div>
+</section>
 
 <div id="app-footer"></div>
 

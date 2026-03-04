@@ -4,61 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프롬프트를 잘 쓰는 11가지 습관 | AI Roasting</title>
+    <link rel="stylesheet" href="css/common.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Helvetica Neue', Arial, -apple-system, system-ui, sans-serif;
-            background: #ffffff;
-            color: #1a1a1a;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
         }
 
-        header {
-            text-align: center;
-            padding: 48px 32px 40px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-            border-bottom: 3px solid #CC0000;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: #e8706a;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            transition: opacity 0.2s;
-        }
-
-        .back-link:hover { opacity: 0.7; }
-
-        h1 {
-            font-size: 40px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-        }
-
-        header p { font-size: 17px; color: rgba(255,255,255,0.6); }
-
-        .header-badge {
-            display: inline-block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8706a;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(232,112,106,0.3);
-            padding: 4px 16px;
-            border-radius: 20px;
-            margin-top: 12px;
-        }
+        .stage-header { text-align: center; padding: 48px 32px 40px; background: linear-gradient(160deg, #1e2235 0%, #1c1f2e 100%); box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); }
+        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 20px; transition: opacity 0.2s; }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 { font-size: 40px; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 8px; word-break: keep-all; }
+        .stage-header > p { font-size: 17px; color: rgba(255,255,255,0.6); word-break: keep-all; }
+        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: rgba(232,112,106,0.12); border: none; padding: 6px 18px; border-radius: 20px; margin-top: 12px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { .stage-header { padding: 36px 24px 32px; } .stage-header h1 { font-size: 28px; } }
 
         .container {
             max-width: 960px;
             margin: 0 auto;
-            padding: 48px 32px;
+            padding: 24px 32px 48px;
         }
 
         /* ── Section Divider ── */
@@ -74,7 +40,7 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: #e0e0e0;
+            background: var(--border);
         }
 
         .step-badge {
@@ -83,11 +49,12 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #CC0000;
-            background: #fff5f5;
-            border: 1px solid #f0c0c0;
+            background: var(--bg-card);
+            border: none;
             padding: 6px 20px;
             border-radius: 20px;
             white-space: nowrap;
+            box-shadow: var(--nm-in-sm);
         }
 
         /* ── Section Header ── */
@@ -98,7 +65,7 @@
         .section-header-block h2 {
             font-size: 24px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             padding-left: 16px;
             border-left: 4px solid #CC0000;
             margin-bottom: 6px;
@@ -106,8 +73,9 @@
 
         .section-subtitle {
             font-size: 15px;
-            color: #666;
+            color: var(--text-muted);
             padding-left: 20px;
+            margin-top: 8px;
         }
 
         /* ── Key Stats ── */
@@ -119,8 +87,9 @@
         }
 
         .stat-card {
-            background: #f8f8f8;
-            border: 1px solid #e8e8e8;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
             border-radius: 12px;
             padding: 24px 20px;
             text-align: center;
@@ -136,23 +105,24 @@
 
         .stat-label {
             font-size: 13px;
-            color: #666;
+            color: var(--text-muted);
             line-height: 1.5;
         }
 
         /* ── Info Box ── */
         .info-box {
-            background: #f9f9f9;
-            border: 1px solid #e8e8e8;
+            background: var(--bg-secondary);
+            box-shadow: var(--nm-in-sm);
+            border: none;
             border-radius: 10px;
             padding: 20px 24px;
             margin-bottom: 32px;
             font-size: 14px;
-            color: #555;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
 
-        .info-box strong { color: #1a1a1a; }
+        .info-box strong { color: var(--text-primary); }
 
         /* ── Bar Chart ── */
         .chart-container {
@@ -162,13 +132,13 @@
         .chart-title {
             font-size: 15px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 4px;
         }
 
         .chart-desc {
             font-size: 12px;
-            color: #999;
+            color: var(--text-muted);
             margin-bottom: 16px;
         }
 
@@ -187,7 +157,7 @@
         .bar-label {
             width: 160px;
             font-size: 13px;
-            color: #444;
+            color: var(--text-secondary);
             text-align: right;
             flex-shrink: 0;
             line-height: 1.3;
@@ -195,7 +165,7 @@
 
         .bar-track {
             flex: 1;
-            background: #f0f0f0;
+            background: var(--bg-secondary);
             border-radius: 6px;
             height: 28px;
             position: relative;
@@ -219,7 +189,7 @@
         .bar-value-out {
             font-size: 12px;
             font-weight: 700;
-            color: #444;
+            color: var(--text-secondary);
             margin-left: 8px;
             white-space: nowrap;
             flex-shrink: 0;
@@ -241,7 +211,7 @@
             align-items: center;
             gap: 6px;
             font-size: 12px;
-            color: #666;
+            color: var(--text-muted);
         }
 
         .legend-dot {
@@ -266,7 +236,7 @@
 
         .compare-label {
             font-size: 12px;
-            color: #444;
+            color: var(--text-secondary);
             text-align: right;
             line-height: 1.3;
         }
@@ -297,7 +267,7 @@
         .compare-header span {
             font-size: 11px;
             font-weight: 700;
-            color: #888;
+            color: var(--text-muted);
             text-align: center;
         }
 
@@ -305,7 +275,8 @@
             font-size: 11px;
             font-weight: 800;
             color: #CC0000;
-            background: #fff5f5;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             padding: 2px 8px;
             border-radius: 10px;
             white-space: nowrap;
@@ -325,25 +296,26 @@
             align-items: flex-start;
             gap: 12px;
             padding: 14px 18px;
-            background: #fafafa;
-            border: 1px solid #e8e8e8;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s;
             user-select: none;
         }
 
-        .check-item:hover { background: #f0f0f0; }
+        .check-item:hover { background: var(--bg-secondary); }
 
         .check-item.checked {
-            background: #f0fdf4;
-            border-color: #86efac;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
         }
 
         .check-box {
             width: 22px;
             height: 22px;
-            border: 2px solid #ccc;
+            border: none;
             border-radius: 6px;
             flex-shrink: 0;
             display: flex;
@@ -351,6 +323,8 @@
             justify-content: center;
             margin-top: 1px;
             transition: all 0.2s;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out-xs);
         }
 
         .check-item.checked .check-box {
@@ -371,21 +345,22 @@
 
         .check-text strong {
             font-size: 14px;
-            color: #1a1a1a;
+            color: var(--text-primary);
             display: block;
             margin-bottom: 2px;
         }
 
         .check-text span {
             font-size: 12px;
-            color: #888;
+            color: var(--text-muted);
         }
 
         .check-result {
             text-align: center;
             padding: 28px 20px;
-            background: #f8f8f8;
-            border: 1px solid #e8e8e8;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
             border-radius: 14px;
             margin-bottom: 32px;
             transition: all 0.3s;
@@ -399,7 +374,7 @@
 
         .check-result .result-label {
             font-size: 14px;
-            color: #666;
+            color: var(--text-muted);
         }
 
         .check-result .result-grade {
@@ -413,27 +388,31 @@
         }
 
         .check-result .result-grade.grade-empty {
-            background: #f0f0f0;
-            color: #999;
+            background: var(--bg-secondary);
+            color: var(--text-muted);
         }
 
         .check-result .result-grade.grade-beginner {
-            background: #fef2f2;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             color: #CC0000;
         }
 
         .check-result .result-grade.grade-intermediate {
-            background: #eff6ff;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             color: #1e40af;
         }
 
         .check-result .result-grade.grade-advanced {
-            background: #f0fdf4;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             color: #166534;
         }
 
         .check-result .result-grade.grade-expert {
-            background: #faf5ff;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             color: #5b21b6;
         }
 
@@ -441,7 +420,7 @@
             width: 100%;
             max-width: 320px;
             height: 8px;
-            background: #e8e8e8;
+            background: var(--bg-secondary);
             border-radius: 4px;
             margin: 14px auto 0;
             overflow: hidden;
@@ -471,28 +450,15 @@
         .next-steps-card {
             border-radius: 14px;
             padding: 32px 28px;
-            border: 2px solid;
+            border: none;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
         }
 
-        .next-steps-card.tier-beginner {
-            background: linear-gradient(135deg, #fef2f2, #fff5f5);
-            border-color: #fca5a5;
-        }
-
-        .next-steps-card.tier-intermediate {
-            background: linear-gradient(135deg, #eff6ff, #f0f7ff);
-            border-color: #93c5fd;
-        }
-
-        .next-steps-card.tier-advanced {
-            background: linear-gradient(135deg, #f0fdf4, #f0fff4);
-            border-color: #86efac;
-        }
-
-        .next-steps-card.tier-expert {
-            background: linear-gradient(135deg, #faf5ff, #f5f0ff);
-            border-color: #c4b5fd;
-        }
+        .next-steps-card.tier-beginner { }
+        .next-steps-card.tier-intermediate { }
+        .next-steps-card.tier-advanced { }
+        .next-steps-card.tier-expert { }
 
         .next-steps-header {
             display: flex;
@@ -515,21 +481,21 @@
             border-radius: 20px;
         }
 
-        .tier-beginner .ns-tier { background: #fecaca; color: #991b1b; }
-        .tier-intermediate .ns-tier { background: #bfdbfe; color: #1e40af; }
-        .tier-advanced .ns-tier { background: #bbf7d0; color: #166534; }
-        .tier-expert .ns-tier { background: #ddd6fe; color: #5b21b6; }
+        .tier-beginner .ns-tier { background: var(--bg-card); box-shadow: var(--nm-in-sm); color: #991b1b; }
+        .tier-intermediate .ns-tier { background: var(--bg-card); box-shadow: var(--nm-in-sm); color: #1e40af; }
+        .tier-advanced .ns-tier { background: var(--bg-card); box-shadow: var(--nm-in-sm); color: #166534; }
+        .tier-expert .ns-tier { background: var(--bg-card); box-shadow: var(--nm-in-sm); color: #5b21b6; }
 
         .next-steps-title {
             font-size: 22px;
             font-weight: 800;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 6px;
         }
 
         .next-steps-desc {
             font-size: 14px;
-            color: #666;
+            color: var(--text-muted);
             line-height: 1.7;
             margin-bottom: 24px;
         }
@@ -545,8 +511,9 @@
             align-items: center;
             gap: 14px;
             padding: 14px 18px;
-            background: rgba(255,255,255,0.8);
-            border: 1px solid rgba(0,0,0,0.08);
+            background: var(--bg-card);
+            box-shadow: var(--nm-out-sm);
+            border: none;
             border-radius: 10px;
             text-decoration: none;
             color: inherit;
@@ -554,10 +521,8 @@
         }
 
         .ns-step:hover {
-            background: #fff;
-            border-color: #CC0000;
+            box-shadow: var(--nm-in-sm);
             transform: translateX(4px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .ns-step-num {
@@ -580,13 +545,13 @@
             display: block;
             font-size: 14px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 1px;
         }
 
         .ns-step-text span {
             font-size: 12px;
-            color: #888;
+            color: var(--text-muted);
         }
 
         .ns-step-arrow {
@@ -598,10 +563,10 @@
         .ns-unchecked-title {
             font-size: 14px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin: 24px 0 12px;
             padding-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top: 1px solid var(--border);
         }
 
         .ns-unchecked-list {
@@ -614,8 +579,9 @@
             font-size: 12px;
             font-weight: 600;
             color: #CC0000;
-            background: rgba(204,0,0,0.06);
-            border: 1px solid rgba(204,0,0,0.15);
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
+            border: none;
             padding: 5px 12px;
             border-radius: 20px;
         }
@@ -632,46 +598,49 @@
             justify-content: center;
             gap: 10px;
             padding: 18px 48px;
-            background: #CC0000;
-            color: #fff;
+            background: var(--bg-card);
+            color: #CC0000;
             font-size: 17px;
             font-weight: 700;
             border: none;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.25s;
-            box-shadow: 0 4px 16px rgba(204,0,0,0.2);
+            box-shadow: var(--nm-out);
         }
 
         .reveal-btn:hover {
-            background: #a30000;
+            box-shadow: 10px 10px 22px rgba(163,177,198,0.8), -10px -10px 22px rgba(255,255,255,1);
             transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(204,0,0,0.3);
         }
 
         .reveal-btn:active {
+            box-shadow: var(--nm-in);
             transform: translateY(0);
         }
 
         .reveal-btn:disabled {
-            background: #ccc;
+            background: var(--bg-card);
+            color: var(--text-muted);
             cursor: not-allowed;
-            box-shadow: none;
+            box-shadow: var(--nm-in-sm);
             transform: none;
         }
 
         .reveal-btn .btn-count {
             font-size: 13px;
             font-weight: 700;
-            background: rgba(255,255,255,0.25);
+            background: var(--bg-secondary);
+            box-shadow: var(--nm-in-sm);
             padding: 2px 10px;
             border-radius: 10px;
         }
 
         /* ── Insight Box ── */
         .insight-box {
-            background: linear-gradient(135deg, #fff5f5, #fef2f2);
-            border: 1px solid #fecaca;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
+            border: none;
             border-radius: 12px;
             padding: 24px 28px;
             margin-bottom: 32px;
@@ -686,7 +655,7 @@
 
         .insight-box p {
             font-size: 14px;
-            color: #555;
+            color: var(--text-secondary);
             line-height: 1.8;
         }
 
@@ -699,7 +668,9 @@
         }
 
         .tip-card {
-            border: 1px solid #e8e8e8;
+            background: var(--bg-card);
+            box-shadow: var(--nm-out);
+            border: none;
             border-radius: 12px;
             padding: 24px 20px;
         }
@@ -707,13 +678,13 @@
         .tip-card h4 {
             font-size: 15px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         .tip-card p {
             font-size: 13px;
-            color: #666;
+            color: var(--text-muted);
             line-height: 1.7;
         }
 
@@ -721,7 +692,8 @@
             font-size: 11px;
             font-weight: 700;
             color: #CC0000;
-            background: #fff5f5;
+            background: var(--bg-card);
+            box-shadow: var(--nm-in-sm);
             padding: 3px 10px;
             border-radius: 10px;
             display: inline-block;
@@ -730,8 +702,9 @@
 
         /* ── Source ── */
         .source-box {
-            background: #f4f4f4;
-            border: 1px solid #e0e0e0;
+            background: var(--bg-secondary);
+            box-shadow: var(--nm-in-sm);
+            border: none;
             border-radius: 10px;
             padding: 20px 24px;
             margin-top: 48px;
@@ -740,13 +713,13 @@
         .source-box h3 {
             font-size: 14px;
             font-weight: 700;
-            color: #1a1a1a;
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
         .source-box p {
             font-size: 12px;
-            color: #888;
+            color: var(--text-muted);
             line-height: 1.8;
         }
 
@@ -757,31 +730,8 @@
 
         .source-box a:hover { text-decoration: underline; }
 
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 48px 32px;
-            border-top: 1px solid #e0e0e0;
-            background: #f4f4f4;
-        }
-
-        footer .footer-brand {
-            font-size: 14px;
-            font-weight: 700;
-            color: #CC0000;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        footer .footer-text {
-            font-size: 12px;
-            color: #999;
-        }
-
         /* ── Responsive ── */
         @media (max-width: 768px) {
-            h1 { font-size: 28px; }
             .container { padding: 32px 20px; }
             .key-stats { grid-template-columns: 1fr; }
             .bar-label { width: 100px; font-size: 11px; }
@@ -795,17 +745,24 @@
 </head>
 <body>
 
-    <header>
+    <header class="stage-header">
         <a class="back-link" href="index.html">&larr; 목록으로</a>
         <h1>프롬프트를 잘 쓰는 11가지 습관</h1>
         <p>Anthropic이 9,830개 실제 대화를 분석해 발견한 AI 활용의 비밀</p>
-        <div class="header-badge">⏱ 10분 &middot; 셀프 진단 포함</div>
+        <div class="header-badge">⏱ 10분 &middot; 셀프 진단 포함 &middot; <span style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:10px;font-size:12px;">입문~중급</span></div>
     </header>
 
     <main class="container">
 
+        <nav class="fw-inter-nav">
+            <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-right:6px;flex-shrink:0;">AI 활용 심화 시리즈</span>
+            <a class="current-fw" href="ai-fluency.html">11가지 습관</a>
+            <a href="multi-persona.html">멀티 페르소나</a>
+            <a href="reduce-hallucinations.html">환각 줄이기</a>
+        </nav>
+
         <!-- 브릿지 박스 -->
-        <div style="background: #f8f5f0; border: 1px solid #e8e0d4; border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 14px;">
+        <div style="background: var(--bg-card); box-shadow: var(--nm-out-sm); border-radius: 10px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 14px;">
             <span style="font-size: 20px; flex-shrink: 0; margin-top: 2px;">💡</span>
             <div>
                 <p style="font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px;">이 페이지 활용법</p>
@@ -964,19 +921,19 @@
                     <div class="compare-label">누락 맥락 파악</div>
                     <div class="compare-bar iter-yes" style="width: 27%;">27%</div>
                     <div class="compare-bar iter-no" style="width: 7%;">7%</div>
-                    <span class="compare-multiplier" style="color:#991b1b; background:#fef2f2;">4.0x</span>
+                    <span class="compare-multiplier" style="color:#991b1b;">4.0x</span>
                 </div>
                 <div class="compare-row">
                     <div class="compare-label">추론 과정 질문</div>
                     <div class="compare-bar iter-yes" style="width: 16%;">16%</div>
                     <div class="compare-bar iter-no" style="width: 3%;">3%</div>
-                    <span class="compare-multiplier" style="color:#991b1b; background:#fef2f2;">5.6x</span>
+                    <span class="compare-multiplier" style="color:#991b1b;">5.6x</span>
                 </div>
                 <div class="compare-row">
                     <div class="compare-label">사실 확인 요청</div>
                     <div class="compare-bar iter-yes" style="width: 13%;">13%</div>
                     <div class="compare-bar iter-no" style="width: 4%;">4%</div>
-                    <span class="compare-multiplier" style="color:#991b1b; background:#fef2f2;">3.3x</span>
+                    <span class="compare-multiplier" style="color:#991b1b;">3.3x</span>
                 </div>
             </div>
         </div>
@@ -1294,6 +1251,29 @@
             </div>
         </div>
 
+        <!-- ── 이 습관이 역효과를 낼 수 있는 상황 ── -->
+        <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:28px 32px;margin-bottom:32px;border-left:4px solid #CC0000;">
+            <div style="font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#CC0000;margin-bottom:12px;">⚠️ 이 습관이 역효과를 낼 수 있는 상황</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;">
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📝 출력 형식 과잉 지정</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">표·JSON·목록 등 형식을 과도하게 요구하면 AI가 형식을 맞추느라 내용의 질이 낮아질 수 있습니다. 창의적 작업이나 짧은 답변에는 형식 지정을 생략하세요.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🎭 역할 부여 남용</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">모든 프롬프트에 페르소나를 넣으면 오히려 일반적인 질문에서 답변이 좁아집니다. 단순 사실 확인이나 계산 작업에는 역할 없이 직접 질문하세요.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔁 반복 개선 루프 집착</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">간단한 초안 작업에서 3~4회 이상 반복 개선하면 시간 낭비입니다. 처음부터 완벽한 결과보다 "80% 완성도 → 직접 마무리"가 더 효율적인 경우가 많습니다.</div>
+                </div>
+                <div style="background:var(--bg-primary);border-radius:10px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📚 과도한 맥락 제공</div>
+                    <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">배경 설명이 너무 길면 AI가 핵심 요청을 놓칩니다. 맥락은 "관련된 것만" 간결하게 — 300단어 이상의 배경 설명은 오히려 답변 품질을 낮출 수 있습니다.</div>
+                </div>
+            </div>
+        </div>
+
         <!-- ── 출처 ── -->
         <div class="source-box">
             <h3>📎 출처</h3>
@@ -1309,15 +1289,26 @@
 
     </main>
 
-    <nav class="page-nav" style="max-width: 960px; margin: 0 auto; padding: 0 32px 48px; display: flex; justify-content: space-between; align-items: center; gap: 16px;">
-        <a href="ai-levels.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">← 이전: 나는 지금 몇 단계일까?</a>
-        <a href="multi-persona.html" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: #CC0000; font-size: 14px; font-weight: 600; padding: 10px 16px; border: 1px solid #e0e0e0; border-radius: 8px; transition: all 0.2s ease; background: #fff; margin-left: auto;" onmouseover="this.style.borderColor='#CC0000';this.style.background='#fff5f5'" onmouseout="this.style.borderColor='#e0e0e0';this.style.background='#fff'">다음: AI 토론법 →</a>
-    </nav>
+    <div style="max-width:960px;margin:0 auto;padding:0 32px 24px;">
+        <div style="background:var(--bg-card);box-shadow:var(--nm-out-sm);border-radius:16px;padding:24px 28px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">다음으로 배울 기법</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <a href="multi-persona.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                    <span style="font-size:28px;">🎭</span>
+                    <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">멀티 페르소나</div><div style="font-size:12px;color:var(--text-muted);">AI 팀을 구성해 토론시키기</div></div>
+                </a>
+                <a href="reduce-hallucinations.html" style="display:flex;align-items:center;gap:12px;padding:16px;background:var(--bg-primary);border-radius:12px;box-shadow:var(--nm-in-sm);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-out-sm)'" onmouseout="this.style.boxShadow='var(--nm-in-sm)'">
+                    <span style="font-size:28px;">🔍</span>
+                    <div><div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px;">환각 줄이기</div><div style="font-size:12px;color:var(--text-muted);">AI 거짓 정보를 걸러내는 기법</div></div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; padding: 0 32px 56px;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 600; padding: 14px 32px; background: var(--bg-card); border-radius: 12px; box-shadow: var(--nm-out); transition: all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-in-sm)';this.style.color='#CC0000'" onmouseout="this.style.boxShadow='var(--nm-out)';this.style.color='var(--text-secondary)'">← 목록으로</a>
+    </div>
 
-    <footer>
-        <p class="footer-brand">AI Roasting</p>
-        <p class="footer-text">Claude 실전 가이드</p>
-    </footer>
+    <div id="app-footer"></div>
 
     <script>
         const behaviorNames = [
@@ -1426,5 +1417,6 @@
         }
     </script>
 
+    <script src="js/common.js"></script>
 </body>
 </html>

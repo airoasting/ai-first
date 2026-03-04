@@ -9,13 +9,14 @@
 <style>
   .stage-header {
     text-align: center;
-    padding: 48px 32px 40px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 100%);
-    border-bottom: 3px solid #C0524A;
+    padding: 48px 32px 56px;
+    background: #1e2235;
+    border-radius: 0 0 32px 32px;
+    box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
   }
   .stage-header .back-link {
     display: inline-block;
-    color: #D47870;
+    color: #e8706a;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -35,12 +36,13 @@
     display: inline-block;
     font-size: 13px;
     font-weight: 600;
-    color: #D47870;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(192,82,74,0.3);
-    padding: 4px 16px;
+    color: #e8706a;
+    background: #1e2235;
+    border: none;
+    padding: 6px 18px;
     border-radius: 20px;
     margin-top: 12px;
+    box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4);
   }
 
   /* ── 5단계 진행 인디케이터 ── */
@@ -51,12 +53,12 @@
     margin-bottom: 28px;
   }
   .step-dot {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 2px solid rgba(255,255,255,0.18);
-    color: rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.32);
     font-size: 13px;
     font-weight: 700;
     display: flex;
@@ -64,24 +66,26 @@
     justify-content: center;
     flex-shrink: 0;
   }
+  .step-dot.diag { font-size: 10px; line-height: 1.1; }
   .step-dot.done {
-    background: rgba(192,82,74,0.25);
-    border-color: #C0524A;
-    color: #D47870;
+    background: rgba(255,255,255,0.11);
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), inset -1px -1px 3px rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.55);
   }
   .step-dot.current {
-    background: #C0524A;
-    border-color: #C0524A;
-    color: #ffffff;
-    box-shadow: 0 0 0 5px rgba(192,82,74,0.22);
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15), 0 4px 14px rgba(0,0,0,0.35);
+    color: #1c1f2e;
   }
   .step-line {
     width: 36px;
     height: 2px;
-    background: rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.07);
     flex-shrink: 0;
   }
-  .step-line.done { background: #C0524A; }
+  .step-line.done { background: rgba(255,255,255,0.22); }
   a.step-dot {
     text-decoration: none;
     cursor: pointer;
@@ -89,14 +93,15 @@
   }
   a.step-dot:hover {
     opacity: 0.75;
-    transform: scale(1.12);
+    transform: scale(1.1);
   }
 
   @media(max-width:768px) {
     .stage-header { padding: 36px 24px 32px; }
     .stage-header h1 { font-size: 28px; }
     .step-line { width: 20px; }
-    .step-dot { width: 28px; height: 28px; font-size: 11px; }
+    .step-dot { width: 30px; height: 30px; font-size: 11px; }
+    .step-dot.diag { font-size: 9px; }
   }
 </style>
 </head>
@@ -104,6 +109,8 @@
 <header class="stage-header">
   <!-- 5단계 진행 인디케이터 -->
   <div class="stage-step-progress">
+    <a class="step-dot diag" href="pd-diagnosis.html">진단</a>
+    <div class="step-line done"></div>
     <a class="step-dot done" href="stage1.html">1</a>
     <div class="step-line done"></div>
     <div class="step-dot current">2</div>
