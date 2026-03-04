@@ -53,7 +53,7 @@ body{font-family:'Helvetica Neue',Arial,-apple-system,system-ui,sans-serif;backg
 /* ── HEADER ── */
 header{
   text-align:center;padding:52px 32px 36px;position:relative;
-  background:linear-gradient(160deg,#1e2235 0%,#1c1f2e 100%);
+  background:linear-gradient(160deg,#1a2340 0%,#1e2a4a 60%,#1a2340 100%);
   box-shadow:0 8px 32px rgba(8,10,18,0.5),inset 0 1px 0 rgba(255,255,255,0.07);
 }
 .brand{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#E8706A;margin-bottom:16px;}
@@ -74,7 +74,7 @@ header>p.header-sub{font-size:15px;color:rgba(255,255,255,0.38);font-weight:400;
 /* ── FOOTER ── */
 footer{
   text-align:center;padding:36px 32px 28px;
-  background:linear-gradient(160deg,#1c1f2e 0%,#1e2235 100%);
+  background:linear-gradient(160deg,#1a2340 0%,#1e2a4a 60%,#1a2340 100%);
   box-shadow:0 -8px 32px rgba(8,10,18,0.4),inset 0 -1px 0 rgba(255,255,255,0.05);
 }
 .footer-brand{font-size:13px;font-weight:700;color:#E8706A;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}

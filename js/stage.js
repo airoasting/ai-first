@@ -269,12 +269,8 @@ function buildStageHTML(m, done) {
           <button class="prompt-toggle-btn" onclick="togglePrompt('ptw-${i}', this)">▼ 전체 프롬프트 보기</button>
         </div>
         ${p.why ? `<div class="prompt-why">💡 <strong>왜 이렇게 쓸까?</strong> : ${p.why}</div>` : ''}
-        <div class="prompt-ai-btns">
-          <button class="btn-open-ai btn-open-chatgpt" onclick="openInAI(${JSON.stringify(p.text)}, 'chatgpt')">ChatGPT에서 열기 ↗</button>
-          <button class="btn-open-ai btn-open-claude" onclick="openInAI(${JSON.stringify(p.text)}, 'claude')">Claude에서 열기 ↗</button>
-        </div>
       </div>
-      <p class="prompt-hint">→ 버튼 클릭 시 프롬프트가 클립보드에 복사되고 AI 창이 열립니다</p>
+      <p class="prompt-hint">→ 📋 복사 버튼을 누른 뒤 AI에 붙여넣으세요</p>
     `).join('')}
   </div>
 

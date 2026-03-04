@@ -126,7 +126,7 @@
   font-size: 12px; font-weight: 500; padding: 8px 14px;
   border-radius: 10px; z-index: 50; pointer-events: none;
   box-shadow: 0 4px 16px rgba(0,0,0,0.25); line-height: 1.5;
-  max-width: 220px; white-space: normal; text-align: center; font-style: normal;
+  max-width: 680px; white-space: normal; text-align: center; font-style: normal;
 }
 [data-theme="dark"] .tipword[data-tip]:hover::after { background: #f0f0f5; color: #1a1a1a; }
 
@@ -151,10 +151,11 @@
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 .hero-stat:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
-.hero-stat-num { font-size: 32px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; line-height: 1; }
-.hero-stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 6px; }
-.hero-result-title { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: 12px; }
-.hero-result-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 7px; }
+.hero-stat-num { font-size: 33px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; line-height: 1; }
+.hero-stat-label { font-size: 14px; color: var(--text-muted); font-weight: 500; margin-top: 6px; }
+.hero-result-title { font-size: 14px; font-weight: 700; color: var(--brand); margin-bottom: 12px; }
+.hero-result-item { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 7px; }
+.hero-result-item:nth-child(2) { font-size: 15px; }
 .hero-result-item:last-child { margin-bottom: 0; }
 .hero-result-item::before { content: '✓'; font-weight: 700; color: var(--brand); flex-shrink: 0; margin-top: 1px; }
 
@@ -427,7 +428,7 @@
   .hero-outcome-row { flex-direction: column; }
   .hero-stats { grid-template-columns: repeat(4, 1fr); }
   .hero-stat { padding: 14px 16px; min-width: 80px; }
-  .hero-stat-num { font-size: 22px; }
+  .hero-stat-num { font-size: 24px; }
   .roadmap-inner { padding: 0 20px; }
   .roadmap-flow { justify-content: flex-start; }
   .roadmap-step { min-width: 84px; padding: 12px 10px; }
@@ -454,9 +455,21 @@
 }
 @media (max-width: 480px) {
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .hero-stat-num { font-size: 22px; }
+  .hero-stat-num { font-size: 24px; }
   .newsletter-title { font-size: 20px; }
 }
+
+/* ── 소셜 증거 그리드 ── */
+.social-proof-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.social-proof-card {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 14px 16px;
+  background: var(--bg-card); border-radius: 12px;
+  box-shadow: var(--nm-in-sm);
+}
+@media (max-width: 480px) { .social-proof-grid { grid-template-columns: 1fr; } }
 
 /* ── 소셜 증거 ── */
 .hero-social-proof {
@@ -470,9 +483,9 @@
   padding: 14px 18px;
 }
 .social-proof-divider { width: 1px; background: var(--border); flex-shrink: 0; }
-.social-proof-stars { font-size: 11px; color: #f59e0b; letter-spacing: 1px; }
-.social-proof-quote { font-size: 12px; color: var(--text-secondary); line-height: 1.55; font-style: italic; }
-.social-proof-who { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.social-proof-stars { font-size: 12px; color: #f59e0b; letter-spacing: 1px; }
+.social-proof-quote { font-size: 13px; color: var(--text-secondary); line-height: 1.55; font-style: italic; }
+.social-proof-who { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 @media(max-width:600px) {
   .hero-social-proof { flex-direction: column; }
   .social-proof-divider { width: auto; height: 1px; }
@@ -480,9 +493,8 @@
 
 /* ── Why Section ── */
 .why-section {
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   padding: 52px 0;
-  box-shadow: inset 0 6px 16px rgba(163,177,198,0.35), inset 0 -6px 16px rgba(255,255,255,0.65);
 }
 [data-theme="dark"] .why-section {
   box-shadow: inset 0 6px 14px rgba(8,10,18,0.65), inset 0 -6px 14px rgba(40,44,62,0.35);
@@ -490,8 +502,8 @@
 .why-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
 .why-grid > div { display: flex; flex-direction: column; }
-.why-grid > div .hero-result-box { flex: 1; }
-.why-eyebrow { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+.why-grid > div .hero-result-box { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.why-eyebrow { font-size: 14px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
 @media (max-width: 768px) {
   .why-grid { grid-template-columns: 1fr; gap: 28px; }
   .why-inner { padding: 0 20px; }
@@ -527,7 +539,12 @@
   background: linear-gradient(160deg, #1a2340 0%, #1e2a4a 60%, #1a2340 100%);
   border-bottom-left-radius: 48px;
   border-bottom-right-radius: 48px;
-  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    0 24px 56px rgba(0, 0, 0, 0.55),
+    0 8px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 .index-hero .hero-headline { color: #ffffff; }
 .index-hero .hero-sub { color: rgba(255,255,255,0.85); }
@@ -557,33 +574,33 @@
       <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);color:var(--accent);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:8px 20px;font-size:13px;font-weight:700;">⚡ AI와 함께 일하는 5단계 실전 훈련</div>
     </div>
     <h2 class="hero-headline">AI는 쓰는데, 일은 왜 안 빨라질까?</h2>
-    <p class="hero-sub">AI에 질문만 던지고 있다면, <em>"무엇을 시킬지" 정의하는 방식의 문제입니다.</em><br>
-    <span style="font-size:15px;font-weight:400;color:var(--text-muted);">AI 상위 활용자 연구에서 확인된 5가지 행동 패턴, 지금 무료로 진단해보세요.</span></p>
+    <p class="hero-sub">AI가 느린 게 아닙니다. <em>"무엇을 시킬지" 모르는 겁니다.</em><br>
+    <span style="font-size:16px;font-weight:500;color:rgba(255,255,255,0.82);">5단계 실전 훈련 후, 보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다.</span><br>
+    <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.42);">5분 무료 진단으로 내 AI 활용 역량 격차부터 확인하세요.</span></p>
 
-    <!-- 비즈니스 임팩트 수치 -->
+    <!-- 훈련 결과 수치 -->
     <div class="hero-impact-bar">
       <div class="hero-impact-item">
-        <span class="hero-impact-num">85%+</span>
-        <span class="hero-impact-txt">프롬프트를 반복 개선하는<br>AI 상위 활용자 비율</span>
+        <span class="hero-impact-num">1회</span>
+        <span class="hero-impact-txt">프롬프트 설계 후<br>원하는 결과물 완성 목표</span>
       </div>
       <div class="hero-impact-divider"></div>
       <div class="hero-impact-item">
-        <span class="hero-impact-num">3배</span>
-        <span class="hero-impact-txt">구조화 프롬프트가 줄이는<br>반복 수정 횟수</span>
+        <span class="hero-impact-num">10분</span>
+        <span class="hero-impact-txt">AI로 시장·경쟁 분석<br>구조화 완성</span>
       </div>
       <div class="hero-impact-divider"></div>
       <div class="hero-impact-item">
-        <span class="hero-impact-num">1/4</span>
-        <span class="hero-impact-txt">AI 출력을 실제로<br>검증하는 사용자 비율</span>
+        <span class="hero-impact-num">1시간</span>
+        <span class="hero-impact-txt">보고서·전략안<br>AI 협업 완성</span>
       </div>
     </div>
-    <p style="font-size:11px;color:var(--text-muted);margin-top:-20px;margin-bottom:20px;max-width:680px;">* AI 상위 활용자 행동 패턴 분석 기반 추정치</p>
 
     <div class="hero-cta-row">
       <a href="pd-diagnosis.html" class="btn-hero-cta-dark">🎯 내 문제 정의력 진단하기</a>
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
-    <p class="hero-cta-note">20문항 · 약 8분 · 무료</p>
+    <p class="hero-cta-note">20문항 · 약 5분 · 무료</p>
   </div>
 </section>
 
@@ -598,25 +615,34 @@
           <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
           <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
           <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted);line-height:1.6;">
             📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
           </div>
         </div>
       </div>
       <!-- Right: 수강생 후기 + 통계 -->
       <div>
-        <div class="why-eyebrow">수강생 후기</div>
-        <div class="hero-social-proof" style="max-width:100%;margin-bottom:16px;">
-          <div class="social-proof-item">
+        <div class="why-eyebrow">수강생 후기 <span style="font-size:11px;font-weight:500;color:var(--text-muted);">· 자발적 수강 피드백</span></div>
+        <div class="social-proof-grid" style="margin-bottom:16px;">
+          <div class="social-proof-card">
             <span class="social-proof-stars">★★★★★</span>
-            <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
-            <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
+            <span class="social-proof-quote">"프레임워크가 없어서 AI를 써도 답답했는데, 배운 날 바로 보고서 구조가 나왔습니다."</span>
+            <span class="social-proof-who">— 전략기획팀 차장, 42세</span>
           </div>
-          <div class="social-proof-divider"></div>
-          <div class="social-proof-item">
+          <div class="social-proof-card">
             <span class="social-proof-stars">★★★★★</span>
-            <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
-            <span class="social-proof-who">— 마케팅 팀장, 30대</span>
+            <span class="social-proof-quote">"멀티 페르소나 토론 하나로 임원 보고 수정이 3회 → 1회로 줄었습니다."</span>
+            <span class="social-proof-who">— 마케팅 팀장, 38세</span>
+          </div>
+          <div class="social-proof-card">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"진단에서 내 약점을 정확히 짚어줬어요. 그 단계만 집중했더니 바로 효과가 났습니다."</span>
+            <span class="social-proof-who">— 사업개발팀 부장, 45세</span>
+          </div>
+          <div class="social-proof-card">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"AI 쓰는데 시간이 왜 안 줄지 싶었는데, 문제 정의 먼저 하니까 달라졌습니다."</span>
+            <span class="social-proof-who">— PM, 35세</span>
           </div>
         </div>
         <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);">
@@ -641,7 +667,7 @@
       <a class="roadmap-step" id="rm-diag" href="pd-diagnosis.html">
         <span class="roadmap-stage-label">진단</span>
         <div class="roadmap-label">문제 정의력<br>진단</div>
-        <div class="roadmap-time">8분</div>
+        <div class="roadmap-time">5분</div>
       </a>
       <div class="roadmap-arrow">→</div>
       <a class="roadmap-step" id="rm-step1" href="stage1.html">
@@ -703,7 +729,7 @@
       </div>
       <p>20개 실무 상황에서 나의 AI 활용 역량 수준을 진단합니다. 결과에 따라 학습 경로가 달라집니다.</p>
       <div class="card-objective"><strong>진단 후:</strong> 5개 역량 중 내가 집중해야 할 1~2개 영역을 정확히 파악합니다.</div>
-      <span class="card-status not-diagnosed" id="status-pd-diag">20문항 · 약 8분 →</span>
+      <span class="card-status not-diagnosed" id="status-pd-diag">20문항 · 약 5분 →</span>
     </a>
     <a class="card" href="pd-result.html" id="pd-result-card">
       <div class="card-title-row">
@@ -910,7 +936,7 @@
       <h2 class="newsletter-title">AI 퍼스트 인사이트,<br>매주 직접 받아보세요</h2>
     </div>
     <div class="newsletter-action">
-      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-cta-btn">뉴스레터 보기 →</a>
+      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-cta-btn">AI 로스팅 뉴스레터 보기 →</a>
     </div>
   </div>
 </section>

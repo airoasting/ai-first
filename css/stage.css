@@ -44,7 +44,7 @@
 .prompt-hint{font-size:13px;color:var(--text-muted);margin-top:10px;margin-bottom:20px;font-style:italic;padding-left:4px;}
 
 /* ── PROMPT EXPLANATION ── */
-.prompt-why{background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.15);border-radius:10px;padding:16px 20px;margin-top:12px;margin-bottom:4px;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.7;}
+.prompt-why{background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.15);border-radius:10px;padding:16px 20px;margin-top:12px;margin-bottom:4px;font-size:13px;color:var(--text-secondary);line-height:1.7;}
 .prompt-why strong{color:var(--accent);font-weight:700;}
 
 /* ── ITERATION GUIDES ── */

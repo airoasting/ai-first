@@ -1,6 +1,6 @@
 /* ── HEADER OVERRIDE ── */
 header{
-  background:linear-gradient(160deg,#1e2235 0%,#1c1f2e 100%);
+  background:linear-gradient(160deg,#1a2340 0%,#1e2a4a 60%,#1a2340 100%);
   border-bottom:none;border-top:none;
   box-shadow:0 8px 32px rgba(8,10,18,0.5),inset 0 1px 0 rgba(255,255,255,0.07);
   padding:48px 32px 56px;

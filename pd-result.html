@@ -64,6 +64,16 @@
       <!-- Score bars -->
       <div class="pd-score-bars" id="pd-score-bars"></div>
 
+      <!-- Recommendation Banner -->
+      <div class="pd-rec-banner" id="pd-rec-banner" style="display:none">
+        <div class="pd-rec-banner-left">
+          <div class="pd-rec-banner-eyebrow">🎯 지금 바로 여기서 시작하세요</div>
+          <div class="pd-rec-banner-title" id="pd-rec-title">1단계: 프롬프트 실전 훈련</div>
+          <div class="pd-rec-banner-sub" id="pd-rec-sub">이 역량이 가장 낮습니다 — 먼저 집중 훈련하세요</div>
+        </div>
+        <a class="pd-rec-banner-btn" href="stage1.html" id="pd-rec-link">바로 시작하기 →</a>
+      </div>
+
       <!-- 5 charts -->
       <div class="pd-charts-section-title">5대 역량 다이아몬드 차트</div>
       <p class="pd-charts-section-sub">각 역량의 4가지 하위 차원을 다이아몬드 차트로 확인하세요.</p>
@@ -100,10 +110,41 @@
         </div>
       </div>
 
+      <!-- Next Action Panel -->
+      <div class="pd-action-panel">
+        <div class="pd-action-panel-title">지금 바로 시작할 수 있습니다</div>
+        <div class="pd-action-choices">
+          <a class="pd-action-choice pd-action-choice--primary" href="stage1.html" id="pd-action-start">
+            <span class="pd-action-choice-icon">🚀</span>
+            <div class="pd-action-choice-body">
+              <div class="pd-action-choice-label">취약 역량 집중 훈련</div>
+              <div class="pd-action-choice-title" id="pd-action-start-title">1단계: 프롬프트 실전 훈련 시작</div>
+            </div>
+            <span class="pd-action-choice-arrow">→</span>
+          </a>
+          <a class="pd-action-choice" href="index.html#roadmap">
+            <span class="pd-action-choice-icon">🗺️</span>
+            <div class="pd-action-choice-body">
+              <div class="pd-action-choice-label">전체 과정 확인</div>
+              <div class="pd-action-choice-title">전체 5단계 학습 로드맵 보기</div>
+            </div>
+            <span class="pd-action-choice-arrow">→</span>
+          </a>
+          <a class="pd-action-choice" href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener">
+            <span class="pd-action-choice-icon">📬</span>
+            <div class="pd-action-choice-body">
+              <div class="pd-action-choice-label">주간 AI 인사이트</div>
+              <div class="pd-action-choice-title">무료 뉴스레터 구독하기</div>
+            </div>
+            <span class="pd-action-choice-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
       <!-- Retry -->
       <div class="pd-result-share">
-        <a class="pd-btn-share" href="pd-diagnosis.html">🔄 4주 후 재진단 (진행 상황 확인)</a>
-        <a class="pd-btn-share" href="index.html">🏠 전체 과정 목록으로</a>
+        <a class="pd-btn-share" href="pd-diagnosis.html">🔄 4주 후 재진단</a>
+        <a class="pd-btn-share" href="index.html">🏠 전체 과정으로</a>
       </div>
     </div>
   </div>
@@ -134,6 +175,42 @@
 </div>
 
 <style>
+/* ── Recommendation Banner ── */
+.pd-rec-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+  background: var(--bg-card); border-radius: 16px;
+  padding: 22px 28px; margin-bottom: 32px;
+  border-left: 4px solid #CC0000;
+  box-shadow: var(--nm-out);
+}
+.pd-rec-banner-left { flex: 1; min-width: 0; }
+.pd-rec-banner-eyebrow {
+  font-size: 11px; font-weight: 800; color: #CC0000;
+  text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;
+}
+.pd-rec-banner-title {
+  font-size: 18px; font-weight: 800; color: var(--text-primary);
+  margin-bottom: 4px; letter-spacing: -0.3px;
+}
+.pd-rec-banner-sub {
+  font-size: 13px; color: var(--text-muted); line-height: 1.5;
+}
+.pd-rec-banner-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #CC0000; color: #fff;
+  font-size: 14px; font-weight: 700;
+  padding: 12px 24px; border-radius: 12px;
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  box-shadow: 4px 4px 12px rgba(204,0,0,0.35), -2px -2px 6px rgba(255,255,255,0.5);
+  transition: all 0.25s ease;
+}
+.pd-rec-banner-btn:hover { transform: translateY(-2px); box-shadow: 6px 6px 16px rgba(204,0,0,0.45); }
+@media (max-width: 600px) {
+  .pd-rec-banner { flex-direction: column; align-items: flex-start; }
+  .pd-rec-banner-btn { width: 100%; justify-content: center; }
+}
+
 /* ── Role Guide ── */
 .pd-role-guide {
   background: var(--bg-card); border-radius: 20px;
@@ -168,6 +245,47 @@
 .pd-role-prompt-text { font-size: 12px; color: #c8d6f0; line-height: 1.7; font-family: 'SF Mono', 'Fira Code', monospace; white-space: pre-wrap; }
 .pd-role-copy-btn { font-size: 11px; font-weight: 700; color: #e8706a; background: rgba(232,112,106,0.12); border: none; border-radius: 7px; padding: 4px 10px; margin-top: 8px; cursor: pointer; transition: opacity 0.2s; }
 .pd-role-copy-btn:hover { opacity: 0.75; }
+
+/* ── Action Panel ── */
+.pd-action-panel {
+  background: var(--bg-card); border-radius: 20px;
+  padding: 28px 32px; box-shadow: var(--nm-out);
+  margin-bottom: 24px;
+}
+.pd-action-panel-title {
+  font-size: 18px; font-weight: 800; color: var(--text-primary);
+  margin-bottom: 18px;
+}
+.pd-action-choices { display: flex; flex-direction: column; gap: 10px; }
+.pd-action-choice {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; background: var(--bg-card);
+  border-radius: 14px; text-decoration: none; color: inherit;
+  box-shadow: var(--nm-out-sm); transition: all 0.25s ease;
+}
+.pd-action-choice:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
+.pd-action-choice:active { box-shadow: var(--nm-in-sm); transform: translateY(0); }
+.pd-action-choice--primary {
+  border-left: 4px solid #CC0000;
+  box-shadow: var(--nm-out);
+}
+.pd-action-choice-icon { font-size: 24px; flex-shrink: 0; }
+.pd-action-choice-body { flex: 1; min-width: 0; }
+.pd-action-choice-label {
+  font-size: 11px; font-weight: 800; color: #CC0000;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;
+}
+.pd-action-choice--primary .pd-action-choice-label { color: #CC0000; }
+.pd-action-choice:not(.pd-action-choice--primary) .pd-action-choice-label { color: var(--accent); }
+.pd-action-choice-title {
+  font-size: 15px; font-weight: 700; color: var(--text-primary);
+}
+.pd-action-choice-arrow {
+  font-size: 18px; color: var(--text-muted); flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .pd-action-panel { padding: 22px 20px; }
+}
 </style>
 
 <script src="js/pd-data.js"></script>
@@ -312,6 +430,22 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cta) cta.href = mapping.stage;
     if (title) title.textContent = mapping.label;
     if (sub) sub.textContent = mapping.sub;
+    // Also update action panel primary CTA
+    var actionStart = document.getElementById('pd-action-start');
+    var actionTitle = document.getElementById('pd-action-start-title');
+    if (actionStart) actionStart.href = mapping.stage;
+    if (actionTitle) actionTitle.textContent = mapping.label;
+    // Show recommendation banner
+    var recBanner = document.getElementById('pd-rec-banner');
+    var recTitle = document.getElementById('pd-rec-title');
+    var recSub = document.getElementById('pd-rec-sub');
+    var recLink = document.getElementById('pd-rec-link');
+    if (recBanner) {
+      if (recTitle) recTitle.textContent = mapping.label;
+      if (recSub) recSub.textContent = mapping.sub;
+      if (recLink) recLink.href = mapping.stage;
+      recBanner.style.display = 'flex';
+    }
   }, 600);
 });
 </script>
