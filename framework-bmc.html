@@ -46,10 +46,9 @@
         .bmc-bottom { grid-column: span 5; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .bmc-bottom .bmc-cell { min-height: 80px; }
         @media (max-width: 700px) {
-            .bmc-grid { display: flex; flex-direction: column; gap: 8px; }
+            .bmc-grid { grid-template-columns: 1fr 1fr; }
             .bmc-cell.span2, .bmc-cell.vp { grid-column: span 1; grid-row: span 1; }
-            .bmc-bottom { display: flex; flex-direction: column; gap: 8px; }
-            .bmc-cell { min-height: 80px; }
+            .bmc-bottom { grid-column: span 2; grid-template-columns: 1fr 1fr; }
         }
 
         /* Blocks detail section */

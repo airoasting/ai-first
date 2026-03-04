@@ -488,7 +488,9 @@
   box-shadow: inset 0 6px 14px rgba(8,10,18,0.65), inset 0 -6px 14px rgba(40,44,62,0.35);
 }
 .why-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
-.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+.why-grid > div { display: flex; flex-direction: column; }
+.why-grid > div .hero-result-box { flex: 1; }
 .why-eyebrow { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
 @media (max-width: 768px) {
   .why-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -542,7 +544,7 @@
       <a href="pd-diagnosis.html" class="btn-primary btn-hero-cta" style="background:linear-gradient(135deg,#CC0000,#e53e3e);box-shadow:0 8px 28px rgba(204,0,0,0.4),-2px -2px 8px rgba(255,255,255,0.5);">🎯 내 문제 정의력 진단하기</a>
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
-    <p class="hero-cta-note">20문항 · 약 8분 · 무료 · 지금까지 <strong style="color:var(--text-secondary);">1,200명+</strong> 완료</p>
+    <p class="hero-cta-note">20문항 · 약 8분 · 무료</p>
   </div>
 </section>
 
@@ -610,9 +612,6 @@
           <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
             📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
           </div>
-        </div>
-        <div style="margin-top:10px;font-size:12px;color:var(--text-muted);background:var(--bg-card);border-radius:10px;padding:8px 14px;box-shadow:var(--nm-in-sm);">
-          💎 <strong style="color:var(--accent);">기업 유료 교육 상당의 콘텐츠</strong>를 무료로 제공합니다
         </div>
       </div>
       <!-- Right: 수강생 후기 + 통계 -->
