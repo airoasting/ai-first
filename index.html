@@ -498,12 +498,51 @@
   .why-section { padding: 36px 0; }
 }
 
-/* ── Hero Navy Background ── */
-.index-hero {
-  background: linear-gradient(160deg, #dce6f5 0%, #e8edf8 60%, #dde5f3 100%);
+/* ── Hero CTA Button (dark bg) ── */
+.btn-hero-cta-dark {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: #ffffff;
+  color: #1a2340;
+  border: none;
+  border-radius: 14px;
+  padding: 18px 40px;
+  font-size: 17px; font-weight: 800;
+  text-decoration: none; cursor: pointer;
+  letter-spacing: -0.3px;
+  box-shadow: 6px 6px 18px rgba(0,0,0,0.5), -3px -3px 10px rgba(255,255,255,0.12);
+  transition: all 0.25s ease;
 }
+.btn-hero-cta-dark:hover {
+  background: #f0f4ff;
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 24px rgba(0,0,0,0.6), -4px -4px 14px rgba(255,255,255,0.15);
+}
+.btn-hero-cta-dark:active {
+  transform: translateY(1px);
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.2), inset -2px -2px 6px rgba(255,255,255,0.8);
+}
+
+/* ── Hero Dark Navy ── */
+.index-hero {
+  background: linear-gradient(160deg, #1a2340 0%, #1e2a4a 60%, #1a2340 100%);
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
+  overflow: hidden;
+}
+.index-hero .hero-headline { color: #ffffff; }
+.index-hero .hero-sub { color: rgba(255,255,255,0.85); }
+.index-hero .hero-sub em { color: #ffffff; }
+.index-hero .hero-sub span { color: rgba(255,255,255,0.55) !important; }
+.index-hero .hero-impact-bar { background: rgba(255,255,255,0.07); box-shadow: none; border: 1px solid rgba(255,255,255,0.1); }
+.index-hero .hero-impact-num { color: #ffffff; }
+.index-hero .hero-impact-txt { color: rgba(255,255,255,0.6); }
+.index-hero .hero-impact-divider { background: rgba(255,255,255,0.12); }
+.index-hero p[style*="text-muted"] { color: rgba(255,255,255,0.4) !important; }
+.index-hero .btn-hero-link { color: rgba(255,255,255,0.7) !important; }
+.index-hero .btn-hero-link:hover { color: #ffffff !important; }
+.index-hero .hero-cta-note { color: rgba(255,255,255,0.45); }
 [data-theme="dark"] .index-hero {
-  background: linear-gradient(160deg, #181f35 0%, #1e2640 60%, #1a2038 100%);
+  background: linear-gradient(160deg, #111827 0%, #1a2236 60%, #111827 100%);
 }
 </style>
 <noscript><div style="padding:40px;text-align:center;font-family:sans-serif;"><h2>이 사이트는 JavaScript가 필요합니다.</h2></div></noscript>
@@ -514,8 +553,8 @@
 <section class="index-hero">
   <div class="hero-inner">
     <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;">
-      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);color:var(--brand);border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:800;letter-spacing:0.5px;box-shadow:var(--nm-out-sm);">🔥 AI ROASTING</div>
-      <div style="display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);color:var(--accent);border:none;border-radius:20px;padding:8px 20px;font-size:13px;font-weight:700;box-shadow:var(--nm-out-sm);">⚡ AI와 함께 일하는 5단계 실전 훈련</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);color:#ff6b6b;border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:8px 20px;font-size:13px;font-weight:800;letter-spacing:0.5px;">🔥 AI ROASTING</div>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);color:var(--accent);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:8px 20px;font-size:13px;font-weight:700;">⚡ AI와 함께 일하는 5단계 실전 훈련</div>
     </div>
     <h2 class="hero-headline">AI는 쓰는데, 일은 왜 안 빨라질까?</h2>
     <p class="hero-sub">AI에 질문만 던지고 있다면, <em>"무엇을 시킬지" 정의하는 방식의 문제입니다.</em><br>
@@ -541,10 +580,53 @@
     <p style="font-size:11px;color:var(--text-muted);margin-top:-20px;margin-bottom:20px;max-width:680px;">* AI 상위 활용자 행동 패턴 분석 기반 추정치</p>
 
     <div class="hero-cta-row">
-      <a href="pd-diagnosis.html" class="btn-primary btn-hero-cta" style="background:linear-gradient(135deg,#CC0000,#e53e3e);box-shadow:0 8px 28px rgba(204,0,0,0.4),-2px -2px 8px rgba(255,255,255,0.5);">🎯 내 문제 정의력 진단하기</a>
+      <a href="pd-diagnosis.html" class="btn-hero-cta-dark">🎯 내 문제 정의력 진단하기</a>
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
     <p class="hero-cta-note">20문항 · 약 8분 · 무료</p>
+  </div>
+</section>
+
+<!-- ── WHY IT WORKS (outcomes + social proof) ── -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-grid">
+      <!-- Left: 이 교육을 마치면 -->
+      <div>
+        <div class="why-eyebrow">이 교육을 마치면</div>
+        <div class="hero-result-box">
+          <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
+          <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
+          <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
+            📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
+          </div>
+        </div>
+      </div>
+      <!-- Right: 수강생 후기 + 통계 -->
+      <div>
+        <div class="why-eyebrow">수강생 후기</div>
+        <div class="hero-social-proof" style="max-width:100%;margin-bottom:16px;">
+          <div class="social-proof-item">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
+            <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
+          </div>
+          <div class="social-proof-divider"></div>
+          <div class="social-proof-item">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
+            <span class="social-proof-who">— 마케팅 팀장, 30대</span>
+          </div>
+        </div>
+        <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);">
+          <div class="hero-stat"><span class="hero-stat-num">5대</span><span class="hero-stat-label">역량</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">20개</span><span class="hero-stat-label">진단 문항</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">5단계</span><span class="hero-stat-label">실전 훈련</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">2.5h</span><span class="hero-stat-label">총 학습 시간</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -594,49 +676,6 @@
     </div>
     <div class="iteration-note">
       🔄 <span>실전에서는 <strong>3↔4단계를 반복해서</strong>, 가설을 세우고, 검증하고, 수정을 반복합니다.</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── WHY IT WORKS (outcomes + social proof) ── -->
-<section class="why-section">
-  <div class="why-inner">
-    <div class="why-grid">
-      <!-- Left: 이 교육을 마치면 -->
-      <div>
-        <div class="why-eyebrow">이 교육을 마치면</div>
-        <div class="hero-result-box">
-          <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
-          <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
-          <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
-            📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
-          </div>
-        </div>
-      </div>
-      <!-- Right: 수강생 후기 + 통계 -->
-      <div>
-        <div class="why-eyebrow">수강생 후기</div>
-        <div class="hero-social-proof" style="max-width:100%;margin-bottom:16px;">
-          <div class="social-proof-item">
-            <span class="social-proof-stars">★★★★★</span>
-            <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
-            <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
-          </div>
-          <div class="social-proof-divider"></div>
-          <div class="social-proof-item">
-            <span class="social-proof-stars">★★★★★</span>
-            <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
-            <span class="social-proof-who">— 마케팅팀장, 38세</span>
-          </div>
-        </div>
-        <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);">
-          <div class="hero-stat"><span class="hero-stat-num">5대</span><span class="hero-stat-label">역량</span></div>
-          <div class="hero-stat"><span class="hero-stat-num">20개</span><span class="hero-stat-label">진단 문항</span></div>
-          <div class="hero-stat"><span class="hero-stat-num">5단계</span><span class="hero-stat-label">실전 훈련</span></div>
-          <div class="hero-stat"><span class="hero-stat-num">2.5h</span><span class="hero-stat-label">총 학습 시간</span></div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -869,17 +908,9 @@
     <div class="newsletter-copy">
       <p class="newsletter-eyebrow">무료 뉴스레터</p>
       <h2 class="newsletter-title">AI 퍼스트 인사이트,<br>매주 직접 받아보세요</h2>
-      <p class="newsletter-sub">AI 활용법 · 실전 프롬프트 · 비즈니스 적용 사례 — 팀장·리더급을 위한 AI 실전 뉴스레터</p>
     </div>
     <div class="newsletter-action">
-      <form id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
-        <div class="newsletter-email-row">
-          <input type="email" class="newsletter-email-input" placeholder="이메일 주소 입력" id="newsletter-email" name="email" required>
-          <button type="submit" class="newsletter-submit-btn">구독 →</button>
-        </div>
-      </form>
-      <p class="newsletter-note" id="newsletter-note">무료 · 스팸 없음 · 언제든 구독 취소 가능</p>
-      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-alt-link">LinkedIn에서 바로 구독하기 →</a>
+      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-cta-btn">뉴스레터 보기 →</a>
     </div>
   </div>
 </section>

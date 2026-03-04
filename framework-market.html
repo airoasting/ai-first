@@ -3,280 +3,1266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>시장·수익 분석 6대 도구 | AI Roasting</title>
-    <meta name="description" content="이익 방정식부터 PEST까지, AI와 함께 시장과 수익 구조를 10분 안에 읽는 핵심 도구 6가지.">
     <link rel="stylesheet" href="css/common.css">
+    <title>시장·수익분석 6대 도구 | AI Roasting</title>
     <style>
-        body { background: var(--bg-primary); color: var(--text-primary); word-break: keep-all; overflow-wrap: break-word; }
-
-        header {
-            text-align: center; padding: 48px 32px 40px;
-            background: linear-gradient(160deg, #1e2235 0%, #1c1f2e 100%);
-            box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+        body {
+            font-family: -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.75;
+            font-size: 16px;
+            word-break: keep-all;
+            overflow-wrap: break-word;
         }
-        .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 20px; transition: opacity 0.2s; }
-        .back-link:hover { opacity: 0.7; }
-        h1 { font-size: 40px; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 8px; word-break: keep-all; }
-        header .desc { font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.6; word-break: keep-all; }
-        .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: rgba(232,112,106,0.12); border: none; padding: 6px 18px; border-radius: 20px; margin-top: 12px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
-        @media (max-width: 768px) { header { padding: 36px 24px 32px; } h1 { font-size: 28px; } }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 32px 64px; }
+        /* ── Stage Header ── */
+        .stage-header { text-align: center; padding: 56px 32px 48px; background: #1e2235; box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); min-height: 320px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; transition: opacity 0.2s; }
+        .stage-header .back-link:hover { opacity: 0.7; }
+        .stage-header h1 { font-size: 43px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.25; }
+        .stage-header .desc { font-size: 18px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: #1e2235; border: none; padding: 6px 20px; border-radius: 24px; margin-top: 16px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { .stage-header { padding: 40px 20px 32px; min-height: 260px; } .stage-header h1 { font-size: 28px; } }
 
-        .intro-box { background: var(--bg-card); box-shadow: var(--nm-in); border-radius: 16px; padding: 28px 32px; margin-bottom: 48px; font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
+        /* ── Container ── */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 56px 32px 40px;
+        }
+
+        /* ── Intro Box ── */
+        .intro-box {
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            box-shadow: var(--nm-in);
+        }
+        .intro-box .intro-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
         .intro-box strong { color: var(--text-primary); }
 
-        .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 56px; }
-        @media (max-width: 700px) { .tool-grid { grid-template-columns: 1fr; } }
+        /* ── TOC Nav ── */
+        .toc-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin-bottom: 32px;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 0;
+        }
+        .toc-nav-inner {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toc-nav a {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            padding: 16px 8px 14px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .toc-nav a:hover {
+            background: var(--bg-secondary);
+            border-bottom-color: var(--border);
+        }
+        .toc-nav a.active {
+            border-bottom-color: var(--accent);
+            background: var(--bg-secondary);
+        }
+        .toc-nav .toc-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .toc-nav a:hover .toc-num { transform: scale(1.1); }
+        .toc-nav a.active .toc-num { background: var(--accent-hover); }
+        .toc-nav .toc-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: center;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+        }
+        .toc-nav a.active .toc-label { color: var(--accent); }
+        .toc-nav .toc-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.2;
+        }
+        .toc-nav a.active .toc-sub { color: var(--accent); opacity: 0.7; }
 
-        .tool-card { background: var(--bg-card); border-radius: 20px; padding: 28px 28px 24px; box-shadow: var(--nm-out); display: flex; flex-direction: column; gap: 14px; }
-        .tool-num { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
-        .tool-title-row { display: flex; align-items: center; gap: 10px; }
-        .tool-emoji { font-size: 28px; line-height: 1; }
-        .tool-name { font-size: 20px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.3px; }
-        .tool-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-        .tool-when { font-size: 13px; font-weight: 700; color: #CC0000; margin-bottom: 4px; }
-        .tool-when-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        /* ── Section Divider ── */
+        .step-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 72px 0 36px;
+        }
+        .step-divider:first-of-type {
+            margin-top: 0;
+        }
+        .step-divider::before,
+        .step-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .step-badge {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent);
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            padding: 6px 20px;
+            border-radius: 24px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
 
-        .prompt-box { background: #1e1e2e; border-radius: 12px; padding: 18px 20px; margin-top: 4px; }
-        .prompt-label { font-size: 10px; font-weight: 800; color: #e8706a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-        .prompt-text { font-size: 12.5px; color: #c8d6f0; line-height: 1.75; font-family: 'SF Mono', 'Fira Code', monospace; white-space: pre-wrap; }
+        /* ── Section Title ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: 31px;
+            font-weight: 800;
+            color: var(--text-primary);
+            padding-left: 20px;
+            border-left: 5px solid var(--accent);
+            margin-bottom: 0;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+        .title-ratings {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .title-rating-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            box-shadow: var(--nm-out-xs);
+        }
+        .title-rating-item .rating-stars {
+            font-size: 14px;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            padding-left: 26px;
+            margin-top: 8px;
+            margin-bottom: 32px;
+        }
 
-        .copy-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 700; color: #e8706a; background: rgba(232,112,106,0.12); border: none; border-radius: 8px; padding: 5px 12px; cursor: pointer; transition: opacity 0.2s; }
-        .copy-btn:hover { opacity: 0.75; }
+        /* ── Text ── */
+        .text-block {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            margin-bottom: 24px;
+        }
+        .text-block strong { color: var(--text-primary); font-weight: 700; }
 
-        .section-divider { display: flex; align-items: center; gap: 16px; margin: 56px 0 32px; }
-        .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-        .divider-badge { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #CC0000; background: var(--bg-card); padding: 6px 20px; border-radius: 20px; white-space: nowrap; box-shadow: var(--nm-in-sm); }
+        /* ── Analogy Box ── */
+        .analogy-box {
+            background: var(--bg-secondary);
+            border: none;
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 32px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
+        }
+        .analogy-box .analogy-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #d97706;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .analogy-box strong { color: var(--text-primary); }
 
-        .tip-box { background: var(--bg-card); border-radius: 16px; padding: 24px 28px; box-shadow: var(--nm-in-sm); border-left: 4px solid #CC0000; margin-bottom: 16px; }
-        .tip-box .tip-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
-        .tip-box .tip-body { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
-        .tip-box .tip-body li { margin-bottom: 6px; padding-left: 4px; }
+        /* ── Info Box ── */
+        .info-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 32px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+        }
+        .info-box strong { color: var(--text-primary); }
+        .info-box.highlight {
+            background: var(--bg-secondary);
+            border-color: var(--border);
+            border-left: 4px solid var(--accent);
+        }
+        .info-box-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
 
-        .next-cta { display: flex; align-items: center; gap: 16px; background: var(--bg-card); border-radius: 16px; padding: 22px 28px; box-shadow: var(--nm-out-sm); text-decoration: none; color: inherit; transition: all 0.25s ease; margin-top: 40px; }
-        .next-cta:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
-        .next-cta-icon { font-size: 28px; flex-shrink: 0; }
-        .next-cta-label { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
-        .next-cta-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
-        .next-cta-arrow { margin-left: auto; font-size: 22px; color: var(--accent); flex-shrink: 0; }
+        /* ── Sub Title ── */
+        h3.sub-title {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 40px 0 16px;
+            letter-spacing: -0.3px;
+        }
+
+        /* ── List ── */
+        .styled-list {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+        .styled-list li {
+            font-size: 16px;
+            color: var(--text-secondary);
+            padding: 8px 0 8px 24px;
+            position: relative;
+            line-height: 1.75;
+        }
+        .styled-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 18px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+        .styled-list li strong { color: var(--text-primary); font-weight: 700; }
+
+        /* ── Example Block ── */
+        .example-block {
+            background: #1e1e2e;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 8px;
+            overflow-x: auto;
+            position: relative;
+        }
+        .example-block .label {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.25);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .example-block pre {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.75;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .example-block pre .dim { color: #6b7280; }
+        .example-block pre .accent { color: #f472b6; }
+        .example-block pre .good { color: #34d399; }
+        .example-block pre .warn { color: #fbbf24; }
+        .example-block pre .info { color: #60a5fa; }
+
+        /* ── Example Explain ── */
+        .example-explain {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 14px 14px;
+            padding: 18px 24px;
+            margin-bottom: 28px;
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+        .example-explain strong { color: var(--text-secondary); }
+
+        /* ── App Card ── */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+            /* break out of 800px container */
+            width: calc(100vw - 64px);
+            max-width: 1200px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+        .app-card {
+            background: var(--bg-card);
+            border: none;
+            border-radius: 14px;
+            padding: 18px 16px 16px;
+            box-shadow: var(--nm-out);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .app-card:hover {
+            box-shadow: var(--nm-out);
+            transform: translateY(-2px);
+        }
+        .app-card .emoji {
+            font-size: 27px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .app-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .app-card p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .app-grid-4col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* ── Tool Grid ── */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .tool-card {
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 12px;
+            padding: 22px 22px;
+            box-shadow: var(--nm-in-sm);
+        }
+        .tool-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .tool-card ul { list-style: none; }
+        .tool-card ul li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 4px 0 4px 16px;
+            position: relative;
+            line-height: 1.6;
+        }
+        .tool-card ul li::before {
+            content: '\2022';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ── Separator ── */
+        .section-end {
+            height: 1px;
+            background: var(--border);
+            margin: 48px 0;
+        }
+
+        /* ── Rating Stars (used in title-rating-item) ── */
+        .rating-stars {
+            font-size: 15px;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        /* ── When-to-use Box ── */
+        .when-box {
+            background: var(--bg-secondary);
+            border: none;
+            border-left: 4px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
+        }
+        .when-box .when-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .when-box strong { color: var(--text-primary); }
+
+        /* ── Limit Box ── */
+        .limit-box {
+            background: var(--bg-secondary);
+            border: none;
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            box-shadow: var(--nm-in-sm);
+        }
+        .limit-box .limit-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .limit-box strong { color: var(--text-primary); }
+
+        /* ── Prompt Box (AI Prompt Example) ── */
+        .prompt-box {
+            background: #1e1e2e;
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .prompt-box .prompt-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .prompt-box p {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* ── Copy Button ── */
+        .copy-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.5);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .copy-btn.copied {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #fff;
+        }
+
+        /* ── Component Grid (generic) ── */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .component-card {
+            background: var(--bg-card);
+            border: none;
+            border-radius: 12px;
+            padding: 18px 20px;
+            text-align: center;
+            box-shadow: var(--nm-out);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .component-card:hover {
+            box-shadow: var(--nm-out);
+            transform: translateY(-2px);
+        }
+        .component-card .comp-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .component-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        /* ── 5 Forces Cross Diagram ── */
+        .forces-diagram {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 0;
+            max-width: 640px;
+            margin: 0 auto 28px;
+            position: relative;
+        }
+        .forces-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+        .forces-card {
+            background: var(--bg-card);
+            border: none;
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-align: center;
+            width: 100%;
+            box-shadow: var(--nm-out);
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .forces-card:hover {
+            box-shadow: var(--nm-out);
+            transform: translateY(-2px);
+        }
+        .forces-card .comp-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+        .forces-card h4 { font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+        .forces-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+        /* center card (rivalry) */
+        .forces-card.center-force {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .forces-card.center-force .comp-icon { filter: grayscale(1) brightness(10); }
+        .forces-card.center-force h4 { color: #fff; }
+        .forces-card.center-force p { color: rgba(255,255,255,0.85); }
+        /* arrow cells */
+        .forces-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--accent);
+            font-weight: 700;
+            opacity: 0.5;
+        }
+        /* grid placement */
+        .f-top    { grid-column: 2; grid-row: 1; }
+        .f-left   { grid-column: 1; grid-row: 2; }
+        .f-center { grid-column: 2; grid-row: 2; }
+        .f-right  { grid-column: 3; grid-row: 2; }
+        .f-bottom { grid-column: 2; grid-row: 3; }
+        .f-arrow-top    { grid-column: 2; grid-row: 1; align-self: end; padding-bottom: 0; }
+        .f-arrow-left   { grid-column: 1; grid-row: 2; justify-self: end; padding-right: 0; }
+        .f-arrow-right  { grid-column: 3; grid-row: 2; justify-self: start; padding-left: 0; }
+        .f-arrow-bottom { grid-column: 2; grid-row: 3; align-self: start; padding-top: 0; }
+        /* 5-cell layout: top / left-center-right / bottom */
+        .forces-diagram {
+            grid-template-columns: 1fr 12px 1.1fr 12px 1fr;
+            grid-template-rows: auto 12px auto 12px auto;
+        }
+        .f-top    { grid-column: 3; grid-row: 1; }
+        .f-arr-t  { grid-column: 3; grid-row: 2; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
+        .f-left   { grid-column: 1; grid-row: 3; }
+        .f-arr-l  { grid-column: 2; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
+        .f-center { grid-column: 3; grid-row: 3; }
+        .f-arr-r  { grid-column: 4; grid-row: 3; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
+        .f-right  { grid-column: 5; grid-row: 3; }
+        .f-arr-b  { grid-column: 3; grid-row: 4; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--accent); opacity: 0.45; }
+        .f-bottom { grid-column: 3; grid-row: 5; }
+        .component-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* ── Page Nav ── */
+        .page-footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 40px 32px;
+            margin-top: 24px;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 28px;
+        }
+        .footer-nav a {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 12px 28px;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+        .footer-nav a:hover { background: var(--accent); color: #fff; }
+
+        /* ── Smooth scroll ── */
+        html { scroll-behavior: smooth; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .container { padding: 40px 20px; }
+            .section-title { font-size: 25px; }
+            h3.sub-title { font-size: 19px; }
+            .app-grid { grid-template-columns: repeat(3, 1fr); }
+            @media (max-width: 480px) { .app-grid { grid-template-columns: repeat(2, 1fr); } }
+            .tool-grid { grid-template-columns: 1fr; }
+            .component-grid { grid-template-columns: 1fr 1fr; }
+            .toc-nav { width: 100vw; margin-left: calc(-50vw + 50%); }
+            .toc-nav .toc-label { font-size: 11px; }
+            .toc-nav .toc-sub { display: none; }
+            .toc-nav a { padding: 12px 4px 10px; }
+            .toc-nav .toc-num { width: 24px; height: 24px; font-size: 11px; }
+            .section-header { gap: 10px; }
+            .title-rating-item { padding: 5px 10px; font-size: 12px; }
+            .forces-diagram { max-width: 100%; }
+            .forces-card h4 { font-size: 13px; }
+            .forces-card p { font-size: 11.5px; }
+            .forces-card { padding: 14px 10px; }
+            .forces-card .comp-icon { font-size: 22px; margin-bottom: 5px; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <a class="back-link" href="index.html">← 목록으로</a>
-    <h1>시장·수익 분석 6대 도구</h1>
-    <p class="desc">AI와 함께 시장과 수익 구조를 10분 안에 읽는 핵심 프레임워크</p>
-    <div class="header-badge">📚 참고자료 · 2단계 정보 탐색 연계</div>
+<header class="stage-header">
+    <a href="index.html" class="back-link">&larr; 전체 과정 보기</a>
+    <h1>시장&middot;수익분석 6대 도구</h1>
+    <p class="desc">3C 분석부터 이익 방정식까지, 시장과 수익 구조를 읽는 핵심 분석 도구</p>
+    <div class="header-badge">6개 프레임워크 &middot; 2단계 정보 탐색에서 활용</div>
 </header>
 
-<main>
 <div class="container">
 
-    <div class="intro-box">
-        시장 분석을 잘 한다는 건 <strong>데이터를 많이 아는 게 아니라, 올바른 질문을 던지는 것</strong>입니다.<br>
-        아래 6가지 도구는 각각 서로 다른 질문에 답합니다. <strong>AI에게 프레임워크를 명시하면</strong>, 분석 속도가 3배 이상 빨라집니다.
+    <!-- ── 프레임워크 간 네비게이션 ── -->
+    <div class="fw-inter-nav">
+        <a href="framework-bmc.html">📊 비즈니스 모델 캔버스</a>
+        <a href="framework-market.html" class="current-fw">📈 시장·수익 분석 6대 도구</a>
+        <a href="framework-ops.html">🏢 마케팅·조직·프로세스 9대 도구</a>
     </div>
 
-    <!-- 상황별 선택 가이드 -->
-    <div style="background:var(--bg-card);border-radius:18px;padding:28px 30px;box-shadow:var(--nm-out);margin-bottom:40px;">
-        <div style="font-size:17px;font-weight:800;color:var(--text-primary);margin-bottom:16px;">🗂️ 지금 내 상황에 맞는 도구는?</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">💰 수익 구조 파악이 필요할 때</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">이익 방정식 (도구 01)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">매출·비용·레버리지 포인트 분해</div>
+    <!-- ── AI로 10분 만에 해보기 ── -->
+    <div style="background:var(--bg-card);border-radius:20px;padding:28px 32px;margin-bottom:40px;box-shadow:var(--nm-out);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+            <span style="font-size:22px;">⚡</span>
+            <span style="font-size:16px;font-weight:800;color:var(--text-primary);">AI로 10분 만에 시장 분석 초안 만들기</span>
+            <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,0.1);border-radius:20px;padding:3px 12px;">입문 · 바로 실습</span>
+        </div>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">아래 프롬프트를 복사해 ChatGPT나 Claude에 붙여넣으세요. 시장 구조가 10분 안에 정리됩니다.</p>
+        <div class="fw-quick-prompt">
+            <div class="fw-quick-prompt-label">📋 시장 분석 통합 프롬프트 — 복사해서 바로 사용</div>
+            <pre id="mkt-quick-prompt">너는 시장 분석 전문가야.
+아래 사업/제품에 대해 시장 분석을 해줘.
+
+[분석 대상]
+(여기에 한 줄로 적으세요 — 예: "국내 직장인 대상 AI 생산성 앱")
+
+[분석 항목]
+1. 3C 분석 — 고객(Customer), 경쟁자(Competitor), 자사(Company) 각각 핵심 3가지
+2. SWOT 분석 — 강점·약점·기회·위협 각 3개 항목
+3. PEST 분석 — 정치/경제/사회/기술 트렌드 각 2개 항목
+4. 주요 경쟁사 3곳의 가격·강점·약점 비교표
+
+마지막에 "가장 시급하게 대응해야 할 위협 1가지"와 "지금 당장 잡을 수 있는 기회 1가지"를 요약해줘.</pre>
+            <button class="fw-quick-btn" onclick="copyFwPrompt('mkt-quick-prompt', this)">📋 프롬프트 복사하기</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 3C 초안 후 → Porter's 5 Forces</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 분석을 바탕으로 포터의 5가지 경쟁 요소(신규진입/대체재/공급자/구매자/경쟁강도)를 각각 점수(1~5점)로 평가하고 가장 위험한 요소를 설명해줘."</div>
             </div>
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:#3b82f6;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">🌍 거시 환경·트렌드 파악</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">PEST 분석 (도구 02)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">정치·경제·사회·기술 4개 축</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:#ef4444;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">⚔️ 시장 진입 전 경쟁 분석</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">Porter's 5 Forces (도구 03)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">수익성 구조·진입 장벽 파악</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:#10b981;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">📊 시장 규모 추정 필요 시</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">TAM·SAM·SOM (도구 04)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">실현 가능한 시장 크기 산출</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:#8b5cf6;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">🔗 원가·차별화 원천 분석</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">가치사슬 (도구 05)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">내부 활동별 가치 창출 분해</div>
-            </div>
-            <div style="background:var(--bg-secondary);border-radius:12px;padding:14px 16px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:800;color:#f59e0b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">📦 포트폴리오 우선순위 결정</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text-primary);">BCG 매트릭스 (도구 06)</div>
-                <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">사업/제품군 투자 배분</div>
+            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
+                <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;">📌 시장 분석 후 → 수익 모델 설계</div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 시장 구조를 바탕으로 우리가 취할 수 있는 수익 모델 3가지를 제안하고, 각각의 장단점과 적합한 고객 세그먼트를 알려줘."</div>
             </div>
         </div>
-        <div style="margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;">💡 하나만 쓰지 말고, 상황에 따라 2~3개 조합해서 사용하세요</div>
     </div>
+
+    <!-- ── Intro ── -->
+    <div class="intro-box">
+        <div class="intro-title">시장 분석, 어디서부터 시작해야 할지 모르겠다면?</div>
+        수익 구조를 분해하고, 경쟁 환경을 파악하고, 거시적 트렌드를 읽는 것.<br>
+        이 3가지가 시장 분석의 핵심입니다.<br>
+        지금부터 소개하는 <strong>6가지 프레임워크</strong>만 익히면,<br>
+        <strong>어떤 시장이든 구조적으로 분석</strong>할 수 있습니다.
+    </div>
+
+    <!-- ── TOC Nav (가로 메뉴 6개) ── -->
+    <nav class="toc-nav" id="tocNav">
+        <div class="toc-nav-inner">
+            <a href="#sec1" data-section="sec1"><span class="toc-num">1</span><span class="toc-label">3C 분석</span><span class="toc-sub">시장 구조</span></a>
+            <a href="#sec2" data-section="sec2"><span class="toc-num">2</span><span class="toc-label">SWOT</span><span class="toc-sub">내외부 진단</span></a>
+            <a href="#sec3" data-section="sec3"><span class="toc-num">3</span><span class="toc-label">5 Forces</span><span class="toc-sub">산업 분석</span></a>
+            <a href="#sec4" data-section="sec4"><span class="toc-num">4</span><span class="toc-label">PEST(EL)</span><span class="toc-sub">거시환경</span></a>
+            <a href="#sec5" data-section="sec5"><span class="toc-num">5</span><span class="toc-label">수익 모델</span><span class="toc-sub">수익 설계</span></a>
+            <a href="#sec6" data-section="sec6"><span class="toc-num">6</span><span class="toc-label">이익 방정식</span><span class="toc-sub">수익 분해</span></a>
+        </div>
+    </nav>
+
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 1. 3C 분석                         -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">1</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec1">3C 분석</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Company, Customer, Competitor &mdash; 시장 구조를 3축으로 파악</p>
+
+    <p class="text-block">
+        오마에 겐이치가 제안한 시장 분석 프레임워크입니다. <strong>자사(Company), 고객(Customer), 경쟁사(Competitor)</strong> 3가지 축으로 시장 구조를 입체적으로 파악합니다. 시장에서 우리의 위치를 명확히 하고, 전략적 기회를 발견하는 데 가장 효과적인 도구입니다.
+    </p>
+
+    <h3 class="sub-title">핵심 구성 요소</h3>
+
+    <div class="component-grid">
+        <div class="component-card">
+            <span class="comp-icon">&#127970;</span>
+            <h4>Company (자사)</h4>
+            <p>우리의 강점과 약점, 핵심 역량, 보유 자원</p>
+        </div>
+        <div class="component-card">
+            <span class="comp-icon">&#128101;</span>
+            <h4>Customer (고객)</h4>
+            <p>고객 니즈, 구매 행동, 세그먼트, 미충족 수요</p>
+        </div>
+        <div class="component-card">
+            <span class="comp-icon">&#9876;&#65039;</span>
+            <h4>Competitor (경쟁사)</h4>
+            <p>경쟁 환경, 경쟁사 전략, 시장 점유율, 차별점</p>
+        </div>
+    </div>
+
+    <div class="analogy-box">
+        <div class="analogy-label">핵심 포인트</div>
+        3C 분석의 진짜 가치는 <strong>3개 축의 교차점</strong>에서 나옵니다. 고객이 원하지만(C) 경쟁사가 제공하지 못하는(C) 영역 중, 우리가 잘할 수 있는(C) 것을 찾는 것. 이것이 바로 <strong>전략적 포지셔닝</strong>입니다.
+    </div>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>시장 진입 전략</strong>을 세울 때, <strong>경쟁 포지셔닝</strong>을 결정할 때, <strong>마케팅 전략</strong>을 수립할 때 가장 먼저 활용해야 할 프레임워크입니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>국내 프리미엄 커피 시장에 대해 3C 분석을 해줘. 자사는 중소 로스터리 브랜드이고, 주요 경쟁사는 스타벅스, 블루보틀이야. 각 C별로 5가지 핵심 인사이트를 정리해줘.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 2. SWOT 분석                       -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">2</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec2">SWOT 분석</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Strengths, Weaknesses, Opportunities, Threats &mdash; 가장 널리 알려진 전략 도구</p>
+
+    <p class="text-block">
+        <strong>내부 요인(강점/약점)</strong>과 <strong>외부 요인(기회/위협)</strong>을 2x2 매트릭스로 정리하는 전략 분석 도구입니다. 가장 직관적이고 범용적이어서, 전략 회의의 출발점으로 가장 많이 사용됩니다.
+    </p>
+
+    <h3 class="sub-title">핵심 구성 요소</h3>
 
     <div class="tool-grid">
-
-        <!-- 1. 이익 방정식 -->
         <div class="tool-card">
-            <div class="tool-num">도구 01</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">💰</span>
-                <span class="tool-name">이익 방정식</span>
-            </div>
-            <div class="tool-desc">이익 = 매출 − 비용. 단순하지만 모든 사업 분석의 출발점입니다. AI에게 구조를 분해시키면 어디서 돈을 버는지, 어디서 새는지 빠르게 파악할 수 있습니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">신규 사업 타당성 검토, 단가·원가 구조 분석, 적자 원인 추적 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">[업종]의 이익 구조를 분해해줘.
-매출 = 단가 × 거래량, 비용 = 고정비 + 변동비로 나누고,
-레버리지 포인트(어디를 10% 개선하면 이익이 가장 크게 늘어나는지)도 같이 알려줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
+            <h4>Strengths (강점)</h4>
+            <ul>
+                <li>내부적으로 잘하는 것</li>
+                <li>경쟁 우위 요소</li>
+                <li>핵심 역량, 보유 자원</li>
+            </ul>
         </div>
-
-        <!-- 2. PEST 분석 -->
         <div class="tool-card">
-            <div class="tool-num">도구 02</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">🌍</span>
-                <span class="tool-name">PEST 분석</span>
-            </div>
-            <div class="tool-desc">Political·Economic·Social·Technological 4가지 거시 환경 변화를 구조화합니다. AI에게 "PEST로 분석해줘"라고 하면 10분 안에 거시환경 리포트가 나옵니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">신시장 진출, 중장기 전략 수립, 리스크 요인 사전 탐지 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">[산업/시장]을 PEST 프레임워크로 분석해줘.
-각 요인별로 ① 현재 상황 ② 향후 2년 트렌드 ③ 우리 사업에 미치는 영향(기회/위협)을
-표 형식으로 정리해줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
+            <h4>Weaknesses (약점)</h4>
+            <ul>
+                <li>내부적으로 부족한 것</li>
+                <li>경쟁사 대비 열위 영역</li>
+                <li>개선이 필요한 부분</li>
+            </ul>
         </div>
-
-        <!-- 3. Porter's 5 Forces -->
         <div class="tool-card">
-            <div class="tool-num">도구 03</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">⚔️</span>
-                <span class="tool-name">Porter's 5 Forces</span>
-            </div>
-            <div class="tool-desc">산업 내 경쟁 강도를 결정하는 5가지 힘: 기존 경쟁, 신규 진입, 대체재, 공급자 협상력, 구매자 협상력. 수익성의 구조적 이유를 파악합니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">시장 매력도 평가, 진입 전략 결정, 경쟁 우위 원천 파악 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">[산업]을 Porter's 5 Forces로 분석해줘.
-각 힘의 강도(높음/중간/낮음)와 그 근거를 설명하고,
-종합 결론으로 "이 산업에서 수익을 내기 쉬운가 어려운가"와 그 이유를 한 단락으로 써줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
+            <h4>Opportunities (기회)</h4>
+            <ul>
+                <li>외부 환경의 유리한 변화</li>
+                <li>새로운 시장, 기술 트렌드</li>
+                <li>규제 완화, 수요 증가</li>
+            </ul>
         </div>
-
-        <!-- 4. TAM / SAM / SOM -->
         <div class="tool-card">
-            <div class="tool-num">도구 04</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">🎯</span>
-                <span class="tool-name">TAM / SAM / SOM</span>
-            </div>
-            <div class="tool-desc">Total Addressable Market → Serviceable Addressable Market → Serviceable Obtainable Market. 시장 규모를 세 단계로 좁혀 현실적인 매출 목표를 설정합니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">투자자 IR 준비, 신사업 기획, 매출 목표 설정 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">[제품/서비스]의 시장 규모를 TAM→SAM→SOM 순서로 추정해줘.
-각 단계의 산출 근거와 가정을 명시하고,
-우리가 3년 안에 현실적으로 점유할 수 있는 SOM과 그 이유도 제시해줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
-        </div>
-
-        <!-- 5. 가치 사슬 분석 -->
-        <div class="tool-card">
-            <div class="tool-num">도구 05</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">🔗</span>
-                <span class="tool-name">가치 사슬 분석</span>
-            </div>
-            <div class="tool-desc">원재료 조달부터 고객 전달까지의 활동 중 어디서 가치가 창출되고 어디서 비용이 낭비되는지를 파악합니다. 원가 절감과 차별화 포인트를 동시에 찾을 수 있습니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">원가 구조 개선, 아웃소싱 판단, 경쟁사 대비 강점 파악 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">[기업/산업]의 가치 사슬을 그려줘.
-주요 활동(Primary Activities)과 지원 활동(Support Activities)으로 나누고,
-비용이 가장 많이 드는 활동 3개와 차별화 가능한 활동 2개를 짚어줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
-        </div>
-
-        <!-- 6. BCG 매트릭스 -->
-        <div class="tool-card">
-            <div class="tool-num">도구 06</div>
-            <div class="tool-title-row">
-                <span class="tool-emoji">📊</span>
-                <span class="tool-name">BCG 매트릭스</span>
-            </div>
-            <div class="tool-desc">사업부/제품군을 시장 성장률 × 시장 점유율로 분류합니다: Star·Cash Cow·Question Mark·Dog. 자원 배분 우선순위를 한눈에 결정할 수 있습니다.</div>
-            <div>
-                <div class="tool-when">언제 쓰나</div>
-                <div class="tool-when-text">포트폴리오 전략 수립, 사업 투자·철수 결정, 예산 배분 우선순위 설정 시</div>
-            </div>
-            <div class="prompt-box">
-                <div class="prompt-label">AI 프롬프트 예시</div>
-                <div class="prompt-text">우리 회사 [제품A, 제품B, 제품C]를 BCG 매트릭스로 분류해줘.
-각 제품의 시장 성장률과 상대 점유율을 추정하고,
-각 제품에 대한 전략적 권고(투자/유지/수확/철수)도 제시해줘.</div>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="section-divider"><span class="divider-badge">실전 활용 팁</span></div>
-
-    <div class="tip-box">
-        <div class="tip-title">🧠 6개 도구를 AI와 함께 쓰는 순서</div>
-        <div class="tip-body">
-            <ol>
-                <li><strong>PEST·5 Forces</strong> → 거시 환경과 경쟁 구조 파악 (Why this market?)</li>
-                <li><strong>TAM/SAM/SOM</strong> → 시장 규모 수치화 (How big?)</li>
-                <li><strong>가치 사슬</strong> → 비용 구조와 차별화 포인트 발견 (Where to compete?)</li>
-                <li><strong>이익 방정식</strong> → 레버리지 포인트 계산 (What to improve?)</li>
-                <li><strong>BCG 매트릭스</strong> → 포트폴리오 우선순위 결정 (What to invest?)</li>
-            </ol>
+            <h4>Threats (위협)</h4>
+            <ul>
+                <li>외부 환경의 불리한 변화</li>
+                <li>경쟁 심화, 기술 변화</li>
+                <li>규제 강화, 경기 침체</li>
+            </ul>
         </div>
     </div>
 
-    <a class="next-cta" href="stage2.html">
-        <span class="next-cta-icon">🔭</span>
-        <div>
-            <div class="next-cta-label">2단계 실전 훈련으로</div>
-            <div class="next-cta-title">이 도구들을 AI와 함께 실제로 써보기 →</div>
-        </div>
-        <span class="next-cta-arrow">→</span>
-    </a>
+    <div class="info-box">
+        <div class="info-box-title">교차 전략이 핵심입니다</div>
+        SWOT의 진짜 가치는 단순 나열이 아니라 <strong>교차 전략</strong>에 있습니다.<br><br>
+        <strong>SO 전략</strong> &mdash; 강점으로 기회를 극대화<br>
+        <strong>WO 전략</strong> &mdash; 약점을 보완하여 기회를 포착<br>
+        <strong>ST 전략</strong> &mdash; 강점으로 위협을 방어<br>
+        <strong>WT 전략</strong> &mdash; 약점과 위협을 동시에 최소화
+    </div>
 
+    <div class="limit-box">
+        <div class="limit-label">한계점</div>
+        SWOT은 <strong>너무 범용적이라 분석의 깊이가 부족</strong>할 수 있습니다. 주관적 판단에 크게 의존하며, 강점/약점의 경계가 모호한 경우가 많습니다. 따라서 <strong>단독 사용보다는 3C, 5 Forces 등 다른 도구와 병행</strong>하는 것을 추천합니다.
+    </div>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>전략 회의의 출발점</strong>으로, <strong>빠른 상황 진단</strong>이 필요할 때, <strong>다른 분석 결과를 종합 정리</strong>할 때 활용합니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>우리 회사(온라인 교육 플랫폼)의 SWOT 분석을 해줘. 단순 나열이 아니라 교차 전략(SO/WO/ST/WT)까지 각 2가지씩 도출하고, 가장 우선순위 높은 전략을 추천해줘.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 3. 5 Forces 분석                   -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">3</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec3">5 Forces 분석</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Porter's Five Forces &mdash; 5가지 경쟁 압력으로 산업 매력도 평가</p>
+
+    <p class="text-block">
+        마이클 포터가 제안한 산업 구조 분석 도구입니다. 하나의 산업 내에서 작용하는 <strong>5가지 경쟁 압력</strong>을 분석하여, 해당 산업이 얼마나 매력적인지, 어디에서 수익이 발생하고 어디에서 빠져나가는지를 파악합니다.
+    </p>
+
+    <h3 class="sub-title">5가지 경쟁 압력</h3>
+
+    <div class="forces-diagram">
+        <!-- Row 1: Top (신규 진입자) -->
+        <div class="forces-cell f-top">
+            <div class="forces-card">
+                <span class="comp-icon">&#128682;</span>
+                <h4>신규 진입자 위협</h4>
+                <p>새로운 경쟁자가 시장에 들어올 가능성</p>
+            </div>
+        </div>
+        <!-- Arrow down -->
+        <div class="f-arr-t">&#8595;</div>
+        <!-- Row 2: Left (공급자) - Center (기존 경쟁) - Right (구매자) -->
+        <div class="forces-cell f-left">
+            <div class="forces-card">
+                <span class="comp-icon">&#128230;</span>
+                <h4>공급자 교섭력</h4>
+                <p>원재료/부품 공급자의 가격 협상력</p>
+            </div>
+        </div>
+        <div class="f-arr-l">&#8594;</div>
+        <div class="forces-cell f-center">
+            <div class="forces-card center-force">
+                <span class="comp-icon">&#9876;&#65039;</span>
+                <h4>기존 경쟁자</h4>
+                <p>현재 시장 내 기업 간 경쟁 강도</p>
+            </div>
+        </div>
+        <div class="f-arr-r">&#8592;</div>
+        <div class="forces-cell f-right">
+            <div class="forces-card">
+                <span class="comp-icon">&#128722;</span>
+                <h4>구매자 교섭력</h4>
+                <p>고객/유통의 가격 인하 압박 능력</p>
+            </div>
+        </div>
+        <!-- Arrow up -->
+        <div class="f-arr-b">&#8593;</div>
+        <!-- Row 3: Bottom (대체재) -->
+        <div class="forces-cell f-bottom">
+            <div class="forces-card">
+                <span class="comp-icon">&#128260;</span>
+                <h4>대체재 위협</h4>
+                <p>우리 제품을 대체할 수 있는 다른 솔루션</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="analogy-box">
+        <div class="analogy-label">분석 팁</div>
+        각 Force의 <strong>강도를 상/중/하로 평가</strong>하고, 그 근거를 명확히 하세요. 5가지 압력이 모두 강하면 그 산업은 수익을 내기 어렵고, 압력이 약할수록 산업 매력도가 높습니다. 중요한 것은 <strong>"그래서 우리가 어떤 포지션을 잡아야 하는가"</strong>로 이어지는 전략적 시사점입니다.
+    </div>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>신규 산업 진입</strong>을 검토할 때, <strong>경쟁 강도를 평가</strong>할 때, <strong>진입 장벽을 분석</strong>할 때 가장 효과적인 프레임워크입니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>한국 전기차 충전 인프라 시장을 포터의 5 Forces로 분석해줘. 각 Force별로 강도(상/중/하)와 근거를 제시하고, 종합적인 산업 매력도를 평가해줘.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 4. PEST(EL) 분석                   -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">4</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec4">PEST(EL) 분석</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Political, Economic, Social, Technological + Environmental, Legal &mdash; 거시환경 분석</p>
+
+    <p class="text-block">
+        거시환경을 <strong>4~6개 차원</strong>으로 분석하는 도구입니다. 기업이 직접 통제할 수 없는 외부 환경 변화가 사업에 미치는 영향을 체계적으로 파악합니다. PEST에 환경(Environmental)과 법률(Legal)을 추가하면 PESTEL이 됩니다.
+    </p>
+
+    <h3 class="sub-title">분석 차원</h3>
+
+    <div class="app-grid app-grid-4col">
+        <div class="app-card">
+            <h4>Political (정치/규제)</h4>
+            <p>정부 정책, 규제 환경, 정치적 안정성, 무역 정책, 세금 정책</p>
+        </div>
+        <div class="app-card">
+            <h4>Economic (경제)</h4>
+            <p>경제 성장률, 인플레이션, 환율, 금리, 소비자 구매력</p>
+        </div>
+        <div class="app-card">
+            <h4>Social (사회/문화)</h4>
+            <p>인구 구조, 라이프스타일, 교육 수준, 문화적 가치관</p>
+        </div>
+        <div class="app-card">
+            <h4>Technological (기술)</h4>
+            <p>기술 혁신 속도, R&D 투자, 디지털 인프라, AI/자동화 트렌드</p>
+        </div>
+        <div class="app-card">
+            <h4>Environmental (환경)</h4>
+            <p>기후 변화, ESG 요구, 탄소 규제, 자원 고갈, 지속가능성</p>
+        </div>
+        <div class="app-card">
+            <h4>Legal (법률)</h4>
+            <p>노동법, 데이터 보호법, 소비자보호법, 지적재산권, 산업별 규제</p>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <div class="info-box-title">PEST vs PESTEL, 언제 무엇을?</div>
+        기본 4가지(PEST)만으로 충분한 경우가 많지만, <strong>환경 규제가 중요한 산업</strong>(에너지, 제조업)이나 <strong>법률 리스크가 큰 시장</strong>(핀테크, 의료)에서는 PESTEL로 확장하세요. 중요한 것은 모든 차원을 채우는 것이 아니라, <strong>사업에 실질적 영향을 미치는 요인</strong>에 집중하는 것입니다.
+    </div>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>해외 시장 진출</strong>을 검토할 때, <strong>규제 변화에 대응</strong>할 때, <strong>중장기 전략 수립의 보조 도구</strong>로 활용합니다. 특히 낯선 시장 환경을 체계적으로 이해하는 데 매우 유용합니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>동남아시아 핀테크 시장에 진출하려고 해. PESTEL 분석을 해줘. 각 요인별로 기회와 위협을 구분하고, 가장 주의해야 할 요인 Top 3를 선정해줘.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 5. 수익 모델                       -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">5</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec5">수익 모델</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Business Model &mdash; 어떻게 돈을 버는가의 설계도</p>
+
+    <p class="text-block">
+        기업이 <strong>가치를 창출하고, 전달하고, 획득하는 방법</strong>의 전체 구조입니다. 같은 제품이라도 수익 모델에 따라 수익 규모와 지속 가능성이 완전히 달라집니다. 넷플릭스가 DVD 대여에서 구독 모델로 전환한 것이 대표적 사례입니다.
+    </p>
+
+    <h3 class="sub-title">핵심 유형</h3>
+
+    <div class="app-grid">
+        <div class="app-card">
+            <h4>구독형</h4>
+            <p>정기 결제로 안정적 수익 확보. 넷플릭스, 스포티파이가 대표적.</p>
+        </div>
+        <div class="app-card">
+            <h4>프리미엄(Freemium)</h4>
+            <p>기본 무료 + 고급 기능 유료. 슬랙, 노션이 대표적.</p>
+        </div>
+        <div class="app-card">
+            <h4>플랫폼(양면시장)</h4>
+            <p>공급자와 수요자를 연결해 양쪽에서 수익. 쿠팡, 배달의민족.</p>
+        </div>
+        <div class="app-card">
+            <h4>광고형</h4>
+            <p>무료 서비스 제공 후 광고 수익 창출. 구글, 유튜브.</p>
+        </div>
+        <div class="app-card">
+            <h4>거래수수료형</h4>
+            <p>거래 성사 시 수수료 부과. 카드사, 부동산 플랫폼.</p>
+        </div>
+        <div class="app-card">
+            <h4>라이선스형</h4>
+            <p>지적 재산권 사용 허가로 수익. 마이크로소프트 오피스, 특허 기업.</p>
+        </div>
+    </div>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>신규 사업의 수익 모델을 설계</strong>할 때, <strong>기존 비즈니스의 수익원을 다각화</strong>할 때, <strong>디지털 전환 전략</strong>을 세울 때 핵심이 되는 프레임워크입니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>AI 기반 헬스케어 앱의 수익 모델을 5가지 대안으로 설계해줘. 각각 장단점과 예상 수익 구조를 비교 분석해줘.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- 6. 이익 방정식                     -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="step-divider"><span class="step-badge">6</span></div>
+
+    <div class="section-header">
+        <h2 class="section-title" id="sec6">이익 방정식</h2>
+        <div class="title-ratings">
+            <span class="title-rating-item">사용 빈도 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+            <span class="title-rating-item">효과성 <span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span></span>
+        </div>
+    </div>
+    <p class="section-subtitle">Profit Equation &mdash; 수익성을 구조적으로 분해하는 가장 기본적 도구</p>
+
+    <p class="text-block">
+        <strong>매출 = 가격 x 수량</strong>, <strong>이익 = 매출 - 비용</strong>.<br>
+        이 단순한 공식이 수익 분석의 출발점입니다. 이익 방정식은 복잡한 사업 구조를 <strong>가격, 수량, 비용</strong>이라는 핵심 변수로 분해하여, 어디에서 돈을 벌고 어디에서 새고 있는지를 명확히 보여줍니다.
+    </p>
+
+    <h3 class="sub-title">핵심 구성 요소</h3>
+    <ul class="styled-list">
+        <li><strong>매출</strong> &mdash; 가격 x 수량. 전체 수입의 크기</li>
+        <li><strong>변동비</strong> &mdash; 판매량에 비례하여 변하는 비용 (원재료, 물류비 등)</li>
+        <li><strong>고정비</strong> &mdash; 판매량과 무관하게 발생하는 비용 (임대료, 인건비 등)</li>
+        <li><strong>공헌이익</strong> &mdash; 매출 - 변동비. 고정비를 충당하는 데 기여하는 이익</li>
+        <li><strong>손익분기점</strong> &mdash; 총비용 = 총매출이 되는 판매량. 이 지점부터 이익 발생</li>
+    </ul>
+
+    <div class="when-box">
+        <div class="when-label">언제 쓰는가?</div>
+        <strong>수익성 개선</strong>이 필요할 때, <strong>가격 전략</strong>을 수립할 때, <strong>신규 사업 타당성</strong>을 검토할 때 가장 먼저 꺼내야 할 도구입니다.
+    </div>
+
+    <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <div class="prompt-label">AI 프롬프트 예시</div>
+        <p>우리 회사의 이익 구조를 분해해줘. 매출 100억, 변동비율 60%, 고정비 25억일 때 공헌이익, 영업이익, 손익분기점을 계산하고 수익성 개선 방안 3가지를 제안해줘.</p>
+    </div>
+
+
+
+</div><!-- /.container -->
+
+<div style="padding:0 32px 56px; max-width:800px; margin:0 auto;">
+    <div style="background:var(--bg-secondary);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--nm-in-sm);">
+        <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">다른 프레임워크도 배워보세요</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="framework-bmc.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📊 비즈니스 모델 캔버스 →</a>
+            <a href="framework-ops.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">🏢 마케팅·조직·프로세스 9대 도구 →</a>
+            <a href="stage2.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--accent);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#fff;box-shadow:0 4px 16px rgba(249,115,22,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">🔭 2단계 정보 탐색 실습으로 →</a>
+        </div>
+    </div>
+    <div style="text-align:center;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 600; padding: 14px 32px; background: var(--bg-card); border-radius: 12px; box-shadow: var(--nm-out); transition: all 0.2s;" onmouseover="this.style.boxShadow='var(--nm-in-sm)';this.style.color='#CC0000'" onmouseout="this.style.boxShadow='var(--nm-out)';this.style.color='var(--text-secondary)'">← 목록으로</a>
+    </div>
 </div>
-</main>
 
 <div id="app-footer"></div>
-<script src="js/data.js"></script>
+
+<script>
+(function() {
+    /* ── TOC Nav: scroll tracking + click ── */
+    var nav = document.getElementById('tocNav');
+    var links = nav.querySelectorAll('a[data-section]');
+    var sections = Array.from(links).map(function(link) {
+        return {
+            id: link.getAttribute('data-section'),
+            el: document.getElementById(link.getAttribute('data-section')),
+            link: link
+        };
+    });
+
+    function onScroll() {
+        var scrollY = window.scrollY + 120;
+        var current = null;
+        for (var i = sections.length - 1; i >= 0; i--) {
+            if (sections[i].el && sections[i].el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+                current = sections[i].id;
+                break;
+            }
+        }
+        links.forEach(function(link) {
+            if (link.getAttribute('data-section') === current) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var targetId = this.getAttribute('data-section');
+            var target = document.getElementById(targetId);
+            if (target) {
+                var navHeight = nav.offsetHeight;
+                var y = target.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        });
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+
+function copyFwPrompt(id, btn) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var text = el.textContent || el.innerText;
+    navigator.clipboard.writeText(text.trim()).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = '✓ 복사됨!'; btn.style.background = '#16a34a';
+        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
+    }).catch(function() {
+        var ta = document.createElement('textarea'); ta.value = text.trim();
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        var orig = btn.textContent; btn.textContent = '✓ 복사됨!';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+    });
+}
+
+/* ── Copy Prompt Button ── */
+function copyPrompt(btn) {
+    var box = btn.closest('.prompt-box');
+    var p = box.querySelector('p');
+    var text = p.textContent || p.innerText;
+
+    navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = '복사됨!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            btn.textContent = '복사';
+            btn.classList.remove('copied');
+        }, 2000);
+    }).catch(function() {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        btn.textContent = '복사됨!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            btn.textContent = '복사';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+</script>
 <script src="js/common.js"></script>
-<script>document.addEventListener('DOMContentLoaded', function() { initCommon(); });</script>
 </body>
 </html>
