@@ -406,10 +406,32 @@
         }
 
         /* ── Responsive ── */
+        /* ── TOC Mobile Toggle ── */
+        .toc-toggle-btn {
+            display: none;
+            width: 100%;
+            background: var(--bg-card);
+            border: none;
+            border-bottom: 2px solid var(--accent);
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: pointer;
+            text-align: left;
+            box-shadow: var(--nm-out-sm);
+        }
+        .toc-toggle-btn .toc-toggle-arrow { float: right; transition: transform 0.2s; }
+        .toc-toggle-btn.open .toc-toggle-arrow { transform: rotate(180deg); }
+        .toc-nav-collapsible { display: flex; }
+
         @media (max-width: 768px) {
             h1 { font-size: 32px; }
             header .desc { font-size: 15px; }
             .container { padding: 36px 20px 32px; }
+            .toc-toggle-btn { display: block; }
+            .toc-nav-collapsible { display: none; }
+            .toc-nav-collapsible.open { display: flex; }
             .toc-nav a { padding: 12px 14px; }
             .toc-label { font-size: 12px; }
             .section h2 { font-size: 22px; }
@@ -477,7 +499,10 @@
 
     <!-- ── TOC Nav ── -->
     <nav class="toc-nav" id="tocNav">
-        <div class="toc-nav-inner">
+        <button class="toc-toggle-btn" id="tocToggleBtn" onclick="toggleToc()" aria-expanded="false">
+            📋 목차 보기 <span class="toc-toggle-arrow">▾</span>
+        </button>
+        <div class="toc-nav-inner toc-nav-collapsible" id="tocCollapsible">
             <a href="#sec1" data-section="sec1"><span class="toc-num">1</span><span class="toc-label">"모르겠습니다"</span><span class="toc-sub">불확실성 허용</span></a>
             <a href="#sec2" data-section="sec2"><span class="toc-num">2</span><span class="toc-label">직접 인용</span><span class="toc-sub">사실 근거 확보</span></a>
             <a href="#sec3" data-section="sec3"><span class="toc-num">3</span><span class="toc-label">출처 검증</span><span class="toc-sub">주장별 근거 요구</span></a>
@@ -787,6 +812,26 @@
         });
     });
 })();
+
+/* ── TOC Mobile Toggle ── */
+function toggleToc() {
+    var btn = document.getElementById('tocToggleBtn');
+    var col = document.getElementById('tocCollapsible');
+    if (!btn || !col) return;
+    var isOpen = col.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen);
+    btn.querySelector('.toc-toggle-arrow').textContent = isOpen ? '▴' : '▾';
+    // auto-close after link click on mobile
+    col.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            col.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', false);
+            btn.querySelector('.toc-toggle-arrow').textContent = '▾';
+        }, { once: true });
+    });
+}
 
 /* ── Copy prompt ── */
 function copyPrompt(btn) {

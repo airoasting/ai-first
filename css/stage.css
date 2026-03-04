@@ -359,8 +359,9 @@
 .graduation-actions{display:flex;flex-direction:column;align-items:center;gap:16px;}
 .btn-graduation-primary{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-size:15px;font-weight:700;padding:16px 32px;border-radius:14px;text-decoration:none;transition:all 0.25s ease;box-shadow:0 6px 20px rgba(245,158,11,0.4);}
 .btn-graduation-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.5);}
-.graduation-share-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;}
-.graduation-share-label{font-size:13px;color:var(--text-muted);font-weight:600;}
+.graduation-share-row{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.graduation-share-label{font-size:14px;font-weight:700;color:var(--text-secondary);}
+.graduation-share-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
 .btn-graduation-share{background:var(--bg-card);border:none;border-radius:10px;font-size:13px;font-weight:700;color:var(--text-secondary);padding:8px 16px;cursor:pointer;transition:all 0.2s;box-shadow:var(--nm-out-xs);}
 .btn-graduation-share:hover{box-shadow:var(--nm-out-sm);color:var(--accent);}
 .btn-graduation-back{font-size:13px;color:var(--text-muted);text-decoration:none;font-weight:500;}

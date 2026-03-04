@@ -407,8 +407,12 @@ function buildGraduationHTML() {
       <div class="graduation-actions">
         <a href="pd-diagnosis.html" class="btn-graduation-primary">📊 4주 후 재진단으로 성장 확인하기</a>
         <div class="graduation-share-row">
-          <span class="graduation-share-label">수료를 공유하세요</span>
-          <button class="btn-graduation-share" onclick="shareGraduation('copy')">🔗 링크 복사</button>
+          <span class="graduation-share-label">🎉 수료를 주변에 알리세요</span>
+          <div class="graduation-share-btns">
+            <button class="btn-graduation-share" onclick="shareGraduation('copy')">🔗 링크 복사</button>
+            <button class="btn-graduation-share" onclick="shareGraduation('twitter')">𝕏 트위터 공유</button>
+            <button class="btn-graduation-share" onclick="shareGraduation('linkedin')">💼 LinkedIn 공유</button>
+          </div>
         </div>
         <a href="index.html" class="btn-graduation-back">처음으로 돌아가기</a>
       </div>
@@ -416,12 +420,15 @@ function buildGraduationHTML() {
 }
 
 function shareGraduation(type) {
-  var text = 'AI 퍼스트로 일하는 5단계 훈련을 완주했습니다! 🏆\n문제 정의력부터 결과물 완성까지 — AI와 함께 일하는 방법을 체계적으로 훈련했습니다.';
+  var shareText = 'AI 퍼스트로 일하는 5단계 훈련을 완주했습니다! 🏆\n문제 정의력부터 결과물 완성까지 — AI와 함께 일하는 방법을 체계적으로 훈련했습니다.';
+  var shareUrl = 'https://airoasting.github.io/ai-first/';
   if (type === 'linkedin') {
-    var url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(location.origin + '/index.html');
-    window.open(url, '_blank');
+    window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(shareUrl), '_blank');
+  } else if (type === 'twitter') {
+    var tweetText = 'AI 퍼스트로 일하는 5단계 훈련 완주! 🏆 문제 정의력부터 결과물 완성까지 체계적으로 배웠습니다. #AI활용 #업무생산성';
+    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweetText) + '&url=' + encodeURIComponent(shareUrl), '_blank');
   } else {
-    navigator.clipboard.writeText(text + '\n' + location.origin + '/index.html').then(function() {
+    navigator.clipboard.writeText(shareText + '\n' + shareUrl).then(function() {
       showToast('🔗 수료 메시지가 복사되었습니다!');
     });
   }
