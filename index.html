@@ -478,6 +478,24 @@
   .social-proof-divider { width: auto; height: 1px; }
 }
 
+/* ── Why Section ── */
+.why-section {
+  background: var(--bg-secondary);
+  padding: 52px 0;
+  box-shadow: inset 0 6px 16px rgba(163,177,198,0.35), inset 0 -6px 16px rgba(255,255,255,0.65);
+}
+[data-theme="dark"] .why-section {
+  box-shadow: inset 0 6px 14px rgba(8,10,18,0.65), inset 0 -6px 14px rgba(40,44,62,0.35);
+}
+.why-inner { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+.why-eyebrow { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; }
+@media (max-width: 768px) {
+  .why-grid { grid-template-columns: 1fr; gap: 28px; }
+  .why-inner { padding: 0 20px; }
+  .why-section { padding: 36px 0; }
+}
+
 /* ── Hero Navy Background ── */
 .index-hero {
   background: linear-gradient(160deg, #dce6f5 0%, #e8edf8 60%, #dde5f3 100%);
@@ -520,61 +538,11 @@
     </div>
     <p style="font-size:11px;color:var(--text-muted);margin-top:-20px;margin-bottom:20px;max-width:680px;">* AI 상위 활용자 행동 패턴 분석 기반 추정치</p>
 
-    <!-- 소셜 증거 -->
-    <div class="hero-social-proof">
-      <div class="social-proof-item">
-        <span class="social-proof-stars">★★★★★</span>
-        <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
-        <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
-      </div>
-      <div class="social-proof-divider"></div>
-      <div class="social-proof-item">
-        <span class="social-proof-stars">★★★★★</span>
-        <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
-        <span class="social-proof-who">— 마케팅팀장, 38세</span>
-      </div>
-    </div>
-
     <div class="hero-cta-row">
       <a href="pd-diagnosis.html" class="btn-primary btn-hero-cta" style="background:linear-gradient(135deg,#CC0000,#e53e3e);box-shadow:0 8px 28px rgba(204,0,0,0.4),-2px -2px 8px rgba(255,255,255,0.5);">🎯 내 문제 정의력 진단하기</a>
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
-    <p class="hero-cta-note">20문항 · 약 8분 · 무료 · 5대 역량별 맞춤 결과</p>
-    <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">⚡ 지금까지 <strong style="color:var(--text-secondary);">1,200명+</strong>이 진단을 완료했습니다</p>
-
-    <!-- 이 교육을 마치면 + 통계 (한 줄) -->
-    <div class="hero-outcome-row">
-      <div class="hero-result-box">
-        <div class="hero-result-title">🎯 이 교육을 마치면</div>
-        <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
-        <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
-        <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
-          📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 업무에 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
-        </div>
-        <div style="margin-top:10px;font-size:12px;color:var(--text-muted);background:var(--bg-secondary);border-radius:10px;padding:8px 14px;box-shadow:var(--nm-in-sm);">
-          💎 <strong style="color:var(--accent);">기업 유료 교육 상당의 콘텐츠</strong>를 무료로 제공합니다
-        </div>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num">5대</span>
-          <span class="hero-stat-label">문제 정의력 역량</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">20개</span>
-          <span class="hero-stat-label">진단 질문</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">5단계</span>
-          <span class="hero-stat-label">실전 훈련 과정</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">약 2.5h</span>
-          <span class="hero-stat-label">총 학습 시간</span>
-        </div>
-      </div>
-    </div>
+    <p class="hero-cta-note">20문항 · 약 8분 · 무료 · 지금까지 <strong style="color:var(--text-secondary);">1,200명+</strong> 완료</p>
   </div>
 </section>
 
@@ -624,6 +592,52 @@
     </div>
     <div class="iteration-note">
       🔄 <span>실전에서는 <strong>3↔4단계를 반복해서</strong>, 가설을 세우고, 검증하고, 수정을 반복합니다.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY IT WORKS (outcomes + social proof) ── -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="why-grid">
+      <!-- Left: 이 교육을 마치면 -->
+      <div>
+        <div class="why-eyebrow">이 교육을 마치면</div>
+        <div class="hero-result-box">
+          <div class="hero-result-item">AI에게 역할과 맥락을 설계해 원하는 결과물을 1회에 뽑아낼 수 있습니다</div>
+          <div class="hero-result-item">시장·경쟁·기술 변화를 AI로 10분 안에 구조화할 수 있습니다</div>
+          <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
+            📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--text-muted);background:var(--bg-card);border-radius:10px;padding:8px 14px;box-shadow:var(--nm-in-sm);">
+          💎 <strong style="color:var(--accent);">기업 유료 교육 상당의 콘텐츠</strong>를 무료로 제공합니다
+        </div>
+      </div>
+      <!-- Right: 수강생 후기 + 통계 -->
+      <div>
+        <div class="why-eyebrow">수강생 후기</div>
+        <div class="hero-social-proof" style="max-width:100%;margin-bottom:16px;">
+          <div class="social-proof-item">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"처음으로 AI를 제대로 쓰는 법을 배웠어요. 보고서 작성 시간이 절반으로 줄었습니다."</span>
+            <span class="social-proof-who">— 전략기획팀 차장, 40대</span>
+          </div>
+          <div class="social-proof-divider"></div>
+          <div class="social-proof-item">
+            <span class="social-proof-stars">★★★★★</span>
+            <span class="social-proof-quote">"멀티 페르소나 토론 하나만으로 임원 보고 수정 횟수가 절반 이하로 줄었습니다."</span>
+            <span class="social-proof-who">— 마케팅팀장, 38세</span>
+          </div>
+        </div>
+        <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);">
+          <div class="hero-stat"><span class="hero-stat-num">5대</span><span class="hero-stat-label">역량</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">20개</span><span class="hero-stat-label">진단 문항</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">5단계</span><span class="hero-stat-label">실전 훈련</span></div>
+          <div class="hero-stat"><span class="hero-stat-num">2.5h</span><span class="hero-stat-label">총 학습 시간</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
