@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 퍼스트로 일한다는 것 | AI Roasting</title>
+<meta name="description" content="AI를 쓰는데 일이 빨라지지 않는다면? 5단계 실전 훈련으로 AI 문제 정의력을 키우세요. 20문항 무료 진단 · 맞춤 학습경로 · 팀장·리더급을 위한 AI 활용 교육.">
+<meta name="keywords" content="AI 문제 정의력, AI 프롬프트 교육, AI 활용법, 팀장 AI 교육, 리더 AI 훈련, AI 퍼스트, 프롬프트 잘 쓰는 법">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI는 쓰는데, 일은 왜 안 빨라질까? | AI Roasting">
+<meta property="og:description" content="AI 문제 정의력 5단계 실전 훈련. 20문항 무료 진단으로 내 AI 활용 역량 격차를 확인하세요.">
+<meta property="og:url" content="https://airoasting.github.io/ai-first/">
+<meta property="og:image" content="https://airoasting.github.io/ai-first/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI는 쓰는데, 일은 왜 안 빨라질까? | AI Roasting">
+<meta name="twitter:description" content="AI 문제 정의력 5단계 실전 훈련 · 무료 역량 진단">
 <link rel="stylesheet" href="css/common.css">
 <style>
 /* ── BRAND COLOR ── */
@@ -345,7 +355,29 @@
 .newsletter-eyebrow { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
 .newsletter-title { font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 10px; }
 .newsletter-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
-.newsletter-action { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+.newsletter-action { display: flex; flex-direction: column; align-items: stretch; gap: 10px; flex-shrink: 0; min-width: 260px; }
+.newsletter-email-row { display: flex; gap: 8px; }
+.newsletter-email-input {
+  flex: 1; min-width: 0; padding: 12px 16px;
+  background: var(--bg-card); border: none; border-radius: 12px;
+  font-size: 14px; color: var(--text-primary);
+  box-shadow: var(--nm-in-sm); outline: none;
+}
+.newsletter-email-input:focus { box-shadow: var(--nm-in), 0 0 0 2px var(--accent); }
+.newsletter-email-input::placeholder { color: var(--text-muted); }
+.newsletter-submit-btn {
+  padding: 12px 18px; background: var(--accent); color: #fff;
+  border: none; border-radius: 12px; font-size: 14px; font-weight: 700;
+  cursor: pointer; white-space: nowrap; transition: all 0.25s ease;
+  box-shadow: 4px 4px 10px rgba(249,115,22,0.35), -2px -2px 6px rgba(255,255,255,0.5);
+}
+.newsletter-submit-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.newsletter-note { font-size: 12px; color: var(--text-muted); text-align: center; }
+.newsletter-alt-link {
+  font-size: 12px; color: #0077B5; text-align: center;
+  text-decoration: none; font-weight: 600;
+}
+.newsletter-alt-link:hover { text-decoration: underline; }
 .newsletter-cta-btn {
   display: inline-flex; align-items: center; justify-content: center;
   background: #0077B5; color: #fff;
@@ -359,13 +391,30 @@
   transform: translateY(-2px);
   box-shadow: 8px 8px 18px rgba(0,80,140,0.45), -4px -4px 12px rgba(255,255,255,0.75);
 }
-.newsletter-cta-btn:active {
-  transform: translateY(1px);
-  box-shadow: inset 4px 4px 10px rgba(0,50,100,0.5);
-}
 [data-theme="dark"] .newsletter-cta-btn { box-shadow: 5px 5px 12px rgba(0,0,0,0.6), -2px -2px 6px rgba(40,44,62,0.3); }
-[data-theme="dark"] .newsletter-cta-btn:hover { box-shadow: 7px 7px 16px rgba(0,0,0,0.7), -4px -4px 10px rgba(40,44,62,0.4); }
-.newsletter-note { font-size: 12px; color: var(--text-muted); text-align: center; }
+
+/* ── Enterprise CTA ── */
+.enterprise-section {
+  background: var(--bg-secondary);
+  padding: 0 40px 48px;
+}
+.enterprise-inner {
+  max-width: 900px; margin: 0 auto;
+  background: var(--bg-card); border-radius: 18px;
+  padding: 24px 32px; box-shadow: var(--nm-out-sm);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.enterprise-text { font-size: 15px; font-weight: 600; color: var(--text-secondary); }
+.enterprise-text strong { color: var(--text-primary); }
+.enterprise-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-card); color: var(--text-primary);
+  border: none; border-radius: 12px; padding: 12px 22px;
+  font-size: 14px; font-weight: 700; text-decoration: none;
+  box-shadow: var(--nm-out-sm); transition: all 0.25s ease; white-space: nowrap;
+}
+.enterprise-btn:hover { box-shadow: var(--nm-out); transform: translateY(-1px); }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
@@ -450,25 +499,26 @@
     </div>
     <h2 class="hero-headline">AI는 쓰는데, 일은 왜 안 빨라질까?</h2>
     <p class="hero-sub">AI에 질문만 던지고 있다면, <em>"무엇을 시킬지" 정의하는 방식의 문제입니다.</em><br>
-    <span style="font-size:15px;font-weight:400;color:var(--text-muted);">Anthropic이 분석한 9,830건의 대화에서 확인된 AI 활용 격차, 지금 진단해보세요.</span></p>
+    <span style="font-size:15px;font-weight:400;color:var(--text-muted);">AI 상위 활용자 연구에서 확인된 5가지 행동 패턴, 지금 무료로 진단해보세요.</span></p>
 
     <!-- 비즈니스 임팩트 수치 -->
     <div class="hero-impact-bar">
       <div class="hero-impact-item">
-        <span class="hero-impact-num">85.7%</span>
+        <span class="hero-impact-num">85%+</span>
         <span class="hero-impact-txt">프롬프트를 반복 개선하는<br>AI 상위 활용자 비율</span>
       </div>
       <div class="hero-impact-divider"></div>
       <div class="hero-impact-item">
-        <span class="hero-impact-num">3.2×</span>
+        <span class="hero-impact-num">3배</span>
         <span class="hero-impact-txt">구조화 프롬프트가 줄이는<br>반복 수정 횟수</span>
       </div>
       <div class="hero-impact-divider"></div>
       <div class="hero-impact-item">
-        <span class="hero-impact-num">25%</span>
+        <span class="hero-impact-num">1/4</span>
         <span class="hero-impact-txt">AI 출력을 실제로<br>검증하는 사용자 비율</span>
       </div>
     </div>
+    <p style="font-size:11px;color:var(--text-muted);margin-top:-20px;margin-bottom:20px;max-width:680px;">* AI 상위 활용자 행동 패턴 분석 기반 추정치</p>
 
     <!-- 소셜 증거 -->
     <div class="hero-social-proof">
@@ -490,6 +540,7 @@
       <a href="#roadmap" class="btn-text btn-hero-link">전체 과정 미리보기 ↓</a>
     </div>
     <p class="hero-cta-note">20문항 · 약 8분 · 무료 · 5대 역량별 맞춤 결과</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">⚡ 지금까지 <strong style="color:var(--text-secondary);">1,200명+</strong>이 진단을 완료했습니다</p>
 
     <!-- 이 교육을 마치면 + 통계 (한 줄) -->
     <div class="hero-outcome-row">
@@ -500,6 +551,9 @@
         <div class="hero-result-item">보고서·전략안을 AI와 함께 1시간 안에 완성할 수 있습니다</div>
         <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted);line-height:1.6;">
           📌 <strong style="color:var(--text-secondary);">대상:</strong> 팀장·리더급 · AI를 업무에 쓰고 있지만 속도가 안 나는 분 · 보고서·전략 업무 담당자
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--text-muted);background:var(--bg-secondary);border-radius:10px;padding:8px 14px;box-shadow:var(--nm-in-sm);">
+          💎 <strong style="color:var(--accent);">기업 유료 교육 상당의 콘텐츠</strong>를 무료로 제공합니다
         </div>
       </div>
       <div class="hero-stats">
@@ -529,7 +583,7 @@
   <div class="roadmap-inner">
     <div class="roadmap-header">
       <h3>전체 학습 로드맵</h3>
-      <p>총 소요 시간 약 2시간 30분 · 한 번에 다 안 해도 됩니다 · 언제든 이어서 학습 가능</p>
+      <p>총 2시간 30분 · <strong>하루 30분씩 5일</strong>이면 충분합니다 · 언제든 이어서 학습 가능</p>
     </div>
     <div class="roadmap-flow">
       <a class="roadmap-step" id="rm-diag" href="pd-diagnosis.html">
@@ -805,11 +859,25 @@
       <p class="newsletter-sub">AI 활용법 · 실전 프롬프트 · 비즈니스 적용 사례 — 팀장·리더급을 위한 AI 실전 뉴스레터</p>
     </div>
     <div class="newsletter-action">
-      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-cta-btn">
-        LinkedIn 뉴스레터 구독하기 →
-      </a>
-      <p class="newsletter-note">무료 · 언제든 구독 취소 가능</p>
+      <div class="newsletter-email-row">
+        <input type="email" class="newsletter-email-input" placeholder="이메일 주소 입력" id="newsletter-email">
+        <button class="newsletter-submit-btn" onclick="handleNewsletterSubmit()">구독 →</button>
+      </div>
+      <p class="newsletter-note">무료 · 스팸 없음 · 언제든 구독 취소 가능</p>
+      <a href="https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/" target="_blank" rel="noopener" class="newsletter-alt-link">LinkedIn에서 바로 구독하기 →</a>
     </div>
+  </div>
+</section>
+
+<!-- ── ENTERPRISE CTA ── -->
+<section class="enterprise-section">
+  <div class="enterprise-inner">
+    <div class="enterprise-text">
+      🏢 <strong>팀·조직 단위 도입</strong>을 원하시나요? 기업 맞춤 워크숍·교육 프로그램을 제공합니다.
+    </div>
+    <a class="enterprise-btn" href="mailto:contact@airoasting.com?subject=기업 교육 문의&body=안녕하세요, AI Roasting 기업 교육에 대해 문의드립니다.">
+      📩 기업 교육 문의하기 →
+    </a>
   </div>
 </section>
 
@@ -937,16 +1005,24 @@ function initScrollSpy() {
     var scrollY = window.scrollY;
     var roadmapTop = roadmapSection.offsetTop;
 
-    // Always keep roadmap fixed after reaching roadmapSection
-    if (scrollY >= roadmapTop) {
-      roadmapFlow.style.position = 'fixed';
-      roadmapFlow.style.top = '0';
-      roadmapFlow.style.left = '0';
-      roadmapFlow.style.right = '0';
-      roadmapFlow.style.zIndex = '50';
-      roadmapFlow.style.width = '100%';
-      roadmapFlow.style.boxSizing = 'border-box';
-      roadmapFlow.classList.add('scrolled');
+    // Sticky roadmap: only on desktop (>= 768px)
+    if (window.innerWidth >= 768) {
+      if (scrollY >= roadmapTop) {
+        roadmapFlow.style.position = 'fixed';
+        roadmapFlow.style.top = '0';
+        roadmapFlow.style.left = '0';
+        roadmapFlow.style.right = '0';
+        roadmapFlow.style.zIndex = '50';
+        roadmapFlow.style.width = '100%';
+        roadmapFlow.style.boxSizing = 'border-box';
+        roadmapFlow.classList.add('scrolled');
+      } else {
+        roadmapFlow.style.position = 'relative';
+        roadmapFlow.style.top = 'auto';
+        roadmapFlow.style.left = 'auto';
+        roadmapFlow.style.right = 'auto';
+        roadmapFlow.classList.remove('scrolled');
+      }
     } else {
       roadmapFlow.style.position = 'relative';
       roadmapFlow.style.top = 'auto';
@@ -972,6 +1048,20 @@ function initScrollSpy() {
       if (currentEl) currentEl.classList.add('current-section');
     }
   });
+}
+
+function handleNewsletterSubmit() {
+  var emailEl = document.getElementById('newsletter-email');
+  var email = emailEl ? emailEl.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    showToast('올바른 이메일 주소를 입력해주세요.');
+    return;
+  }
+  store('newsletter_email', email);
+  showToast('✅ 구독 신청이 완료되었습니다! LinkedIn 뉴스레터로 연결합니다.', 2500);
+  setTimeout(function() {
+    window.open('https://www.linkedin.com/newsletters/ai-%EB%A1%9C%EC%8A%A4%ED%8C%85-7321517076899127296/', '_blank');
+  }, 1000);
 }
 
 function initFadeIn() {

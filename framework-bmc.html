@@ -4,905 +4,270 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비즈니스 모델 캔버스 | AI Roasting</title>
+    <meta name="description" content="사업 구조를 한 장에 시각화하는 9블록 프레임워크. AI와 함께 30분 안에 비즈니스 모델을 설계합니다.">
     <link rel="stylesheet" href="css/common.css">
     <style>
-        body {
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            word-break: keep-all;
-            overflow-wrap: break-word;
-        }
-
-        /* ── Stage Header ── */
-        .stage-header { text-align: center; padding: 56px 32px 48px; background: #1e2235; box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); min-height: 320px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .stage-header .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 24px; transition: opacity 0.2s; }
-        .stage-header .back-link:hover { opacity: 0.7; }
-        .stage-header h1 { font-size: 43px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px; margin-bottom: 12px; line-height: 1.25; }
-        .stage-header .desc { font-size: 18px; color: rgba(255,255,255,0.55); line-height: 1.6; }
-        .stage-header .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: #1e2235; border: none; padding: 6px 20px; border-radius: 24px; margin-top: 16px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
-        @media (max-width: 768px) { .stage-header { padding: 40px 20px 32px; min-height: 260px; } .stage-header h1 { font-size: 28px; } }
-
-        /* ── Container ── */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 56px 32px 40px;
-        }
-        .container.no-top { padding-top: 0; }
-
-        /* ── Wide Container ── */
-        .container-wide {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* ── Intro Box ── */
-        .intro-box {
-            background: var(--bg-card);
-            box-shadow: var(--nm-in);
-            border: none;
-            border-radius: 16px;
-            padding: 28px 32px;
-            margin-bottom: 48px;
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-        .intro-box .intro-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #CC0000;
-            margin-bottom: 8px;
-        }
+        body { background: var(--bg-primary); color: var(--text-primary); word-break: keep-all; overflow-wrap: break-word; }
+        header { text-align: center; padding: 48px 32px 40px; background: linear-gradient(160deg, #1e2235 0%, #1c1f2e 100%); box-shadow: 0 6px 24px rgba(8,10,18,0.5), inset 0 1px 0 rgba(255,255,255,0.07); }
+        .back-link { display: inline-block; color: #e8706a; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 20px; transition: opacity 0.2s; }
+        .back-link:hover { opacity: 0.7; }
+        h1 { font-size: 40px; font-weight: 800; color: #ffffff; letter-spacing: -1px; margin-bottom: 8px; word-break: keep-all; }
+        header .desc { font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.6; word-break: keep-all; }
+        .header-badge { display: inline-block; font-size: 13px; font-weight: 600; color: #e8706a; background: rgba(232,112,106,0.12); padding: 6px 18px; border-radius: 20px; margin-top: 12px; box-shadow: 4px 4px 10px rgba(8,10,18,0.75), -4px -4px 10px rgba(40,44,62,0.4); }
+        @media (max-width: 768px) { header { padding: 36px 24px 32px; } h1 { font-size: 28px; } }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 32px 64px; }
+        .intro-box { background: var(--bg-card); box-shadow: var(--nm-in); border-radius: 16px; padding: 28px 32px; margin-bottom: 48px; font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
         .intro-box strong { color: var(--text-primary); }
 
-        /* ── TOC Nav ── */
-        .toc-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--bg-primary);
-            border-bottom: none;
-            box-shadow: 0 6px 20px rgba(163,177,198,0.55), 0 2px 6px rgba(255,255,255,0.8);
-            margin-bottom: 32px;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-        }
-        .toc-nav-inner {
-            display: flex;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .toc-nav a {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            padding: 16px 8px 14px;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
-        }
-        .toc-nav a:hover { background: var(--bg-secondary); border-bottom-color: var(--border); }
-        .toc-nav a.active { border-bottom-color: #CC0000; background: var(--bg-secondary); }
-        .toc-nav .toc-num {
-            display: flex; align-items: center; justify-content: center;
-            width: 28px; height: 28px; border-radius: 50%;
-            background: #CC0000; color: #fff; font-size: 12px; font-weight: 800;
-        }
-        .toc-nav a:hover .toc-num { transform: scale(1.1); }
-        .toc-nav a.active .toc-num { background: #990000; }
-        .toc-nav .toc-label { font-size: 13px; font-weight: 700; color: var(--text-secondary); text-align: center; line-height: 1.3; }
-        .toc-nav a.active .toc-label { color: #CC0000; }
-        .toc-nav .toc-sub { font-size: 11px; color: var(--text-muted); text-align: center; }
-        .toc-nav a.active .toc-sub { color: #CC0000; opacity: 0.7; }
-
-        /* ── Section Divider ── */
-        .step-divider {
-            display: flex; align-items: center; gap: 16px; margin: 72px 0 36px;
-        }
-        .step-divider::before, .step-divider::after {
-            content: ''; flex: 1; height: 1px; background: var(--border);
-        }
-        .step-badge {
-            font-size: 13px; font-weight: 800; color: #CC0000; background: var(--bg-card);
-            border: 2px solid #CC0000; padding: 6px 20px; border-radius: 24px;
-            letter-spacing: 0.5px; white-space: nowrap;
-        }
-
-        /* ── Section Title ── */
-        .section-title {
-            font-size: 31px; font-weight: 800; color: var(--text-primary);
-            padding-left: 20px; border-left: 5px solid #CC0000;
-            margin-bottom: 8px; line-height: 1.3; letter-spacing: -0.5px;
-        }
-        .section-subtitle {
-            font-size: 16px; color: var(--text-muted); padding-left: 26px; margin-top: 8px; margin-bottom: 32px;
-        }
-
-        /* ── Text ── */
-        .text-block {
-            font-size: 16px; color: var(--text-secondary); line-height: 1.85; margin-bottom: 24px;
-        }
-        .text-block strong { color: var(--text-primary); font-weight: 700; }
-
-        /* ── Info Box ── */
-        .info-box {
-            background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 14px;
-            padding: 24px 28px; margin-bottom: 32px; font-size: 15px; color: var(--text-secondary); line-height: 1.85;
-        }
-        .info-box strong { color: var(--text-primary); }
-        .info-box.highlight {
-            background: var(--bg-secondary); border-color: #fecaca; border-left: 4px solid #CC0000;
-        }
-        .info-box-title { font-size: 15px; font-weight: 800; color: #CC0000; margin-bottom: 8px; }
-
-        /* ── Sub Title ── */
-        h3.sub-title { font-size: 23px; font-weight: 800; color: var(--text-primary); margin: 40px 0 16px; }
-
-        /* ── List ── */
-        .styled-list { list-style: none; margin-bottom: 28px; }
-        .styled-list li {
-            font-size: 16px; color: var(--text-secondary); padding: 8px 0 8px 24px; position: relative; line-height: 1.75;
-        }
-        .styled-list li::before {
-            content: ''; position: absolute; left: 0; top: 18px;
-            width: 8px; height: 8px; border-radius: 50%; background: #CC0000;
-        }
-        .styled-list li strong { color: var(--text-primary); font-weight: 700; }
-
-        /* ── Analogy Box ── */
-        .analogy-box {
-            background: var(--bg-card);
-            box-shadow: var(--nm-in);
-            border: none;
-            border-left: 4px solid #f59e0b;
-            border-radius: 12px; padding: 24px 28px; margin-bottom: 32px;
-            font-size: 16px; color: var(--text-secondary); line-height: 1.85;
-        }
-        .analogy-box .analogy-label {
-            font-size: 13px; font-weight: 800; color: #d97706; margin-bottom: 6px;
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .analogy-box strong { color: var(--text-primary); }
-
-        /* ── Step Card ── */
-        .step-card {
-            background: var(--bg-card); box-shadow: var(--nm-out); border: none; border-radius: 14px;
-            padding: 24px 28px; margin-bottom: 16px;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
-        .step-card .step-num {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 32px; height: 32px; border-radius: 50%;
-            background: #CC0000; color: #fff; font-size: 14px; font-weight: 800;
-            margin-right: 12px; vertical-align: middle;
-        }
-        .step-card .step-name { font-size: 17px; font-weight: 700; color: var(--text-primary); vertical-align: middle; }
-        .step-card .step-desc { font-size: 15px; color: var(--text-secondary); margin-top: 8px; padding-left: 44px; line-height: 1.75; }
-
-        /* ── Example Block ── */
-        .example-block {
-            background: #1e1e2e; border-radius: 14px; padding: 24px 28px;
-            margin-bottom: 8px; overflow-x: auto; position: relative;
-        }
-        .example-block .label {
-            position: absolute; top: 10px; right: 14px; font-size: 10px; font-weight: 700;
-            color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 1px;
-        }
-        .example-block pre {
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 14px; color: #e2e8f0; line-height: 1.75; white-space: pre-wrap; word-break: break-word;
-        }
-        .example-block pre .dim { color: #6b7280; }
-        .example-block pre .accent { color: #f472b6; }
-        .example-block pre .good { color: #34d399; }
-        .example-block pre .warn { color: #fbbf24; }
-        .example-block pre .info { color: #60a5fa; }
-
-        .example-explain {
-            background: var(--bg-secondary); border: 1px solid var(--border); border-top: none;
-            border-radius: 0 0 14px 14px; padding: 18px 24px; margin-bottom: 28px;
-            font-size: 15px; color: var(--text-muted); line-height: 1.75;
-        }
-        .example-explain strong { color: var(--text-secondary); }
-
-        /* ══════════════════════════════════ */
-        /* ── BMC Grid                     ── */
-        /* ══════════════════════════════════ */
+        /* BMC Visual Grid */
         .bmc-grid {
-            display: grid; grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: auto auto auto; gap: 10px; margin-bottom: 40px; font-size: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 10px;
+            margin-bottom: 48px;
         }
         .bmc-cell {
-            background: var(--bg-card); box-shadow: var(--nm-out); border: none; border-radius: 14px;
-            padding: 20px 18px; line-height: 1.7;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .bmc-cell:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
-        .bmc-cell .cell-title { font-weight: 800; color: #CC0000; font-size: 14px; margin-bottom: 2px; }
-        .bmc-cell .cell-question { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; }
-        .bmc-cell .cell-explain {
-            font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px;
-            padding-bottom: 12px; border-bottom: 1px dashed var(--border);
-        }
-        .bmc-cell .cell-explain strong { color: var(--text-primary); }
-        .bmc-cell .cell-analogy {
-            font-size: 11.5px; color: #92400e; background: #fffbeb;
-            border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; line-height: 1.6;
-        }
-        .bmc-cell .cell-tip-label {
-            font-size: 10px; font-weight: 700; color: #2563eb; letter-spacing: 0.3px; margin-bottom: 6px;
-        }
-        .bmc-cell ul { list-style: none; font-size: 12.5px; color: var(--text-secondary); }
-        .bmc-cell ul li { padding: 2px 0; }
-        .bmc-cell ul li::before { content: '\2022 '; color: #2563eb; font-weight: 700; }
-
-        .bmc-kp { grid-column: 1 / 2; grid-row: 1 / 3; }
-        .bmc-ka { grid-column: 2 / 3; grid-row: 1 / 2; }
-        .bmc-kr { grid-column: 2 / 3; grid-row: 2 / 3; }
-        .bmc-vp { grid-column: 3 / 4; grid-row: 1 / 3; }
-        .bmc-cr { grid-column: 4 / 5; grid-row: 1 / 2; }
-        .bmc-ch { grid-column: 4 / 5; grid-row: 2 / 3; }
-        .bmc-cs { grid-column: 5 / 6; grid-row: 1 / 3; }
-        .bmc-cost { grid-column: 1 / 3; grid-row: 3 / 4; }
-        .bmc-rev { grid-column: 3 / 6; grid-row: 3 / 4; }
-
-        /* ── Example Grid (green) ── */
-        .bmc-grid-example .bmc-cell .cell-title { color: #16a34a; }
-        .bmc-grid-example .bmc-cell ul li::before { color: #16a34a; }
-        .bmc-grid-example .bmc-cell { background: var(--bg-card); box-shadow: var(--nm-out); border: none; }
-        .bmc-grid-example .bmc-cell:hover { box-shadow: 10px 10px 22px rgba(163,177,198,0.8),-10px -10px 22px rgba(255,255,255,1); }
-
-        .bmc-grid-label {
-            text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 16px;
-        }
-        .bmc-grid-label strong { color: #16a34a; font-weight: 700; }
-
-        /* ── Template Box ── */
-        .template-box {
             background: var(--bg-card);
-            box-shadow: var(--nm-in);
-            border: none;
             border-radius: 14px;
-            padding: 24px 28px; margin-bottom: 28px; position: relative;
+            padding: 18px 18px 14px;
+            box-shadow: var(--nm-out-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 110px;
         }
-        .template-box .template-label { font-size: 13px; font-weight: 800; color: #2563eb; margin-bottom: 12px; }
-        .template-box pre {
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 14px; color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap; word-break: break-word;
+        .bmc-cell.span2 { grid-column: span 2; }
+        .bmc-cell.vp { grid-column: 3; grid-row: span 2; }
+        .bmc-num { font-size: 10px; font-weight: 800; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+        .bmc-icon { font-size: 22px; line-height: 1; }
+        .bmc-name { font-size: 14px; font-weight: 800; color: var(--text-primary); }
+        .bmc-ques { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-top: 2px; }
+        .bmc-bottom { grid-column: span 5; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .bmc-bottom .bmc-cell { min-height: 80px; }
+        @media (max-width: 700px) {
+            .bmc-grid { grid-template-columns: 1fr 1fr; }
+            .bmc-cell.span2, .bmc-cell.vp { grid-column: span 1; grid-row: span 1; }
+            .bmc-bottom { grid-column: span 2; grid-template-columns: 1fr 1fr; }
         }
-        .template-box pre .blank { color: #2563eb; text-decoration: underline; text-decoration-style: dotted; }
 
-        /* ── Copy Button ── */
-        .copy-btn {
-            position: absolute; top: 14px; right: 14px;
-            background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.25);
-            color: #2563eb; font-size: 12px; font-weight: 700;
-            padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s; z-index: 2;
-        }
-        .copy-btn:hover { background: #2563eb; color: #fff; }
-        .copy-btn.copied { background: #16a34a; border-color: #16a34a; color: #fff; }
-        .copy-btn.copy-btn-dark {
-            background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
-        }
-        .copy-btn.copy-btn-dark:hover { background: rgba(255,255,255,0.2); color: #fff; }
+        /* Blocks detail section */
+        .blocks-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; }
+        .block-card { background: var(--bg-card); border-radius: 16px; padding: 24px 26px; box-shadow: var(--nm-out-sm); display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; }
+        .block-icon-wrap { width: 52px; height: 52px; border-radius: 14px; background: var(--bg-card); box-shadow: var(--nm-in-sm); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        .block-body {}
+        .block-title { font-size: 17px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+        .block-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 8px; }
+        .block-question { font-size: 13px; color: #CC0000; font-weight: 600; }
+        @media (max-width: 600px) { .block-card { grid-template-columns: 1fr; } .block-icon-wrap { width: 44px; height: 44px; font-size: 20px; } }
 
-        html { scroll-behavior: smooth; }
+        .prompt-section { background: var(--bg-card); border-radius: 20px; padding: 32px; box-shadow: var(--nm-out); margin-bottom: 48px; }
+        .prompt-section-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+        .prompt-section-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+        .prompt-box { background: #1e1e2e; border-radius: 12px; padding: 20px 22px; }
+        .prompt-label { font-size: 10px; font-weight: 800; color: #e8706a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+        .prompt-text { font-size: 13px; color: #c8d6f0; line-height: 1.75; font-family: 'SF Mono', 'Fira Code', monospace; white-space: pre-wrap; }
+        .copy-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 700; color: #e8706a; background: rgba(232,112,106,0.12); border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: opacity 0.2s; }
+        .copy-btn:hover { opacity: 0.75; }
 
-        /* ── Responsive ── */
-        @media (max-width: 1024px) {
-            .bmc-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; }
-            .bmc-kp,.bmc-ka,.bmc-kr,.bmc-vp,.bmc-cr,.bmc-ch,.bmc-cs,.bmc-cost,.bmc-rev { grid-column: auto; grid-row: auto; }
-        }
-        @media (max-width: 768px) {
-            .container { padding: 40px 20px; }
-            .container-wide { padding: 0 16px; }
-            .section-title { font-size: 25px; }
-            h3.sub-title { font-size: 19px; }
-            .bmc-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-            .bmc-kp,.bmc-ka,.bmc-kr,.bmc-vp,.bmc-cr,.bmc-ch,.bmc-cs,.bmc-cost,.bmc-rev { grid-column: auto; grid-row: auto; }
-            .bmc-cell { padding: 18px 16px; }
-            .toc-nav .toc-label { font-size: 11px; }
-            .toc-nav .toc-sub { display: none; }
-            .toc-nav a { padding: 12px 4px 10px; }
-            .toc-nav .toc-num { width: 24px; height: 24px; font-size: 11px; }
-        }
+        .section-divider { display: flex; align-items: center; gap: 16px; margin: 48px 0 28px; }
+        .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .divider-badge { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #CC0000; background: var(--bg-card); padding: 6px 20px; border-radius: 20px; white-space: nowrap; box-shadow: var(--nm-in-sm); }
+
+        .next-cta { display: flex; align-items: center; gap: 16px; background: var(--bg-card); border-radius: 16px; padding: 22px 28px; box-shadow: var(--nm-out-sm); text-decoration: none; color: inherit; transition: all 0.25s ease; margin-top: 40px; }
+        .next-cta:hover { box-shadow: var(--nm-out); transform: translateY(-2px); }
+        .next-cta-icon { font-size: 28px; flex-shrink: 0; }
+        .next-cta-label { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+        .next-cta-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+        .next-cta-arrow { margin-left: auto; font-size: 22px; color: var(--accent); flex-shrink: 0; }
     </style>
 </head>
 <body>
-
-<header class="stage-header">
-    <a href="index.html" class="back-link">&larr; 전체 과정 보기</a>
+<header>
+    <a class="back-link" href="index.html">← 목록으로</a>
     <h1>비즈니스 모델 캔버스</h1>
-    <p class="desc">"우리 사업은 이렇게 돈을 번다"를 한 장에 정리하는 설계도</p>
-    <div class="header-badge">사용 빈도 ★★★★★ &middot; 3단계 방향 설정에서 활용</div>
+    <p class="desc">사업 구조를 한 장에 시각화하는 9블록 프레임워크</p>
+    <div class="header-badge">📚 참고자료 · 3단계 방향 설정 연계</div>
 </header>
 
+<main>
 <div class="container">
 
-    <!-- ── 프레임워크 간 네비게이션 ── -->
-    <div class="fw-inter-nav">
-        <a href="framework-bmc.html" class="current-fw">📊 비즈니스 모델 캔버스</a>
-        <a href="framework-market.html">📈 시장·수익 분석 6대 도구</a>
-        <a href="framework-ops.html">🏢 마케팅·조직·프로세스 9대 도구</a>
-    </div>
-
-    <!-- ── AI로 10분 만에 해보기 (FIRST!) ── -->
-    <div style="background:var(--bg-card);border-radius:20px;padding:28px 32px;margin-bottom:40px;box-shadow:var(--nm-out);">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-            <span style="font-size:22px;">⚡</span>
-            <span style="font-size:16px;font-weight:800;color:var(--text-primary);">AI로 10분 만에 BMC 초안 만들기</span>
-            <span style="margin-left:auto;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,0.1);border-radius:20px;padding:3px 12px;">입문 · 바로 실습</span>
-        </div>
-        <p style="font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">아래 프롬프트를 복사해 ChatGPT나 Claude에 붙여넣으세요. 개념을 다 몰라도 초안이 바로 나옵니다.</p>
-        <div class="fw-quick-prompt">
-            <div class="fw-quick-prompt-label">📋 BMC 초안 생성 프롬프트 — 복사해서 바로 사용</div>
-            <pre id="bmc-quick-prompt">너는 비즈니스 전략 전문가야.
-아래 사업 아이디어에 대해 비즈니스 모델 캔버스(BMC) 9개 블록을 작성해줘.
-
-[사업 아이디어]
-(여기에 한 줄로 적으세요 — 예: "직장인 대상 점심 도시락 구독 서비스")
-
-[출력 형식]
-각 블록을 3~5개 핵심 포인트로 정리해줘:
-1. 고객 세그먼트 — 누구한테 팔 건지
-2. 가치 제안 — 왜 우리 걸 사야 하는지
-3. 채널 — 어디서 어떻게 팔지
-4. 고객 관계 — 어떻게 단골로 만들지
-5. 수익원 — 어떻게 돈 버는지
-6. 핵심 자원 — 없으면 못 하는 것
-7. 핵심 활동 — 매일 꼭 해야 하는 일
-8. 핵심 파트너 — 누구랑 협력해야 하는지
-9. 비용 구조 — 어디에 돈 나가는지
-
-마지막에 이 BMC의 강점 2가지와 가장 큰 위험 요소 2가지도 분석해줘.</pre>
-            <button class="fw-quick-btn" onclick="copyFwPrompt('bmc-quick-prompt', this)">📋 프롬프트 복사하기</button>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
-            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:700;color:#CC0000;margin-bottom:6px;">📌 초안 받은 후 → 경쟁사 비교</div>
-                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"위 BMC와 경쟁사 [이름]의 BMC를 비교해서 우리가 지는 부분 3가지와 차별화 방안을 알려줘."</div>
-            </div>
-            <div style="padding:14px 18px;background:var(--bg-secondary);border-radius:10px;box-shadow:var(--nm-in-sm);">
-                <div style="font-size:12px;font-weight:700;color:#CC0000;margin-bottom:6px;">📌 초안 받은 후 → 약점 검증</div>
-                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">"이 BMC에서 투자자가 '이건 위험한데?' 할 부분 5가지를 찾고, 각각 어떻게 보완하면 좋을지 알려줘."</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Intro ── -->
     <div class="intro-box">
-        <div class="intro-title">사업계획서 50페이지를 딱 1장으로 정리할 수 있다면?</div>
-        비즈니스 모델 캔버스(줄여서 BMC)는 <strong>"우리 사업이 어떻게 돌아가는지"를 9칸짜리 표 하나로 정리</strong>하는 도구예요.<br>
-        <strong>누구에게, 무엇을, 어떻게 팔고, 돈은 어떻게 버는지</strong> &mdash; 딱 이 핵심만 뽑아서 한눈에 볼 수 있게 만들어줍니다.<br>
-        아래 9개 박스를 채우기만 하면, <strong>여러분의 사업 아이디어가 구체적인 설계도</strong>로 바뀝니다.
+        <strong>비즈니스 모델 캔버스(BMC)</strong>는 복잡한 사업 구조를 9개의 블록으로 정리합니다.<br>
+        AI에게 "이 블록들을 채워줘"라고 하면 <strong>30분 안에 초안 BMC가 완성</strong>되고, 당신은 핵심 가정을 검토하는 데 집중할 수 있습니다.
     </div>
 
-    <!-- ── TOC Nav ── -->
-    <nav class="toc-nav" id="tocNav">
-        <div class="toc-nav-inner">
-            <a href="#sec1" data-section="sec1"><span class="toc-num">1</span><span class="toc-label">BMC란?</span><span class="toc-sub">개념</span></a>
-            <a href="#sec2" data-section="sec2"><span class="toc-num">2</span><span class="toc-label">9개 블록</span><span class="toc-sub">설명</span></a>
-            <a href="#sec3" data-section="sec3"><span class="toc-num">3</span><span class="toc-label">활용 예시</span><span class="toc-sub">스킨케어</span></a>
-            <a href="#sec4" data-section="sec4"><span class="toc-num">4</span><span class="toc-label">작성 순서</span><span class="toc-sub">실전 플로우</span></a>
-            <a href="#sec5" data-section="sec5"><span class="toc-num">5</span><span class="toc-label">AI 활용법</span><span class="toc-sub">프롬프트</span></a>
-        </div>
-    </nav>
-
-
-    <!-- ═══════════════════════════════════ -->
-    <!-- 1. BMC란?                          -->
-    <!-- ═══════════════════════════════════ -->
-    <div class="step-divider"><span class="step-badge">SECTION 1</span></div>
-
-    <h2 class="section-title" id="sec1">BMC란?</h2>
-    <p class="section-subtitle">처음 들어보셨어도 괜찮아요. 아주 쉽게 설명할게요.</p>
-
-    <p class="text-block">
-        카페를 열겠다고 상상해보세요. 머릿속에 이런 질문이 떠오를 거예요.<br><br>
-        <strong>"누구한테 팔지? 무슨 메뉴로? 어디서? 얼마에? 재료는 어디서 사지? 비용은 얼마나 들지?"</strong><br><br>
-        이 질문들을 <strong>9개의 칸에 정리한 표</strong>가 바로 비즈니스 모델 캔버스(BMC)예요. 복잡한 사업 계획을 한 장의 종이에 깔끔하게 정리해주는 도구입니다.
-    </p>
-
-    <ul class="styled-list">
-        <li><strong>한 장이면 끝</strong> : 50페이지짜리 사업계획서가 필요 없어요. 9칸만 채우면 사업 전체 그림이 보여요</li>
-        <li><strong>전문 지식 없이도 OK</strong> : 경영학을 몰라도 괜찮아요. 쉬운 질문에 답하듯 채우면 됩니다</li>
-        <li><strong>수정이 자유로워요</strong> : 포스트잇처럼 붙였다 떼며 계속 고칠 수 있는 "살아있는 문서"예요</li>
-        <li><strong>전 세계에서 가장 많이 쓰여요</strong> : 작은 가게부터 글로벌 기업까지, 사업을 설계할 때 제일 먼저 꺼내는 도구예요</li>
-    </ul>
-
-    <div class="analogy-box">
-        <div class="analogy-label">비유로 이해하기</div>
-        집을 짓기 전에 <strong>설계도</strong>를 그리죠? "방은 몇 개? 화장실은 어디에? 주방 크기는?" 이런 걸 미리 정해야 집을 잘 지을 수 있어요.<br><br>
-        BMC는 <strong>사업의 설계도</strong>예요. "손님은 누구? 뭘 팔지? 어디서 팔지? 돈은 어떻게 벌지?"를 미리 한 장에 그려보는 거예요. 설계도 없이 집을 지으면 나중에 뜯어고쳐야 하듯이, BMC 없이 사업을 시작하면 나중에 방향을 잡기 어려워요.
-    </div>
-
-
-    <!-- ═══════════════════════════════════ -->
-    <!-- 2. 9개 블록 한눈에 보기              -->
-    <!-- ═══════════════════════════════════ -->
-    <div class="step-divider"><span class="step-badge">SECTION 2</span></div>
-
-    <h2 class="section-title" id="sec2">9개 블록 한눈에 보기</h2>
-    <p class="section-subtitle">각 칸이 무슨 뜻이고, 어떤 걸 적어야 하는지 알려드릴게요</p>
-
-    <p class="text-block">
-        아래가 BMC의 전체 모습이에요. <strong>9개 박스 각각이 "사업에 대한 핵심 질문" 하나</strong>에 해당해요. 각 박스 안에 뜻을 쉽게 풀어놓았고, <strong>"여기엔 이런 걸 적으면 돼요"</strong>라는 가이드도 넣었어요. 천천히 읽어보세요!
-    </p>
-
-</div><!-- /.container -->
-
-<!-- ── Section 2: 설명 그리드 ── -->
-<div class="container-wide">
+    <!-- BMC Visual -->
     <div class="bmc-grid">
-
-        <!-- 핵심 파트너 -->
-        <div class="bmc-cell bmc-kp">
-            <div class="cell-title">핵심 파트너</div>
-            <div class="cell-question">누구의 도움이 필요할까?</div>
-            <div class="cell-explain">사업을 혼자서 다 할 수는 없어요. 재료를 공급해주는 업체, 물건을 만들어주는 공장, 함께 홍보해줄 파트너 등 <strong>우리를 도와줄 외부 협력자</strong>를 적는 칸이에요.</div>
-            <div class="cell-analogy">카페로 치면? 원두 납품 업체, 우유 공급처, 배달앱 회사 등이에요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>원재료·부품 공급 업체</li>
-                <li>제조를 대신 해줄 공장</li>
-                <li>함께 홍보·판매할 파트너</li>
-                <li>전문 조언을 해줄 자문사</li>
-            </ul>
+        <div class="bmc-cell span2">
+            <div class="bmc-num">07</div>
+            <div class="bmc-icon">🤝</div>
+            <div class="bmc-name">핵심 파트너십</div>
+            <div class="bmc-ques">누가 우리를 도와주나?</div>
         </div>
-
-        <!-- 핵심 활동 -->
-        <div class="bmc-cell bmc-ka">
-            <div class="cell-title">핵심 활동</div>
-            <div class="cell-question">매일 꼭 해야 할 일은?</div>
-            <div class="cell-explain">우리 사업이 굴러가려면 <strong>반드시 해야 하는 일</strong>이 뭔지 적는 칸이에요. "이걸 안 하면 사업이 멈춘다"는 핵심 업무들이에요.</div>
-            <div class="cell-analogy">카페로 치면? 커피 만들기, 매장 청소, 메뉴 개발, 인스타 홍보 등이에요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>제품 만들기 (개발·제조·디자인)</li>
-                <li>서비스 운영 (배송·고객응대·품질관리)</li>
-                <li>고객 모으기 (마케팅·영업·홍보)</li>
-            </ul>
+        <div class="bmc-cell" style="grid-row: 1;">
+            <div class="bmc-num">06</div>
+            <div class="bmc-icon">⚙️</div>
+            <div class="bmc-name">핵심 활동</div>
+            <div class="bmc-ques">무엇을 해야 하나?</div>
         </div>
-
-        <!-- 핵심 자원 -->
-        <div class="bmc-cell bmc-kr">
-            <div class="cell-title">핵심 자원</div>
-            <div class="cell-question">없으면 사업 못 하는 것은?</div>
-            <div class="cell-explain">사업에 <strong>반드시 있어야 하는 것</strong>들을 적어요. 사람, 기술, 돈, 장비 등 "이것 없으면 시작도 못 한다"는 것들이에요.</div>
-            <div class="cell-analogy">카페로 치면? 바리스타(사람), 에스프레소 머신(장비), 매장(공간), 레시피(기술)예요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>사람 : 전문 인력, 핵심 팀원</li>
-                <li>기술 : 특허, 노하우, 소프트웨어</li>
-                <li>물건 : 장비, 시설, 재고</li>
-                <li>돈 : 초기 자금, 투자금</li>
-            </ul>
+        <div class="bmc-cell vp" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(204,0,0,0.05) 100%); box-shadow: var(--nm-out); border-top: 3px solid #CC0000;">
+            <div class="bmc-num">02</div>
+            <div class="bmc-icon">💎</div>
+            <div class="bmc-name">가치 제안</div>
+            <div class="bmc-ques">고객에게 어떤 가치를 제공하나?<br>어떤 문제를 해결하나?</div>
         </div>
-
-        <!-- 가치 제안 -->
-        <div class="bmc-cell bmc-vp">
-            <div class="cell-title">가치 제안</div>
-            <div class="cell-question">왜 우리 걸 사야 할까?</div>
-            <div class="cell-explain">고객이 다른 곳 말고 <strong>왜 우리한테 와야 하는지</strong>, 그 이유를 적는 칸이에요. 친구가 "그거 왜 사?"라고 물었을 때 대답할 수 있는 딱 한마디! <strong>BMC에서 가장 중요한 칸</strong>이에요.</div>
-            <div class="cell-analogy">카페로 치면? "여긴 디카페인이 진짜 맛있어" 또는 "새벽 5시부터 열어서 출근길에 딱이야" 같은 거예요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>고객의 어떤 문제를 해결해주는지</li>
-                <li>경쟁 제품보다 뭐가 더 나은지</li>
-                <li>가격·품질·편리함 중 우리 강점은?</li>
-                <li>"이거 때문에 산다"고 할 핵심 한 가지</li>
-            </ul>
+        <div class="bmc-cell" style="grid-row: 1;">
+            <div class="bmc-num">04</div>
+            <div class="bmc-icon">💬</div>
+            <div class="bmc-name">고객 관계</div>
+            <div class="bmc-ques">어떻게 관계를 유지하나?</div>
         </div>
-
-        <!-- 고객 관계 -->
-        <div class="bmc-cell bmc-cr">
-            <div class="cell-title">고객 관계</div>
-            <div class="cell-question">고객을 어떻게 단골로 만들까?</div>
-            <div class="cell-explain">처음 온 고객을 <strong>어떻게 맞이하고, 어떻게 다시 오게</strong> 할지 정하는 칸이에요. 한 번 사고 끝이 아니라 계속 찾아오게 만드는 전략이에요.</div>
-            <div class="cell-analogy">카페로 치면? 스탬프 적립, 단골 할인, 인스타 리뷰 이벤트 같은 거예요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>1:1 상담 vs 알아서 이용하게 할지</li>
-                <li>처음 오는 고객 끌어오는 방법</li>
-                <li>다시 사게 만드는 방법 (구독·적립·멤버십)</li>
-            </ul>
+        <div class="bmc-cell span2">
+            <div class="bmc-num">01</div>
+            <div class="bmc-icon">👥</div>
+            <div class="bmc-name">고객 세그먼트</div>
+            <div class="bmc-ques">누구를 위한 가치인가?</div>
         </div>
-
-        <!-- 채널 -->
-        <div class="bmc-cell bmc-ch">
-            <div class="cell-title">채널</div>
-            <div class="cell-question">어디서, 어떻게 팔까?</div>
-            <div class="cell-explain">고객이 <strong>우리 제품을 처음 알게 되는 경로</strong>와 <strong>실제로 구매하는 장소</strong>를 적는 칸이에요. "어떻게 알리고, 어디서 팔고, 어떻게 전달하지?"를 생각하면 돼요.</div>
-            <div class="cell-analogy">카페로 치면? 인스타그램(알리기), 매장+배달앱(팔기), 직접 수령+배달(전달)이에요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>알리기 : SNS, 블로그, 광고, 입소문</li>
-                <li>팔기 : 온라인몰, 오프라인 매장, 앱</li>
-                <li>전달 : 직접 전달, 택배, 다운로드</li>
-            </ul>
+        <div class="bmc-cell" style="grid-row: 2; grid-column: 3 / 4;">
+            <div class="bmc-num">08</div>
+            <div class="bmc-icon">🏗️</div>
+            <div class="bmc-name">핵심 자원</div>
+            <div class="bmc-ques">무엇이 필요한가?</div>
         </div>
-
-        <!-- 고객 세그먼트 -->
-        <div class="bmc-cell bmc-cs">
-            <div class="cell-title">고객 세그먼트</div>
-            <div class="cell-question">누구한테 팔 건데?</div>
-            <div class="cell-explain">우리 제품을 <strong>진짜 사줄 사람이 누구인지</strong> 구체적으로 정하는 칸이에요. "다 팔래요"는 답이 아니에요! <strong>딱 맞는 고객</strong>을 정해야 나머지 8칸도 채울 수 있어요. <strong>모든 사업의 첫 번째 질문!</strong></div>
-            <div class="cell-analogy">카페로 치면? "출근길 30대 직장인"처럼 구체적으로 정하는 거예요. "모든 사람"이라고 하면 메뉴도, 가격도, 위치도 정할 수 없어요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>나이, 성별, 직업 등 기본 정보</li>
-                <li>어떤 고민이나 불편함이 있는지</li>
-                <li>지금은 어떤 방법으로 해결하고 있는지</li>
-                <li>우리 제품에 돈을 쓸 의향이 있는지</li>
-            </ul>
+        <div class="bmc-cell" style="grid-row: 2; grid-column: 4 / 5;">
+            <div class="bmc-num">03</div>
+            <div class="bmc-icon">📡</div>
+            <div class="bmc-name">채널</div>
+            <div class="bmc-ques">어떻게 전달하나?</div>
         </div>
-
-        <!-- 비용 구조 -->
-        <div class="bmc-cell bmc-cost">
-            <div class="cell-title">비용 구조</div>
-            <div class="cell-question">돈이 어디에 나가지?</div>
-            <div class="cell-explain">사업을 운영하면서 <strong>나가는 돈을 전부 적는</strong> 칸이에요. 얼마를 벌든, 나가는 돈이 더 많으면 망하겠죠? 그래서 비용을 정확히 파악하는 게 중요해요.</div>
-            <div class="cell-analogy">카페로 치면? 월세, 직원 월급, 원두·우유 값, 전기세, 배달앱 수수료 등이에요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>고정비 : 매달 꼭 나가는 돈 (월세, 인건비)</li>
-                <li>변동비 : 많이 팔수록 늘어나는 비용 (재료비)</li>
-                <li>초기비용 : 시작할 때만 드는 돈 (장비, 인테리어)</li>
-                <li>가장 큰 비용이 뭔지 파악하기</li>
-            </ul>
-        </div>
-
-        <!-- 수익원 -->
-        <div class="bmc-cell bmc-rev">
-            <div class="cell-title">수익원</div>
-            <div class="cell-question">돈은 어디서 들어오지?</div>
-            <div class="cell-explain"><strong>돈이 들어오는 통로</strong>를 적는 칸이에요. 뭘 팔아서 돈을 벌지, 얼마를 받을지, 한 번 받을지 매달 받을지 등을 정해요. 왼쪽의 비용 구조와 비교해서 <strong>"남는 장사인지"</strong> 확인하는 게 핵심!</div>
-            <div class="cell-analogy">카페로 치면? 커피 판매, 디저트 판매, 원두 소매 판매, 케이터링 서비스 등이에요.</div>
-            <div class="cell-tip-label">여기에 적으면 좋은 것</div>
-            <ul>
-                <li>제품 판매 : 한 번에 돈 받기</li>
-                <li>구독·멤버십 : 매달 꾸준히 돈 받기</li>
-                <li>수수료·중개 : 거래할 때마다 받기</li>
-                <li>가격은 얼마로, 어떤 방식으로 받을지</li>
-            </ul>
+        <div class="bmc-bottom">
+            <div class="bmc-cell">
+                <div class="bmc-num">09</div>
+                <div class="bmc-icon">💸</div>
+                <div class="bmc-name">비용 구조</div>
+                <div class="bmc-ques">주요 비용은 무엇인가?</div>
+            </div>
+            <div class="bmc-cell">
+                <div class="bmc-num">05</div>
+                <div class="bmc-icon">💰</div>
+                <div class="bmc-name">수익 흐름</div>
+                <div class="bmc-ques">어떻게 돈을 버나?</div>
+            </div>
         </div>
     </div>
-</div><!-- /.container-wide -->
 
-<div class="container no-top">
+    <div class="section-divider"><span class="divider-badge">9블록 상세 설명</span></div>
 
-    <div class="info-box">
-        <div class="info-box-title">BMC 읽는 순서</div>
-        표의 <strong>오른쪽부터 왼쪽으로</strong> 읽으면 자연스러워요.<br>
-        "누구한테 팔지?(고객)" → "왜 살까?(가치)" → "어떻게 팔지?(채널·관계)" → "돈은?(수익)" → "뭐가 필요하지?(자원·활동·파트너)" → "비용은?(비용)"<br>
-        이 순서로 읽으면 <strong>사업이 하나의 이야기처럼</strong> 흘러가요.
-    </div>
-
-
-    <!-- ═══════════════════════════════════ -->
-    <!-- 3. 활용 예시: 글로우랩               -->
-    <!-- ═══════════════════════════════════ -->
-    <div class="step-divider"><span class="step-badge">SECTION 3</span></div>
-
-    <h2 class="section-title" id="sec3">활용 예시</h2>
-    <p class="section-subtitle">실제로 9칸을 채우면 어떤 모습인지 볼까요?</p>
-
-    <p class="text-block">
-        위에서 배운 9개 칸을 직접 채워볼게요. 가상의 화장품 브랜드 <strong>"글로우랩(GlowLab)"</strong>이라는 회사를 만들어봤어요. 민감한 피부를 위한 저자극 스킨케어 제품을 파는 회사라고 가정하고, 각 칸을 어떻게 채웠는지 확인해보세요.
-    </p>
-
-</div><!-- /.container -->
-
-<!-- ── Section 3: 글로우랩 예시 그리드 ── -->
-<div class="container-wide">
-    <p class="bmc-grid-label">사례 : <strong>글로우랩(GlowLab)</strong> &mdash; 민감한 피부를 위한 저자극 스킨케어 브랜드</p>
-
-    <div class="bmc-grid bmc-grid-example">
-        <div class="bmc-cell bmc-kp">
-            <div class="cell-title">핵심 파트너</div>
-            <ul>
-                <li>원료 공급 업체</li>
-                <li>OEM 제조 공장 (대신 만들어주는 곳)</li>
-                <li>피부과 전문의 자문단</li>
-                <li>뷰티 유튜버·인플루언서</li>
-            </ul>
+    <div class="blocks-list">
+        <div class="block-card">
+            <div class="block-icon-wrap">👥</div>
+            <div class="block-body">
+                <div class="block-title">① 고객 세그먼트 (Customer Segments)</div>
+                <div class="block-desc">누구를 위한 가치를 만드는가? 가장 중요한 고객은 누구인가? 세그먼트를 좁힐수록 가치 제안이 날카로워집니다.</div>
+                <div class="block-question">핵심 질문 → "우리 고객 중 가장 돈을 많이 내는 20%는 누구인가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-ka">
-            <div class="cell-title">핵심 활동</div>
-            <ul>
-                <li>신제품 연구 개발</li>
-                <li>안전성·품질 테스트</li>
-                <li>SNS 콘텐츠 제작</li>
-                <li>고객 피부 상담</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">💎</div>
+            <div class="block-body">
+                <div class="block-title">② 가치 제안 (Value Propositions)</div>
+                <div class="block-desc">고객에게 어떤 가치를 제공하는가? 어떤 문제를 해결하는가? 가치 제안이 불명확하면 나머지 8개 블록이 흔들립니다.</div>
+                <div class="block-question">핵심 질문 → "경쟁사 대비 우리가 10배 더 잘하는 단 한 가지는?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-kr">
-            <div class="cell-title">핵심 자원</div>
-            <ul>
-                <li>자체 연구소 (R&D)</li>
-                <li>특허 받은 보습 성분</li>
-                <li>뷰티 전문 연구원</li>
-                <li>10만 명 고객 커뮤니티</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">📡</div>
+            <div class="block-body">
+                <div class="block-title">③ 채널 (Channels)</div>
+                <div class="block-desc">고객 세그먼트에게 어떻게 가치를 전달하는가? 인지-구매-전달-사후지원 각 단계별 최적 채널을 매핑합니다.</div>
+                <div class="block-question">핵심 질문 → "고객이 우리를 처음 알게 되는 경로는 무엇인가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-vp">
-            <div class="cell-title">가치 제안</div>
-            <ul>
-                <li>피부과 전문의가 함께 만든 제품</li>
-                <li>자극 성분 0% (향료·색소 없음)</li>
-                <li>피부 보호막 강화 특허 성분</li>
-                <li>합리적 가격 (2~3만원대)</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">💬</div>
+            <div class="block-body">
+                <div class="block-title">④ 고객 관계 (Customer Relationships)</div>
+                <div class="block-desc">각 세그먼트와 어떤 관계를 형성·유지하는가? 자동화·개인화·커뮤니티 중 어떤 모델이 적합한지 결정합니다.</div>
+                <div class="block-question">핵심 질문 → "고객이 이탈하는 주요 시점은 언제인가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-cr">
-            <div class="cell-title">고객 관계</div>
-            <ul>
-                <li>1:1 피부 고민 상담 챗봇</li>
-                <li>매달 배송 구독 서비스</li>
-                <li>SNS 사용 후기 이벤트</li>
-                <li>고객끼리 소통하는 리뷰 커뮤니티</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">💰</div>
+            <div class="block-body">
+                <div class="block-title">⑤ 수익 흐름 (Revenue Streams)</div>
+                <div class="block-desc">고객은 무엇에 돈을 내는가? 판매·구독·라이선스·광고 등 수익 모델의 종류와 각 흐름의 비중을 파악합니다.</div>
+                <div class="block-question">핵심 질문 → "수익이 가장 크게 늘 수 있는 모델 변경은 무엇인가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-ch">
-            <div class="cell-title">채널</div>
-            <ul>
-                <li>자사 온라인 쇼핑몰</li>
-                <li>올리브영 매장 입점</li>
-                <li>인스타그램·유튜브 마케팅</li>
-                <li>피부과 클리닉에 납품</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">⚙️</div>
+            <div class="block-body">
+                <div class="block-title">⑥ 핵심 활동 (Key Activities)</div>
+                <div class="block-desc">가치 제안을 실현하기 위해 반드시 해야 하는 활동들. 제조·문제해결·플랫폼 관리 중 어떤 유형인지 파악합니다.</div>
+                <div class="block-question">핵심 질문 → "이 활동을 멈추면 가치 제안이 무너지는가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-cs">
-            <div class="cell-title">고객 세그먼트</div>
-            <ul>
-                <li>20~35세 여성</li>
-                <li>민감한 피부·트러블 피부 고민자</li>
-                <li>화장품 성분을 꼼꼼히 따지는 분</li>
-                <li>피부과 치료 후 관리가 필요한 분</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">🏗️</div>
+            <div class="block-body">
+                <div class="block-title">⑦ 핵심 자원 (Key Resources)</div>
+                <div class="block-desc">비즈니스 모델을 작동시키는 데 필요한 가장 중요한 자산. 물리적·지적·인적·재무적 자원을 유형별로 분류합니다.</div>
+                <div class="block-question">핵심 질문 → "경쟁사가 복제하기 가장 어려운 우리의 자원은?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-cost">
-            <div class="cell-title">비용 구조</div>
-            <ul>
-                <li>원료 구매 + 제조 비용 (40%)</li>
-                <li>마케팅·광고 비용 (25%)</li>
-                <li>연구 개발 비용 (20%)</li>
-                <li>택배·배송·운영 비용 (15%)</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">🤝</div>
+            <div class="block-body">
+                <div class="block-title">⑧ 핵심 파트너십 (Key Partnerships)</div>
+                <div class="block-desc">누가 핵심 활동을 돕는가? 공급자·파트너·전략적 제휴를 구분하고, 의존도를 파악하여 리스크를 관리합니다.</div>
+                <div class="block-question">핵심 질문 → "이 파트너가 이탈하면 사업이 멈추는가?"</div>
+            </div>
         </div>
-        <div class="bmc-cell bmc-rev">
-            <div class="cell-title">수익원</div>
-            <ul>
-                <li>제품 판매 (스킨·세럼·크림)</li>
-                <li>매달 정기배송 구독 패키지</li>
-                <li>피부과에 대량 납품 (B2B)</li>
-                <li>시즌 한정판·콜라보 제품</li>
-            </ul>
+        <div class="block-card">
+            <div class="block-icon-wrap">💸</div>
+            <div class="block-body">
+                <div class="block-title">⑨ 비용 구조 (Cost Structure)</div>
+                <div class="block-desc">비즈니스 모델 운영에서 발생하는 주요 비용. 고정비·변동비로 구분하고 수익과의 관계를 명확히 합니다.</div>
+                <div class="block-question">핵심 질문 → "매출이 2배 늘 때 비용은 어떻게 변하는가?"</div>
+            </div>
         </div>
     </div>
-</div><!-- /.container-wide -->
 
-<div class="container no-top">
+    <div class="section-divider"><span class="divider-badge">AI 작성 프롬프트</span></div>
 
-    <div class="info-box">
-        <div class="info-box-title">이 예시에서 배울 점</div>
-        글로우랩 BMC를 보면 <strong>9개 칸이 하나의 이야기처럼 연결</strong>되어 있어요.<br><br>
-        "민감한 피부로 고민하는 20~35세 여성(고객)"에게 → "피부과 전문의가 만든 자극 없는 제품(가치)"을 → "올리브영과 인스타그램(채널)"을 통해 알리고 → "정기배송 구독(관계)"으로 단골을 만들어요.<br><br>
-        이렇게 <strong>모든 칸이 서로 맞물려 돌아가면</strong> 좋은 BMC입니다. 하나의 칸을 바꾸면 다른 칸도 함께 바꿔야 할 수 있어요.
-    </div>
+    <div class="prompt-section">
+        <div class="prompt-section-title">BMC 초안을 AI로 30분 만에 만드는 법</div>
+        <div class="prompt-section-sub">아래 프롬프트를 복사해 ChatGPT 또는 Claude에 붙여넣고, [ ] 안의 내용만 채우세요.</div>
+        <div class="prompt-box">
+            <div class="prompt-label">AI 프롬프트 (전체 BMC 생성)</div>
+            <div class="prompt-text">나는 [회사/사업 설명]을 준비 중이야.
+비즈니스 모델 캔버스의 9개 블록을 모두 채워줘.
 
+각 블록별로 다음을 포함해:
+- 현재 상황 or 가정 (2~3개 항목)
+- 가장 중요한 가정 1개 (검증이 필요한 것)
 
-    <!-- ═══════════════════════════════════ -->
-    <!-- 4. 작성 순서                        -->
-    <!-- ═══════════════════════════════════ -->
-    <div class="step-divider"><span class="step-badge">SECTION 4</span></div>
-
-    <h2 class="section-title" id="sec4">작성 순서</h2>
-    <p class="section-subtitle">이 순서대로 채우면 처음이라도 쉽게 완성할 수 있어요</p>
-
-    <p class="text-block">
-        9칸을 아무 순서로 채우면 앞뒤가 안 맞을 수 있어요. 아래 순서를 따르면 <strong>자연스럽게 연결되는 사업 모델</strong>이 만들어집니다.
-    </p>
-
-    <div class="step-card">
-        <span class="step-num">1</span><span class="step-name">고객 세그먼트</span>
-        <div class="step-desc"><strong>"누구한테 팔 건데?"</strong>부터 시작하세요. "직장인? 학생? 주부? 남성? 여성?" 나이, 성별, 고민 등을 구체적으로 그려보세요. 여기가 흔들리면 나머지 8칸이 전부 흔들려요.</div>
-    </div>
-
-    <div class="step-card">
-        <span class="step-num">2</span><span class="step-name">가치 제안</span>
-        <div class="step-desc">정한 고객에게 <strong>"왜 우리 걸 사야 해?"</strong>라고 물었을 때 한 문장으로 대답할 수 있어야 해요. "우리는 ○○한 사람들의 ○○ 문제를 ○○하게 해결해줍니다"처럼요.</div>
-    </div>
-
-    <div class="step-card">
-        <span class="step-num">3</span><span class="step-name">채널 + 고객 관계</span>
-        <div class="step-desc"><strong>"어디서 팔고, 고객이랑 어떻게 소통할지"</strong>를 함께 정해요. 인터넷으로 팔지, 매장에서 팔지, 고객 문의는 전화로 받을지 챗봇으로 받을지 등을 결정합니다.</div>
-    </div>
-
-    <div class="step-card">
-        <span class="step-num">4</span><span class="step-name">수익원</span>
-        <div class="step-desc"><strong>"돈을 어떻게 벌 건데?"</strong>를 구체적으로 정해요. 한 번 팔고 끝인지, 매달 구독료를 받을지, 얼마에 팔 건지 등을 정합니다. 이게 곧 사업의 생존 방식이에요.</div>
-    </div>
-
-    <div class="step-card">
-        <span class="step-num">5</span><span class="step-name">핵심 자원 + 활동 + 파트너</span>
-        <div class="step-desc">위에서 정한 걸 실행하려면 <strong>"뭐가 필요하고, 뭘 해야 하고, 누구랑 같이 해야 하는지"</strong>를 정리해요. 사업의 뒷단(운영)을 설계하는 단계예요.</div>
-    </div>
-
-    <div class="step-card">
-        <span class="step-num">6</span><span class="step-name">비용 구조</span>
-        <div class="step-desc">마지막으로 <strong>"총 비용이 얼마나 드는지"</strong> 계산해요. 4번에서 정한 수익과 비교해서 남는 장사인지 확인하세요. 여기서 적자가 나면 1번부터 다시 생각해봐야 해요.</div>
-    </div>
-
-    <div class="analogy-box">
-        <div class="analogy-label">처음이라 막막하다면?</div>
-        완벽하게 쓰려고 하지 마세요! <strong>포스트잇에 키워드만 적어서 붙여보는 것</strong>부터 시작하면 돼요. "우리 고객은... 음... 20대 여성?" 이 정도면 충분해요. 나중에 고치면 됩니다. BMC의 진짜 가치는 완벽한 한 장이 아니라, <strong>계속 고쳐나가는 과정</strong>에 있어요.
-    </div>
-
-
-    <!-- ═══════════════════════════════════ -->
-    <!-- 5. AI 활용법                        -->
-    <!-- ═══════════════════════════════════ -->
-    <div class="step-divider"><span class="step-badge">SECTION 5</span></div>
-
-    <h2 class="section-title" id="sec5">AI 활용법</h2>
-    <p class="section-subtitle">빈 칸이 막막하면? AI한테 초안을 부탁해보세요</p>
-
-    <p class="text-block">
-        혼자서 9칸을 채우기 어렵다면, AI(ChatGPT, Claude 등)에게 먼저 초안을 만들어달라고 해보세요. <strong>아래 글을 복사해서 AI에 붙여넣기만 하면</strong>, 몇 분 안에 9칸이 다 채워진 BMC를 받아볼 수 있어요. 거기서 마음에 안 드는 부분만 고치면 훨씬 수월합니다.
-    </p>
-
-    <h3 class="sub-title">BMC 초안 만들어달라고 하기</h3>
-
-    <div class="example-block">
-        <span class="label">AI Prompt</span>
-        <button class="copy-btn copy-btn-dark" onclick="copyBlock(this)">복사하기</button>
-        <pre>당신은 비즈니스 전략 전문가입니다. 아래 사업 아이디어에 대해
-비즈니스 모델 캔버스를 작성해주세요.
-
-<span class="info">[사업 아이디어]</span>
-<span class="warn">민감한 피부를 위한 저자극 스킨케어 화장품 브랜드</span>
-
-9개 블록(고객 세그먼트, 가치 제안, 채널, 고객 관계, 수익원,
-핵심 자원, 핵심 활동, 핵심 파트너, 비용 구조)을 각각
-구체적으로 작성해주세요.
-
-각 블록은 <span class="good">3~5개 핵심 포인트</span>로 정리하고,
-마지막에 이 사업의 <span class="accent">강점 3가지와 위험 요소 3가지</span>도
-분석해주세요.</pre>
-    </div>
-    <div class="example-explain">
-        <strong>사용법</strong> : 위 글에서 <strong>노란색 부분(사업 아이디어)</strong>만 여러분의 아이디어로 바꾸세요. "반려동물 수제 간식 쇼핑몰", "직장인 대상 영어 회화 앱" 등 자유롭게 바꿀 수 있어요.
-    </div>
-
-    <h3 class="sub-title">초안을 받은 뒤, 더 물어보기</h3>
-
-    <p class="text-block">
-        AI가 만든 초안이 마음에 들면, 아래 질문을 이어서 해보세요. <strong>더 깊이 있는 분석</strong>을 받을 수 있어요.
-    </p>
-
-    <div class="info-box">
-        <div class="info-box-title">경쟁 업체와 비교해보기</div>
-        <strong>"위에서 만든 우리 BMC와 경쟁사(예: 닥터지, 라운드랩)의 BMC를 비교해줘. 우리가 이기는 부분과 지는 부분을 표로 정리하고, 차별화할 수 있는 방법 3가지를 알려줘."</strong>
-    </div>
-
-    <div class="info-box">
-        <div class="info-box-title">약점 찾아보기</div>
-        <strong>"이 BMC에서 가장 약한 부분은 어디야? 투자자가 보면 '이건 좀 위험한데?'라고 말할 부분 5가지를 찾고, 각각 어떻게 보완하면 좋을지 알려줘."</strong>
-    </div>
-
-    <div class="info-box">
-        <div class="info-box-title">고객을 더 쪼개보기</div>
-        <strong>"지금 타깃 고객을 3종류로 더 나눠서, 각각 다른 버전의 BMC를 만들어줘. 어떤 고객 그룹이 우리한테 가장 좋은 고객인지도 비교해줘."</strong>
-    </div>
-
-    <div class="template-box">
-        <button class="copy-btn" onclick="copyBox(this)">복사하기</button>
-        <div class="template-label">어떤 사업이든 쓸 수 있는 만능 템플릿</div>
-        <pre>당신은 <span class="blank">[역할 - 예: 마케팅]</span> 전문가입니다.
-아래 사업에 대해 BMC를 작성해주세요.
-
-[사업 정보]
-- 사업 아이디어 : <span class="blank">[한 줄로 설명]</span>
-- 팔고 싶은 고객 : <span class="blank">[어떤 사람?]</span>
-- 우리만의 강점 : <span class="blank">[경쟁사와 다른 점]</span>
-
-9개 블록을 각 3~5개 포인트로 정리하고,
-<span class="blank">[추가로 궁금한 것]</span>도 함께 분석해주세요.</pre>
-    </div>
-
-</div><!-- /.container -->
-
-<div style="padding:28px 32px 56px; max-width:800px; margin:0 auto;">
-    <div style="background:var(--bg-secondary);border-radius:16px;padding:24px 28px;margin-bottom:24px;box-shadow:var(--nm-in-sm);">
-        <div style="font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;">다른 프레임워크도 배워보세요</div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="framework-market.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">📈 시장·수익 분석 6대 도구 →</a>
-            <a href="framework-ops.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--bg-card);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:var(--text-secondary);box-shadow:var(--nm-out-sm);transition:all 0.2s;" onmouseover="this.style.color='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.color='var(--text-secondary)';this.style.transform=''">🏢 마케팅·조직·프로세스 9대 도구 →</a>
-            <a href="stage3.html" style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--accent);border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#fff;box-shadow:0 4px 16px rgba(249,115,22,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">🎯 3단계 방향 설정 실습으로 →</a>
+마지막에 "가장 취약한 블록 3개"와 그 이유를 알려줘.</div>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent).then(()=>{this.textContent='✓ 복사됨';setTimeout(()=>{this.textContent='📋 복사'},1500)})">📋 복사</button>
         </div>
     </div>
-    <div style="text-align:center;">
-        <a href="index.html" style="display:inline-flex; align-items:center; gap:8px; background:#e0e5ec; color:#4a5568; font-size:15px; font-weight:700; text-decoration:none; padding:14px 36px; border-radius:12px; box-shadow:6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9); transition:all 0.25s ease;" onmouseover="this.style.boxShadow='8px 8px 18px rgba(163,177,198,0.8),-8px -8px 18px rgba(255,255,255,1)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='6px 6px 14px rgba(163,177,198,0.65),-6px -6px 14px rgba(255,255,255,0.9)'; this.style.transform='translateY(0)'">&larr; 목록으로</a>
-    </div>
+
+    <a class="next-cta" href="stage3.html">
+        <span class="next-cta-icon">💡</span>
+        <div>
+            <div class="next-cta-label">3단계 실전 훈련으로</div>
+            <div class="next-cta-title">BMC를 활용해 방향 10개를 설정하기 →</div>
+        </div>
+        <span class="next-cta-arrow">→</span>
+    </a>
+
 </div>
-
+</main>
 <div id="app-footer"></div>
-
-<script>
-function copyFwPrompt(id, btn) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    var text = el.textContent || el.innerText;
-    navigator.clipboard.writeText(text.trim()).then(function() {
-        var orig = btn.textContent;
-        btn.textContent = '✓ 복사됨!';
-        btn.style.background = '#16a34a';
-        setTimeout(function() { btn.textContent = orig; btn.style.background = ''; }, 2000);
-    }).catch(function() {
-        var ta = document.createElement('textarea'); ta.value = text.trim();
-        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-        var orig = btn.textContent; btn.textContent = '✓ 복사됨!';
-        setTimeout(function() { btn.textContent = orig; }, 2000);
-    });
-}
-(function() {
-    var nav = document.getElementById('tocNav');
-    var links = nav.querySelectorAll('a[data-section]');
-    var sections = Array.from(links).map(function(link) {
-        return { id: link.getAttribute('data-section'), el: document.getElementById(link.getAttribute('data-section')), link: link };
-    });
-    function onScroll() {
-        var scrollY = window.scrollY + 120, current = null;
-        for (var i = sections.length - 1; i >= 0; i--) {
-            if (sections[i].el && sections[i].el.getBoundingClientRect().top + window.scrollY <= scrollY) { current = sections[i].id; break; }
-        }
-        links.forEach(function(link) {
-            link.classList.toggle('active', link.getAttribute('data-section') === current);
-        });
-    }
-    links.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.getElementById(this.getAttribute('data-section'));
-            if (target) { window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight - 16, behavior: 'smooth' }); }
-        });
-    });
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-})();
-
-function copyBlock(btn) {
-    var pre = btn.closest('.example-block').querySelector('pre');
-    var text = pre.textContent || pre.innerText;
-    navigator.clipboard.writeText(text).then(function() {
-        btn.textContent = '\u2713 복사됨!'; btn.classList.add('copied');
-        setTimeout(function() { btn.textContent = '복사하기'; btn.classList.remove('copied'); }, 2000);
-    }).catch(function() {
-        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-        btn.textContent = '\u2713 복사됨!'; btn.classList.add('copied');
-        setTimeout(function() { btn.textContent = '복사하기'; btn.classList.remove('copied'); }, 2000);
-    });
-}
-
-function copyBox(btn) {
-    var pre = btn.closest('.template-box').querySelector('pre');
-    var text = pre.textContent || pre.innerText;
-    navigator.clipboard.writeText(text).then(function() {
-        btn.textContent = '\u2713 복사됨!'; btn.classList.add('copied');
-        setTimeout(function() { btn.textContent = '복사하기'; btn.classList.remove('copied'); }, 2000);
-    }).catch(function() {
-        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-        btn.textContent = '\u2713 복사됨!'; btn.classList.add('copied');
-        setTimeout(function() { btn.textContent = '복사하기'; btn.classList.remove('copied'); }, 2000);
-    });
-}
-</script>
+<script src="js/data.js"></script>
 <script src="js/common.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function() { initCommon(); });</script>
 </body>
 </html>

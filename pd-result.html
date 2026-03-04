@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI 문제 정의력 진단 결과. 5대 역량별 다이아몬드 차트로 강점과 약점을 확인하고 직무별 즉시 실행 가이드를 받으세요.">
 <title>문제 정의력 결과 | AI Roasting</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@3.4.5/dist/dom-to-image-more.min.js"></script>
@@ -82,6 +83,23 @@
         <span class="pd-next-cta-arrow">→</span>
       </a>
 
+      <!-- Role-based immediate action guide -->
+      <div class="pd-role-guide" id="pd-role-guide">
+        <div class="pd-role-guide-header">
+          <div class="pd-role-guide-title">📌 내 직무에서 바로 쓰는 법</div>
+          <div class="pd-role-guide-sub">직무를 선택하면 <strong>다음 주 월요일부터</strong> 바로 적용할 수 있는 액션을 알려드립니다</div>
+        </div>
+        <div class="pd-role-tabs">
+          <button class="pd-role-tab active" onclick="selectRole('leader')">👔 팀장·리더</button>
+          <button class="pd-role-tab" onclick="selectRole('strategy')">📊 전략·기획</button>
+          <button class="pd-role-tab" onclick="selectRole('marketing')">📣 마케터</button>
+          <button class="pd-role-tab" onclick="selectRole('pm')">🛠️ PM·개발</button>
+        </div>
+        <div class="pd-role-content" id="pd-role-content">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
       <!-- Retry -->
       <div class="pd-result-share">
         <a class="pd-btn-share" href="pd-diagnosis.html">🔄 4주 후 재진단 (진행 상황 확인)</a>
@@ -115,15 +133,159 @@
   </div>
 </div>
 
+<style>
+/* ── Role Guide ── */
+.pd-role-guide {
+  background: var(--bg-card); border-radius: 20px;
+  padding: 32px 36px; box-shadow: var(--nm-out);
+  margin-bottom: 28px;
+}
+.pd-role-guide-header { margin-bottom: 22px; }
+.pd-role-guide-title { font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.pd-role-guide-sub { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.pd-role-guide-sub strong { color: var(--text-secondary); }
+.pd-role-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.pd-role-tab {
+  padding: 8px 18px; background: var(--bg-card); border: none;
+  border-radius: 12px; font-size: 14px; font-weight: 700;
+  color: var(--text-muted); cursor: pointer;
+  box-shadow: var(--nm-out-sm); transition: all 0.2s ease;
+}
+.pd-role-tab:hover { color: var(--text-primary); box-shadow: var(--nm-out); }
+.pd-role-tab.active { color: #fff; background: #CC0000; box-shadow: 4px 4px 10px rgba(204,0,0,0.35), -2px -2px 6px rgba(255,255,255,0.5); }
+.pd-role-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 600px) { .pd-role-actions { grid-template-columns: 1fr; } }
+.pd-role-action-card {
+  background: var(--bg-card); border-radius: 14px;
+  padding: 18px 20px; box-shadow: var(--nm-out-sm);
+  border-left: 3px solid var(--accent);
+}
+.pd-role-action-when { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.pd-role-action-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.pd-role-action-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+.pd-role-prompt-box { background: #1e1e2e; border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+.pd-role-prompt-label { font-size: 10px; font-weight: 800; color: #e8706a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.pd-role-prompt-text { font-size: 12px; color: #c8d6f0; line-height: 1.7; font-family: 'SF Mono', 'Fira Code', monospace; white-space: pre-wrap; }
+.pd-role-copy-btn { font-size: 11px; font-weight: 700; color: #e8706a; background: rgba(232,112,106,0.12); border: none; border-radius: 7px; padding: 4px 10px; margin-top: 8px; cursor: pointer; transition: opacity 0.2s; }
+.pd-role-copy-btn:hover { opacity: 0.75; }
+</style>
+
 <script src="js/pd-data.js"></script>
 <script src="js/common.js"></script>
 <script src="js/pd-result.js"></script>
 <script>
+var ROLE_GUIDE_DATA = {
+  leader: {
+    actions: [
+      {
+        when: '다음 주 월요일',
+        title: '팀 회의 전 AI 브리핑 만들기',
+        desc: '회의 안건을 AI에게 주고 "낙관론자·비판론자·현실주의자" 3가지 관점으로 분석시켜 보세요.',
+        prompt: '우리 팀 회의 안건: [안건]\n\n낙관론자(최선의 시나리오), 비판론자(리스크), 현실주의자(현실적 실행 방안) 각각의 입장에서 2개 포인트씩 분석해줘. 마지막에 내가 팀에 던질 질문 2개도 제안해줘.'
+      },
+      {
+        when: '이번 주 내',
+        title: '보고서 초안 1시간 완성',
+        desc: '다음 보고서 주제로 5단계를 따라가 보세요. 경영진 슬라이드 5장 구조까지 AI와 함께 완성합니다.',
+        prompt: '보고 주제: [주제]\n대상 임원: [직책]\n핵심 메시지: [한 줄 요약]\n\n이 보고서의 경영진 슬라이드 5장 구조를 만들어줘. 각 슬라이드 제목과 핵심 내용 2줄씩.'
+      }
+    ]
+  },
+  strategy: {
+    actions: [
+      {
+        when: '다음 주 월요일',
+        title: 'PEST 분석 10분 완성',
+        desc: '다음 기획 과제의 거시 환경을 AI에게 PEST로 분석시켜 보세요. 10분 안에 환경 분석 초안이 완성됩니다.',
+        prompt: '[산업/시장]을 PEST 프레임워크로 분석해줘.\n각 요인별 현재 상황 + 향후 2년 트렌드 + 기회/위협을 표로 정리하고,\n우리 사업에 가장 큰 영향을 주는 요인 상위 3개를 선정해줘.'
+      },
+      {
+        when: '이번 주 내',
+        title: '가설 10개 → 3개로 좁히기',
+        desc: '3단계 방향 설정 훈련을 따라 AI가 뽑은 가설 10개를 내 판단으로 3개로 압축해보세요.',
+        prompt: '[문제/기회]: \n\n이 문제에 대한 전략적 가설을 10개 생성해줘.\n각 가설마다 ① 핵심 주장 ② 성립 조건 ③ 반대 논거를 포함해줘.'
+      }
+    ]
+  },
+  marketing: {
+    actions: [
+      {
+        when: '다음 주 월요일',
+        title: 'STP 전략 30분 초안',
+        desc: '현재 진행 중인 캠페인이나 제품의 STP를 AI로 빠르게 정리하세요. 타깃이 명확해지면 메시지가 달라집니다.',
+        prompt: '[제품/서비스/캠페인]의 STP 전략을 수립해줘.\nSegmentation: 고객을 3개 그룹으로 나눠줘.\nTargeting: 가장 매력적인 타깃 1개 선정 + 이유.\nPositioning: 타깃을 위한 포지셔닝 한 문장.'
+      },
+      {
+        when: '이번 주 내',
+        title: '고객 여정 맵으로 전환율 개선',
+        desc: '고객이 구매 전후 어디서 이탈하는지 AI와 함께 여정 맵으로 시각화하면 개선 포인트가 명확해집니다.',
+        prompt: '[제품] 구매 고객 페르소나: [직책/나이/고민]\n\n이 고객의 여정을 인지→고려→구매→사용→재구매로 나누고,\n각 단계에서 ① 행동 ② 감정 ③ 통증 포인트 ④ 개선 기회를 표로 정리해줘.'
+      }
+    ]
+  },
+  pm: {
+    actions: [
+      {
+        when: '다음 주 월요일',
+        title: 'OKR 분기 초안 10분 완성',
+        desc: '이번 분기 팀 OKR을 AI와 함께 작성해보세요. 뻔한 KR이 아닌 측정 가능한 성과 지표가 나옵니다.',
+        prompt: '[팀/제품]의 이번 분기 OKR을 작성해줘.\n배경: [팀 역할과 현재 과제]\n\nObjective 1개 (도전적이고 영감을 주는)와\nKey Results 3개 (수치로 측정 가능한)를 제시해줘.\n각 KR마다 달성 기준(초과/달성/미달)도 명시해줘.'
+      },
+      {
+        when: '이번 주 내',
+        title: 'RACI로 역할 혼선 제거',
+        desc: '다음 프로젝트 킥오프 전 RACI 매트릭스를 AI로 빠르게 작성하면 "그건 제 일이 아닌데요"가 사라집니다.',
+        prompt: '[프로젝트명]의 RACI 매트릭스를 만들어줘.\n주요 활동 5~7개를 행으로, 관련 역할/직책을 열로 구성하고\nR(실행)/A(최종책임)/C(자문)/I(정보공유)를 배정해줘.'
+      }
+    ]
+  }
+};
+
+var currentRole = 'leader';
+
+function selectRole(role) {
+  currentRole = role;
+  document.querySelectorAll('.pd-role-tab').forEach(function(t) { t.classList.remove('active'); });
+  var activeTab = document.querySelector('.pd-role-tab[onclick="selectRole(\'' + role + '\')"]');
+  if (activeTab) activeTab.classList.add('active');
+  renderRoleContent(role);
+}
+
+function renderRoleContent(role) {
+  var data = ROLE_GUIDE_DATA[role];
+  if (!data) return;
+  var el = document.getElementById('pd-role-content');
+  if (!el) return;
+  el.innerHTML = '<div class="pd-role-actions">' + data.actions.map(function(a, i) {
+    var escapedPrompt = a.prompt.replace(/`/g, '&#96;').replace(/'/g, '&#39;');
+    return '<div class="pd-role-action-card">' +
+      '<div class="pd-role-action-when">' + a.when + '</div>' +
+      '<div class="pd-role-action-title">' + a.title + '</div>' +
+      '<div class="pd-role-action-desc">' + a.desc + '</div>' +
+      '<div class="pd-role-prompt-box">' +
+        '<div class="pd-role-prompt-label">AI 프롬프트</div>' +
+        '<div class="pd-role-prompt-text" id="role-prompt-' + role + '-' + i + '">' + a.prompt + '</div>' +
+        '<button class="pd-role-copy-btn" onclick="copyRolePrompt(\'' + role + '\', ' + i + ')">📋 복사</button>' +
+      '</div>' +
+    '</div>';
+  }).join('') + '</div>';
+}
+
+function copyRolePrompt(role, idx) {
+  var el = document.getElementById('role-prompt-' + role + '-' + idx);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(function() {
+    showToast('📋 복사 완료! ChatGPT 또는 Claude에 붙여넣으세요.', 2500);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   initCommon();
   initPDResult();
   // Update next-step CTA based on weakest competency
-  // pd-result.js의 renderPDLearningPath가 이미 맞춤 학습경로를 처리함
+  // Role guide init
+  setTimeout(function() { renderRoleContent('leader'); }, 300);
+
   // 아래는 하단 "권장 다음 행동" CTA 업데이트 (올바른 area key 사용)
   setTimeout(function() {
     var diag = typeof load === 'function' ? load('pd_diagnosis') : null;
